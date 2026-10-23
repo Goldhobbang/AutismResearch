@@ -1,0 +1,7 @@
+PASS: synthetic publish rejected; real-data metrics unchanged.
+Traceback (most recent call last):
+  File "/workspace/AutismResearch/scripts/publish_results.py", line 51, in <module>
+    main()
+  File "/workspace/AutismResearch/scripts/publish_results.py", line 21, in main
+    raise ValueError('Synthetic checks cannot populate real research results.')
+ValueError: Synthetic checks cannot populate real research results.

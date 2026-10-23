@@ -1,0 +1,131 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PRODUCT_DESIGN</title><style>body{margin:0;background:#f0f5f8;color:#173346;font:16px/1.85 system-ui,-apple-system,"Segoe UI",sans-serif}main{max-width:1420px;margin:auto;padding:36px;background:white}h1{font-size:2rem;line-height:1.45;color:#153a50}h2{margin-top:3rem;padding-top:1rem;border-top:2px solid #c6d9e4;color:#175b72}h3{margin-top:2rem}a{color:#08679a;overflow-wrap:anywhere}table{border-collapse:collapse;display:block;overflow-x:auto;font-size:.91rem;margin:1.4rem 0}th,td{border:1px solid #cedce5;padding:10px;vertical-align:top;min-width:100px}th{background:#eaf3f7;text-align:left}tr:nth-child(even){background:#f8fafc}pre{background:#172c3b;color:#f1f7fa;padding:18px;overflow-x:auto;border-radius:7px;font-size:.88rem;line-height:1.6}code{font-family:Consolas,monospace}blockquote{border-left:4px solid #2e8798;margin-left:0;padding:12px 22px;background:#eef7fa}.toc{background:#edf5f8;padding:15px 24px;border-radius:9px}img{max-width:100%;height:auto}.status{font-size:.88rem;color:#546e7d}@media(max-width:700px){main{padding:18px}h1{font-size:1.5rem}}@media print{main{padding:0}body{font-size:10pt}table{display:table;font-size:8pt}th,td{min-width:0;padding:5px}pre{white-space:pre-wrap;background:#f0f0f0;color:black}.toc{display:none}h2{break-after:avoid}}</style></head><body><main><p class="status">2026-10-23 | ESP32-S3 BLE-only | 미제작 설계 · 실제 데이터 평가 보류</p><div class="toc">
+<ul>
+<li><a href="#esp32-s3-ble-only">ESP32-S3 손목형 시스템 설계안 (BLE-only)</a><ul>
+<li><a href="#1">1. 수정한 연결 구조</a></li>
+<li><a href="#2-esp32-s3">2. ESP32-S3 후보와 메모리</a></li>
+<li><a href="#3-feature-extraction-tinyml">3. Feature Extraction → TinyML</a></li>
+<li><a href="#4">4. 상하면 배치와 배터리</a></li>
+<li><a href="#5-bom">5. 전원·충전·BOM</a></li>
+<li><a href="#6">6. 앱·로깅·검증 범위</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="esp32-s3-ble-only">ESP32-S3 손목형 시스템 설계안 (BLE-only)</h1>
+<p>개정: 2026-10-23 사용자 구상 반영. <strong>실물 제작·배터리·무선·MCU 추론·아동 착용을 시험하지 않은 개념 설계</strong>다. 현행 범위에서 LTE 모뎀·SIM·안테나·요금·전력 시나리오는 제외했다. 이전 버전은 archive에 보존했다.</p>
+<h2 id="1">1. 수정한 연결 구조</h2>
+<p><img alt="센서별 인터페이스와 출력" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDUwIiBoZWlnaHQ9Ijg0MCIgdmlld0JveD0iMCAwIDE0NTAgODQwIj48ZGVmcz48bWFya2VyIGlkPSJhcnJvdyIgbWFya2VyV2lkdGg9IjgiIG1hcmtlckhlaWdodD0iOCIgcmVmWD0iNyIgcmVmWT0iNCIgb3JpZW50PSJhdXRvIj48cGF0aCBkPSJNMCwwIEw4LDQgTDAsOCIgZmlsbD0iIzJiNzA4NiIvPjwvbWFya2VyPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmN2ZhIi8+PGcgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZpbGw9IiMxNTM0NDgiPjx0ZXh0IHg9IjMwIiB5PSI0MCIgZm9udC1zaXplPSIyNyIgZm9udC13ZWlnaHQ9ImJvbGQiPkVTUDMyLVMzIHdyaXN0IHN5c3RlbSDigJQgQkxFIG9ubHk8L3RleHQ+PHRleHQgeD0iMzAiIHk9IjcwIiBmb250LXNpemU9IjE2Ij5Db25jZXB0IC8gbm90IGJ1aWx0IHwgRURBIGFsb25lIHVzZXMgRURBIEFGRSB8IE1pYyArIExpZ2h0OiBjb250ZXh0IGNoYW5uZWxzLCBwcmVkaWN0aXZlIHZhbHVlIHVudmVyaWZpZWQ8L3RleHQ+PHJlY3QgeD0iMzAiIHk9IjEyNSIgd2lkdGg9IjE3NSIgaGVpZ2h0PSI3NSIgcng9IjEwIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjODlhZGJkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI0NCIgeT0iMTUzIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCI+RURBIGVsZWN0cm9kZXM8L3RleHQ+PHRleHQgeD0iNDQiIHk9IjE3OSIgZm9udC1zaXplPSIxNSI+QSAvIEIgc2tpbiBjb250YWN0czwvdGV4dD48cmVjdCB4PSIyNDUiIHk9IjEyNSIgd2lkdGg9IjIyNSIgaGVpZ2h0PSI3NSIgcng9IjEwIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjODlhZGJkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSIyNTkiIHk9IjE1MyIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiPkVEQSBBbmFsb2cgRnJvbnQtRW5kPC90ZXh0Pjx0ZXh0IHg9IjI1OSIgeT0iMTc5IiBmb250LXNpemU9IjE1Ij5DdXJyZW50IGxpbWl0IC8gZmlsdGVyIC8gY2FsaWJyYXRlPC90ZXh0PjxyZWN0IHg9IjUxMCIgeT0iMTI1IiB3aWR0aD0iMTEwIiBoZWlnaHQ9Ijc1IiByeD0iMTAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiM4OWFkYmQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjUyNCIgeT0iMTUzIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCI+QURDPC90ZXh0Pjx0ZXh0IHg9IjUyNCIgeT0iMTc5IiBmb250LXNpemU9IjE1Ij5NQ1UgLyBleHQuPC90ZXh0PjxwYXRoIGQ9Ik0yMDUsMTYyIEwyNDAsMTYyIiBmaWxsPSJub25lIiBzdHJva2U9IiMyYjcwODYiIHN0cm9rZS13aWR0aD0iMi41IiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSIvPjxwYXRoIGQ9Ik00NzAsMTYyIEw1MDUsMTYyIiBmaWxsPSJub25lIiBzdHJva2U9IiMyYjcwODYiIHN0cm9rZS13aWR0aD0iMi41IiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSIvPjxwYXRoIGQ9Ik02MjAsMTYyIEw2NzUsMTYyIiBmaWxsPSJub25lIiBzdHJva2U9IiMyYjcwODYiIHN0cm9rZS13aWR0aD0iMi41IiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSIvPjxyZWN0IHg9IjMwIiB5PSIyNjUiIHdpZHRoPSIzMDAiIGhlaWdodD0iODIiIHJ4PSIxMCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iIzg5YWRiZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNDQiIHk9IjI5MyIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiPlBQRyBvcHRpY2FsIHNlbnNvcjwvdGV4dD48dGV4dCB4PSI0NCIgeT0iMzE5IiBmb250LXNpemU9IjE1Ij5MRUQgLyBkZXRlY3RvciAvIEFGRSAvIEZJRk88L3RleHQ+PHBhdGggZD0iTTMzMCwzMDYgTDY3NSwzMDYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJiNzA4NiIgc3Ryb2tlLXdpZHRoPSIyLjUiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+PHRleHQgeD0iMzkwIiB5PSIyOTQiIGZvbnQtc2l6ZT0iMTUiPkkyQyArIElSUTwvdGV4dD48cmVjdCB4PSIzMCIgeT0iMzg1IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjgyIiByeD0iMTAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiM4OWFkYmQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjQ0IiB5PSI0MTMiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSJib2xkIj5JTVU8L3RleHQ+PHRleHQgeD0iNDQiIHk9IjQzOSIgZm9udC1zaXplPSIxNSI+My1heGlzIEFDQyBmaXJzdDwvdGV4dD48cGF0aCBkPSJNMzMwLDQyNiBMNjc1LDQyNiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMmI3MDg2IiBzdHJva2Utd2lkdGg9IjIuNSIgbWFya2VyLWVuZD0idXJsKCNhcnJvdykiLz48dGV4dCB4PSIzOTAiIHk9IjQxNCIgZm9udC1zaXplPSIxNSI+STJDIG9yIFNQSSArIElSUTwvdGV4dD48cmVjdCB4PSIzMCIgeT0iNTA1IiB3aWR0aD0iMzAwIiBoZWlnaHQ9IjgyIiByeD0iMTAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiM4OWFkYmQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjQ0IiB5PSI1MzMiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSJib2xkIj5EaWdpdGFsIE1pYzwvdGV4dD48dGV4dCB4PSI0NCIgeT0iNTU5IiBmb250LXNpemU9IjE1Ij5Wb2xhdGlsZSBzaG9ydCBhdWRpbyBmcmFtZXM8L3RleHQ+PHBhdGggZD0iTTMzMCw1NDYgTDY3NSw1NDYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJiNzA4NiIgc3Ryb2tlLXdpZHRoPSIyLjUiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+PHRleHQgeD0iMzkwIiB5PSI1MzQiIGZvbnQtc2l6ZT0iMTUiPkkyUyAvIHN1cHBvcnRlZCBQRE08L3RleHQ+PHJlY3QgeD0iMzAiIHk9IjYyNSIgd2lkdGg9IjMwMCIgaGVpZ2h0PSI4MiIgcng9IjEwIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjODlhZGJkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI0NCIgeT0iNjUzIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCI+QW1iaWVudCBMaWdodDwvdGV4dD48dGV4dCB4PSI0NCIgeT0iNjc5IiBmb250LXNpemU9IjE1Ij5PdXR3YXJkLWZhY2luZyBsaWdodCBhcGVydHVyZTwvdGV4dD48cGF0aCBkPSJNMzMwLDY2NiBMNjc1LDY2NiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMmI3MDg2IiBzdHJva2Utd2lkdGg9IjIuNSIgbWFya2VyLWVuZD0idXJsKCNhcnJvdykiLz48dGV4dCB4PSIzOTAiIHk9IjY1NCIgZm9udC1zaXplPSIxNSI+STJDPC90ZXh0PjxyZWN0IHg9IjY4MCIgeT0iMTA1IiB3aWR0aD0iMzY1IiBoZWlnaHQ9IjYzMCIgcng9IjEwIiBmaWxsPSIjZTZmMWY2IiBzdHJva2U9IiM4OWFkYmQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjY5NCIgeT0iMTMzIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCI+RVNQMzItUzMgbW9kdWxlPC90ZXh0Pjx0ZXh0IHg9IjY5NCIgeT0iMTU5IiBmb250LXNpemU9IjE1Ij5GbGFzaCAvIFBTUkFNIHBlciBzZWxlY3RlZCBTS1U8L3RleHQ+PHRleHQgeD0iNjk0IiB5PSIxODIiIGZvbnQtc2l6ZT0iMTUiPk5hdGl2ZS1yYXRlIGFjcXVpc2l0aW9uICsgdGltZSBzeW5jPC90ZXh0PjxyZWN0IHg9IjcxMCIgeT0iMjI1IiB3aWR0aD0iMzA1IiBoZWlnaHQ9IjgwIiByeD0iMTAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiM4OWFkYmQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjcyNCIgeT0iMjUzIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCI+U2lnbmFsIFF1YWxpdHkgKyBCdWZmZXI8L3RleHQ+PHRleHQgeD0iNzI0IiB5PSIyNzkiIGZvbnQtc2l6ZT0iMTUiPkludmFsaWQgLyBzdGFsZSBkYXRhID0mZ3Q7IGhvbGQgc2NvcmU8L3RleHQ+PHBhdGggZD0iTTg2MywzMDUgTDg2MywzMzMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJiNzA4NiIgc3Ryb2tlLXdpZHRoPSIyLjUiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+PHJlY3QgeD0iNzEwIiB5PSIzNDAiIHdpZHRoPSIzMDUiIGhlaWdodD0iODAiIHJ4PSIxMCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iIzg5YWRiZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNzI0IiB5PSIzNjgiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSJib2xkIj5GZWF0dXJlIEV4dHJhY3Rpb248L3RleHQ+PHRleHQgeD0iNzI0IiB5PSIzOTQiIGZvbnQtc2l6ZT0iMTUiPlBhc3Qtb25seSA2MCBzLCB1cGRhdGUgZXZlcnkxNSBzPC90ZXh0PjxwYXRoIGQ9Ik04NjMsNDIwIEw4NjMsNDQ4IiBmaWxsPSJub25lIiBzdHJva2U9IiMyYjcwODYiIHN0cm9rZS13aWR0aD0iMi41IiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSIvPjxyZWN0IHg9IjcxMCIgeT0iNDU1IiB3aWR0aD0iMzA1IiBoZWlnaHQ9IjgwIiByeD0iMTAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiM4OWFkYmQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjcyNCIgeT0iNDgzIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCI+VGlueU1MIEluZmVyZW5jZTwvdGV4dD48dGV4dCB4PSI3MjQiIHk9IjUwOSIgZm9udC1zaXplPSIxNSI+TFIgZmlyc3Q7IE5OIGlzIG9wdGlvbmFsIGxhdGVyPC90ZXh0PjxwYXRoIGQ9Ik04NjMsNTM1IEw4NjMsNTY1IiBmaWxsPSJub25lIiBzdHJva2U9IiMyYjcwODYiIHN0cm9rZS13aWR0aD0iMi41IiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSIvPjxyZWN0IHg9IjcxMCIgeT0iNTc1IiB3aWR0aD0iMzA1IiBoZWlnaHQ9IjEwMCIgcng9IjEwIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjODlhZGJkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI3MjQiIHk9IjYwMyIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiPk91dHB1dCBQb2xpY3k8L3RleHQ+PHRleHQgeD0iNzI0IiB5PSI2MjkiIGZvbnQtc2l6ZT0iMTUiPlF1YWxpdHkgZ2F0ZSAvIGNvb2xkb3duIC8gZnJlc2huZXNzPC90ZXh0Pjx0ZXh0IHg9IjcyNCIgeT0iNjUyIiBmb250LXNpemU9IjE1Ij5VbmNhbGlicmF0ZWQgcmVzZWFyY2ggc2NvcmU8L3RleHQ+PHJlY3QgeD0iMTExMCIgeT0iMTUwIiB3aWR0aD0iMzA1IiBoZWlnaHQ9Ijg1IiByeD0iMTAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiM4OWFkYmQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjExMjQiIHk9IjE3OCIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiPkJMRSBBbGVydDwvdGV4dD48dGV4dCB4PSIxMTI0IiB5PSIyMDQiIGZvbnQtc2l6ZT0iMTUiPk5lYXIgZ3VhcmRpYW4gLyB0ZWFjaGVyIHBob25lPC90ZXh0PjxwYXRoIGQ9Ik0xMDQ1LDE5MyBMMTEwNSwxOTMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJiNzA4NiIgc3Ryb2tlLXdpZHRoPSIyLjUiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+PHJlY3QgeD0iMTExMCIgeT0iMjcwIiB3aWR0aD0iMzA1IiBoZWlnaHQ9Ijg1IiByeD0iMTAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiM4OWFkYmQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjExMjQiIHk9IjI5OCIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiPkd1YXJkaWFuIC8gVGVhY2hlciBBcHA8L3RleHQ+PHRleHQgeD0iMTEyNCIgeT0iMzI0IiBmb250LXNpemU9IjE1Ij5TdGF0ZSAvIHF1YWxpdHkgLyByZXZpZXcgLyBjb250ZXh0PC90ZXh0PjxwYXRoIGQ9Ik0xMjYzLDIzNSBMMTI2MywyNjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJiNzA4NiIgc3Ryb2tlLXdpZHRoPSIyLjUiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+PHJlY3QgeD0iMTExMCIgeT0iNDQwIiB3aWR0aD0iMzA1IiBoZWlnaHQ9IjExMCIgcng9IjEwIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjODlhZGJkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSIxMTI0IiB5PSI0NjgiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSJib2xkIj5IYXB0aWMgb3V0cHV0PC90ZXh0Pjx0ZXh0IHg9IjExMjQiIHk9IjQ5NCIgZm9udC1zaXplPSIxNSI+RFJWMjYwNUwgLSZndDsgTFJBIC8gRVJNPC90ZXh0Pjx0ZXh0IHg9IjExMjQiIHk9IjUxNyIgZm9udC1zaXplPSIxNSI+Q2hpbGQgd3Jpc3QgaGFwdGljIG9mZiBieSBkZWZhdWx0PC90ZXh0PjxwYXRoIGQ9Ik0xMDQ1LDQ5NSBMMTEwNSw0OTUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJiNzA4NiIgc3Ryb2tlLXdpZHRoPSIyLjUiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIi8+PHJlY3QgeD0iMTExMCIgeT0iNjI1IiB3aWR0aD0iMzA1IiBoZWlnaHQ9IjExMCIgcng9IjEwIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjODlhZGJkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSIxMTI0IiB5PSI2NTMiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSJib2xkIj5Mb2NhbCBMb2dnaW5nPC90ZXh0Pjx0ZXh0IHg9IjExMjQiIHk9IjY3OSIgZm9udC1zaXplPSIxNSI+RmVhdHVyZXMgLyBxdWFsaXR5IC8gc2NvcmUgLyBldmVudHM8L3RleHQ+PHRleHQgeD0iMTEyNCIgeT0iNzAyIiBmb250LXNpemU9IjE1Ij5DaXJjdWxhciBidWZmZXI7IE5PIHJhdyBhdWRpbzwvdGV4dD48cGF0aCBkPSJNMTA0NSw2ODAgTDExMDUsNjgwIiBmaWxsPSJub25lIiBzdHJva2U9IiMyYjcwODYiIHN0cm9rZS13aWR0aD0iMi41IiBtYXJrZXItZW5kPSJ1cmwoI2Fycm93KSIvPjx0ZXh0IHg9IjMwIiB5PSI3OTAiIGZvbnQtc2l6ZT0iMTciPlBvd2VyIC8gY2hhcmdpbmcgLyBwcm90ZWN0aW9uIC8gcmVndWxhdGVkIHJhaWxzIHNlcnZlIGFsbCBibG9ja3M7IGV4YWN0IGNpcmN1aXQsIEdQSU8gbWFwIGFuZCBiYXR0ZXJ5IHJlbWFpbiB1bnZlcmlmaWVkLjwvdGV4dD48dGV4dCB4PSIzMCIgeT0iODE3IiBmb250LXNpemU9IjE2Ij5DdXJyZW50IHJlc2VhcmNoOiBhZHVsdCBzdHJlc3MgY2xhc3NpZmljYXRpb24uIEFTRCBldmVudCB3YXJuaW5nIGFuZCByZWFsIDYwIHMgbGVhZCB0aW1lIHJlcXVpcmUgc2VwYXJhdGUgZGF0YSBhbmQgdmFsaWRhdGlvbi48L3RleHQ+PC9nPjwvc3ZnPg==" /></p>
+<p>사용자 그림에서 바꾼 핵심은 <strong>EDA 전극만 EDA Analog Front-End를 거친다는 점</strong>이다. PPG·IMU·Mic·Light를 EDA AFE에 연결하지 않는다.</p>
+<table>
+<thead>
+<tr>
+<th>입력/출력</th>
+<th>연결 제안</th>
+<th>확인해야 할 것</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EDA 전극 A/B</td>
+<td>전류 제한·교정·필터를 포함한 EDA AFE → ADC → MCU</td>
+<td>전극 재료·면적·접촉·입력 누설·포화·µS 교정. MCU ADC 또는 외부 ADC 중 선택은 AFE와 잡음 예산으로 결정</td>
+</tr>
+<tr>
+<td>PPG</td>
+<td>LED/photodiode/AFE/ADC/FIFO가 포함된 광학 센서 → I2C + interrupt</td>
+<td>원시 BVP 접근, 전압/논리레벨, 광학 차광·압력·피부/움직임 artifact. MAX30102는 예시 후보</td>
+</tr>
+<tr>
+<td>IMU</td>
+<td>I2C 또는 SPI + data-ready/FIFO</td>
+<td>가속도3축 우선. range·축·실제 ODR을 기록. LSM6DS3TR-C 후보</td>
+</tr>
+<tr>
+<td>디지털 Mic</td>
+<td>선택 마이크의 I2S 또는 지원되는 PDM 경로 → 짧은 DMA 프레임</td>
+<td>마이크/ESP-IDF의 수신 모드·클록·핀 호환. 원음은 프레임 계산 후 폐기하고 저장·전송하지 않음</td>
+</tr>
+<tr>
+<td>Light</td>
+<td>조도 센서 I2C → MCU</td>
+<td>바깥쪽 개구부, 자체 LED/손/케이스 차광, 실제 integration time. VEML7700 계열은 검토 후보</td>
+</tr>
+<tr>
+<td>BLE Alert</td>
+<td>MCU BLE → 가까운 보호자·교사 phone/tablet</td>
+<td>연결·시각·유효기간·수신확인·백그라운드 앱. 휴대폰이 없을 때 독립 원거리 알림을 보장하지 않음</td>
+</tr>
+<tr>
+<td>Haptic</td>
+<td>MCU I2C → DRV2605L → 정격에 맞는 LRA/ERM</td>
+<td>GPIO 직접 구동 금지. 모터 선택·구동 보정·전원 피크·광학/음향 artifact. 아동 손목 진동은 기본 비활성 제안</td>
+</tr>
+<tr>
+<td>Local Logging</td>
+<td>flash의 순환 버퍼에 특징·품질·점수·event timestamp</td>
+<td>쓰기 수명·용량·암호화·보존기간·전원차단 복구. raw audio 비저장</td>
+</tr>
+</tbody>
+</table>
+<p>Mic와 Light는 구상에 포함하되 <strong>환경 맥락·품질 보조의 추가 센서</strong>로 다룬다. 소리 크기나 조도가 곧 감각 과부하 또는 멜트다운 라벨은 아니다. 현재 WESAD/PhysioNet 입력에는 두 센서가 없으므로 추가 예측력을 검증했다고 주장하지 않는다. 알고리즘 입력은 우선 EDA/BVP/ACC이며, Mic/Light 투입은 별도 검증 이후다.</p>
+<h2 id="2-esp32-s3">2. ESP32-S3 후보와 메모리</h2>
+<p>첫 개발 후보는 ESP32-S3-DevKitC-1-N8R8 / ESP32-S3-WROOM-1-N8R8 계열이다. 공식 개발보드 안내에서 이 변형의 Flash8MB/PSRAM8MB를 확인했다. SoC 내부 SRAM512KB와 외부 PSRAM은 구분한다. PSRAM 용량 전체를 DMA·실시간 내부 SRAM처럼 자유롭게 쓸 수 있다고 가정하지 않는다. 개발보드는 책상 위 실험 후보이며 최종 손목 크기 PCB가 아니다.</p>
+<p><strong>모듈형이면 Flash/PSRAM은 모듈에 포함될 수 있다.</strong> 사용자 상면의 별도 메모리 블록은 논리 블록으로 표시하고 실제 추가 IC가 필요한지는 SKU로 결정한다. 보드 변형마다 사용할 수 없는 GPIO·메모리 예약 핀이 있으므로 핀 번호는 아직 확정하지 않는다. Wi-Fi는 이번 기본 운용에서 사용하지 않는다.</p>
+<table>
+<thead>
+<tr>
+<th>메모리 항목</th>
+<th style="text-align: right;">계산·설계 가정</th>
+<th>한계</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E4형60초 raw ring</td>
+<td style="text-align: right;">(4+64+3×32)×60×4=39,360byte</td>
+<td>연구자료 주파수의 계산</td>
+</tr>
+<tr>
+<td>새 장치 예: EDA4/PPG100/ACC52Hz</td>
+<td style="text-align: right;">(4+100+3×52)×60×4=62,400byte</td>
+<td>후보 ODR로 다시 특징/모델 검증 필요</td>
+</tr>
+<tr>
+<td>Light10Hz float32 예</td>
+<td style="text-align: right;">2,400byte/60초</td>
+<td>실제 integration time에 맞출 것</td>
+</tr>
+<tr>
+<td>Mic16kHz/16bit/20ms</td>
+<td style="text-align: right;">640byte/프레임, 이중버퍼1,280byte</td>
+<td>파형은 짧은 휘발성 버퍼만. 전처리 scratch 별도</td>
+</tr>
+<tr>
+<td>Mic 원음60초</td>
+<td style="text-align: right;">1,920,000byte</td>
+<td>저장하지 않는 설계. 작은 특징/요약만 유지</td>
+</tr>
+<tr>
+<td>100특징 LR 수치배열</td>
+<td style="text-align: right;">계수404+scaler800+imputer400=1,604byte</td>
+<td>전체 C runtime·stack·전처리 비용 아님</td>
+</tr>
+</tbody>
+</table>
+<p>계획 예산은 센서 ring 약64KiB, Mic DMA/scratch16KiB, 특징·FFT32KiB, BLE/RTOS128KiB, 앱 stack/heap64KiB, 여유96KiB로 <strong>400KiB 예시</strong>다. ESP32-S3 내부512KiB 이내의 단순 합계일 뿐 실행 보장은 아니다. 예약 영역·링커·stack·DMA·할당 단편화를 확인하고 필요하면 PSRAM으로 로그·비핵심 버퍼를 옮긴다. TFLM 같은 별도 NN runtime을 택하면 tensor arena를 추가로 재산정한다.</p>
+<h2 id="3-feature-extraction-tinyml">3. Feature Extraction → TinyML</h2>
+<p>TinyML은 큰 신경망을 반드시 뜻하지 않는다. 첫 이식 후보는 실험에서 검증된 특징과 LR의 C 구현이다. 작은 RF 또는 int8 NN은 그다음 비교 대상이다. Python joblib를 MCU가 그대로 실행하지 않으므로 imputer/scaler/특징 순서·단위·계수를 export하고 PC 기준 출력과 golden-vector로 대조해야 한다.</p>
+<p>15초마다 과거60초만 계산하고 측정 품질이 나쁘면 점수를 보류한다. Mic는 짧은 프레임의 RMS·클리핑·대역 에너지, Light는 평균·변화량 같은 후보부터 검토한다. 검증 없이 두 입력을 기존3센서 모델에 추가할 수는 없다. dB SPL 교정 전 마이크 값을 절대 소음 수준이라고 표시하지 않는다.</p>
+<p>진동·LED 전류 변경·충전·센서 재시작은 artifact를 만들 수 있다. 해당 event를 기록하고 품질 보류/재안정화 정책을 실험으로 정한다. 비동기 취득·버퍼/시간 동기화·BLE와 로깅 부하를 함께 평가한다. 실제 MCU 지연은 아직 N/A다.</p>
+<h2 id="4">4. 상하면 배치와 배터리</h2>
+<p><img alt="상면·하면·측면 개념도" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNDgwIiBoZWlnaHQ9Ijc2MCIgdmlld0JveD0iMCAwIDE0ODAgNzYwIj48ZGVmcz48bWFya2VyIGlkPSJhcnJvdyIgbWFya2VyV2lkdGg9IjgiIG1hcmtlckhlaWdodD0iOCIgcmVmWD0iNyIgcmVmWT0iNCIgb3JpZW50PSJhdXRvIj48cGF0aCBkPSJNMCwwIEw4LDQgTDAsOCIgZmlsbD0iIzJiNzA4NiIvPjwvbWFya2VyPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmN2ZhIi8+PGcgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZpbGw9IiMxNTM0NDgiPjx0ZXh0IHg9IjMwIiB5PSI0MCIgZm9udC1zaXplPSIyNyIgZm9udC13ZWlnaHQ9ImJvbGQiPlByb3Bvc2VkIHRvcCAvIHNraW4tY29udGFjdCAvIHNpZGUgYXJyYW5nZW1lbnQ8L3RleHQ+PHRleHQgeD0iMzAiIHk9IjcwIiBmb250LXNpemU9IjE2Ij5Ob3QgdG8gc2NhbGUgLyBubyBkaW1lbnNpb25zIGZpbmFsaXplZCAvIG5vIFBDQiBvciBlbmNsb3N1cmUgYnVpbHQgfCBBbnRlbm5hIGNsZWFyYW5jZSBtdXN0IGZvbGxvdyBzZWxlY3RlZCBtb2R1bGUgZHJhd2luZ3M8L3RleHQ+PHJlY3QgeD0iMzAiIHk9IjExNSIgd2lkdGg9IjQ0MCIgaGVpZ2h0PSI1ODAiIHJ4PSIxMCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iIzg5YWRiZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNDQiIHk9IjE0MyIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiPlRPUCDigJQgb3V0d2FyZC1mYWNpbmc8L3RleHQ+PHJlY3QgeD0iNTIwIiB5PSIxMTUiIHdpZHRoPSI0NDAiIGhlaWdodD0iNTgwIiByeD0iMTAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiM4OWFkYmQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjUzNCIgeT0iMTQzIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCI+Qk9UVE9NIOKAlCBza2luLWNvbnRhY3Q8L3RleHQ+PHJlY3QgeD0iMTAxMCIgeT0iMTE1IiB3aWR0aD0iNDQwIiBoZWlnaHQ9IjU4MCIgcng9IjEwIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjODlhZGJkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSIxMDI0IiB5PSIxNDMiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSJib2xkIj5TSURFIOKAlCB2b2x1bWUgcGxhbm5pbmc8L3RleHQ+PHJlY3QgeD0iNTAiIHk9IjE2NSIgd2lkdGg9IjQwMCIgaGVpZ2h0PSI4NSIgcng9IjEwIiBmaWxsPSIjZTRmM2VlIiBzdHJva2U9IiM4OWFkYmQiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWRhc2hhcnJheT0iNyA1Ii8+PHRleHQgeD0iNjQiIHk9IjE5MyIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiPkJMRSBhbnRlbm5hIGtlZXAtb3V0PC90ZXh0Pjx0ZXh0IHg9IjY0IiB5PSIyMTkiIGZvbnQtc2l6ZT0iMTUiPk5vIGJhdHRlcnkgLyBtZXRhbCAvIHJvdXRpbmcgYmVuZWF0aCBvciBhcm91bmQ8L3RleHQ+PHRleHQgeD0iNjQiIHk9IjI0MiIgZm9udC1zaXplPSIxNSI+Zm9sbG93IG1hbnVmYWN0dXJlciAzRCBjbGVhcmFuY2U8L3RleHQ+PHJlY3QgeD0iNjAiIHk9IjI4MCIgd2lkdGg9IjIyMCIgaGVpZ2h0PSIxMjAiIHJ4PSIxMCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iIzg5YWRiZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNzQiIHk9IjMwOCIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiPkVTUDMyLVMzIG1vZHVsZTwvdGV4dD48dGV4dCB4PSI3NCIgeT0iMzM0IiBmb250LXNpemU9IjE1Ij5DUFUgKyBpbnRlZ3JhdGVkIG1lbW9yeTwvdGV4dD48dGV4dCB4PSI3NCIgeT0iMzU3IiBmb250LXNpemU9IjE1Ij5GbGFzaC9QU1JBTSBwZXIgdmFyaWFudDwvdGV4dD48cmVjdCB4PSIzMDUiIHk9IjI4MCIgd2lkdGg9IjE0MCIgaGVpZ2h0PSIxMDAiIHJ4PSIxMCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iIzg5YWRiZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iMzE5IiB5PSIzMDgiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSJib2xkIj5Qb3dlcjwvdGV4dD48dGV4dCB4PSIzMTkiIHk9IjMzNCIgZm9udC1zaXplPSIxNSI+UmFpbHMgKyBwcm90ZWN0aW9uPC90ZXh0Pjx0ZXh0IHg9IjMxOSIgeT0iMzU3IiBmb250LXNpemU9IjE1Ij5ObyBkdXBsaWNhdGVzPC90ZXh0PjxyZWN0IHg9IjYwIiB5PSI0MzAiIHdpZHRoPSIxMTAiIGhlaWdodD0iODAiIHJ4PSIxMCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iIzg5YWRiZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNzQiIHk9IjQ1OCIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiPklNVTwvdGV4dD48dGV4dCB4PSI3NCIgeT0iNDg0IiBmb250LXNpemU9IjE1Ij5SaWdpZCBzdXBwb3J0PC90ZXh0PjxyZWN0IHg9IjE5NSIgeT0iNDMwIiB3aWR0aD0iMjQ1IiBoZWlnaHQ9IjgwIiByeD0iMTAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiM4OWFkYmQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjIwOSIgeT0iNDU4IiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCI+TWljIC8gTGlnaHQ8L3RleHQ+PHRleHQgeD0iMjA5IiB5PSI0ODQiIGZvbnQtc2l6ZT0iMTUiPk91dHdhcmQgYWNvdXN0aWMgLyBsaWdodCBwb3J0czwvdGV4dD48cmVjdCB4PSI2MCIgeT0iNTQ1IiB3aWR0aD0iMTgwIiBoZWlnaHQ9IjkwIiByeD0iMTAiIGZpbGw9IndoaXRlIiBzdHJva2U9IiM4OWFkYmQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9Ijc0IiB5PSI1NzMiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSJib2xkIj5FREEgQUZFPC90ZXh0Pjx0ZXh0IHg9Ijc0IiB5PSI1OTkiIGZvbnQtc2l6ZT0iMTUiPk5lYXIgZWxlY3Ryb2RlIGZlZWQ8L3RleHQ+PHRleHQgeD0iNzQiIHk9IjYyMiIgZm9udC1zaXplPSIxNSI+UXVpZXQgaGlnaC1aIHJvdXRpbmc8L3RleHQ+PHJlY3QgeD0iMjcwIiB5PSI1NDUiIHdpZHRoPSIxNzAiIGhlaWdodD0iOTAiIHJ4PSIxMCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iIzg5YWRiZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iMjg0IiB5PSI1NzMiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSJib2xkIj5EUlYyNjA1TDwvdGV4dD48dGV4dCB4PSIyODQiIHk9IjU5OSIgZm9udC1zaXplPSIxNSI+TW90b3IgY291cGxpbmcgY2hlY2s8L3RleHQ+PHRleHQgeD0iNjAiIHk9IjY3MCIgZm9udC1zaXplPSIxNSI+QmF0dGVyeSBmb290cHJpbnQgaXMgY29uc3RyYWluZWQgYnkgc2lkZSB2aWV3LjwvdGV4dD48cmVjdCB4PSI1NDUiIHk9IjIwMCIgd2lkdGg9IjE3MCIgaGVpZ2h0PSI5MCIgcng9IjEwIiBmaWxsPSJ3aGl0ZSIgc3Ryb2tlPSIjODlhZGJkIiBzdHJva2Utd2lkdGg9IjIiLz48dGV4dCB4PSI1NTkiIHk9IjIyOCIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiPkVsZWN0cm9kZSBBPC90ZXh0Pjx0ZXh0IHg9IjU1OSIgeT0iMjU0IiBmb250LXNpemU9IjE1Ij5Ta2luIGNvbnRhY3Q8L3RleHQ+PHJlY3QgeD0iNzU1IiB5PSIyMDAiIHdpZHRoPSIxNzAiIGhlaWdodD0iOTAiIHJ4PSIxMCIgZmlsbD0id2hpdGUiIHN0cm9rZT0iIzg5YWRiZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iNzY5IiB5PSIyMjgiIGZvbnQtc2l6ZT0iMTgiIGZvbnQtd2VpZ2h0PSJib2xkIj5FbGVjdHJvZGUgQjwvdGV4dD48dGV4dCB4PSI3NjkiIHk9IjI1NCIgZm9udC1zaXplPSIxNSI+U3BhY2luZyBub3QgZmluYWxpemVkPC90ZXh0PjxyZWN0IHg9IjYwMCIgeT0iMzYwIiB3aWR0aD0iMjkwIiBoZWlnaHQ9IjE3MCIgcng9IjEwIiBmaWxsPSIjZWRmNmZhIiBzdHJva2U9IiM4OWFkYmQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjYxNCIgeT0iMzg4IiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCI+UFBHIG9wdGljYWwgd2luZG93PC90ZXh0Pjx0ZXh0IHg9IjYxNCIgeT0iNDE0IiBmb250LXNpemU9IjE1Ij5PcGVuIHNraW4gb3B0aWNhbCBwYXRoPC90ZXh0Pjx0ZXh0IHg9IjYxNCIgeT0iNDM3IiBmb250LXNpemU9IjE1Ij5MRUQvZGV0ZWN0b3IgbGlnaHQgaXNvbGF0aW9uPC90ZXh0Pjx0ZXh0IHg9IjYxNCIgeT0iNDYwIiBmb250LXNpemU9IjE1Ij5TZWFsIC8gcHJlc3N1cmUgLyBhbWJpZW50IHJlamVjdGlvbjwvdGV4dD48dGV4dCB4PSI1NDUiIHk9IjU5NSIgZm9udC1zaXplPSIxNiI+U2tpbi1jb250YWN0IHN1cmZhY2U6IGNvbWZvcnQsIHN3ZWF0LCBtb3Rpb24sPC90ZXh0Pjx0ZXh0IHg9IjU0NSIgeT0iNjIyIiBmb250LXNpemU9IjE2Ij5jbGVhbmluZywgaGVhdCBhbmQgYXNzZW50IHJlcXVpcmUgdmFsaWRhdGlvbi48L3RleHQ+PHRleHQgeD0iNTQ1IiB5PSI2NjMiIGZvbnQtc2l6ZT0iMTUiPkRvIG5vdCBwbGFjZSBhIGJhdHRlcnkgYWNyb3NzIHRoZSBvcHRpY2FsIHBhdGguPC90ZXh0PjxyZWN0IHg9IjEwMzUiIHk9IjE3NSIgd2lkdGg9IjExMCIgaGVpZ2h0PSIxMjAiIHJ4PSIxMCIgZmlsbD0iI2U0ZjNlZSIgc3Ryb2tlPSIjODlhZGJkIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1kYXNoYXJyYXk9IjcgNSIvPjx0ZXh0IHg9IjEwNDkiIHk9IjIwMyIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiPlJGIGNsZWFyPC90ZXh0Pjx0ZXh0IHg9IjEwNDkiIHk9IjIyOSIgZm9udC1zaXplPSIxNSI+Vm9sdW1lPC90ZXh0Pjx0ZXh0IHg9IjEwNDkiIHk9IjI1MiIgZm9udC1zaXplPSIxNSI+Tm8gbWV0YWw8L3RleHQ+PHRleHQgeD0iMTE3MCIgeT0iMjA1IiBmb250LXNpemU9IjE1Ij5Ub3Agc2hlbGw6IE1pYyAvIExpZ2h0IG9wZW5pbmdzPC90ZXh0PjxyZWN0IHg9IjEwMzUiIHk9IjMyNSIgd2lkdGg9IjM4NSIgaGVpZ2h0PSIxOCIgZmlsbD0iIzJjN2E4NSIvPjx0ZXh0IHg9IjEwNDAiIHk9IjMxNiIgZm9udC1zaXplPSIxNSI+UENCIC8gc2VsZWN0ZWQgbW9kdWxlIHBsYWNlbWVudDwvdGV4dD48cmVjdCB4PSIxMDkwIiB5PSIzODAiIHdpZHRoPSIxNjUiIGhlaWdodD0iMTE1IiByeD0iMTAiIGZpbGw9IiNmZmYwZDciIHN0cm9rZT0iIzg5YWRiZCIgc3Ryb2tlLXdpZHRoPSIyIi8+PHRleHQgeD0iMTEwNCIgeT0iNDA4IiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iYm9sZCI+QmF0dGVyeSB6b25lPC90ZXh0Pjx0ZXh0IHg9IjExMDQiIHk9IjQzNCIgZm9udC1zaXplPSIxNSI+T2ZmIFJGIGNsZWFyYW5jZTwvdGV4dD48dGV4dCB4PSIxMTA0IiB5PSI0NTciIGZvbnQtc2l6ZT0iMTUiPk9mZiBvcHRpY2FsIHBhdGg8L3RleHQ+PHJlY3QgeD0iMTI5MCIgeT0iMzY1IiB3aWR0aD0iMTE1IiBoZWlnaHQ9IjE3MCIgcng9IjEwIiBmaWxsPSIjZWRmNmZhIiBzdHJva2U9IiM4OWFkYmQiIHN0cm9rZS13aWR0aD0iMiIvPjx0ZXh0IHg9IjEzMDQiIHk9IjM5MyIgZm9udC1zaXplPSIxOCIgZm9udC13ZWlnaHQ9ImJvbGQiPlBQRyBwYXRoPC90ZXh0Pjx0ZXh0IHg9IjEzMDQiIHk9IjQxOSIgZm9udC1zaXplPSIxNSI+U2Vuc29yPC90ZXh0Pjx0ZXh0IHg9IjEzMDQiIHk9IjQ0MiIgZm9udC1zaXplPSIxNSI+V2luZG93PC90ZXh0Pjx0ZXh0IHg9IjEzMDQiIHk9IjQ2NSIgZm9udC1zaXplPSIxNSI+U2tpbjwvdGV4dD48cGF0aCBkPSJNMTAzNSw1NzUgTDE0MjAsNTc1IiBzdHJva2U9IiM5YTZiNTciIHN0cm9rZS13aWR0aD0iNSIvPjx0ZXh0IHg9IjEwNTAiIHk9IjYwNSIgZm9udC1zaXplPSIxNSI+U2tpbi1mYWNpbmcgc2hlbGwgLyBlbGVjdHJvZGVzIC8gb3B0aWNhbCBzZWFsPC90ZXh0Pjx0ZXh0IHg9IjEwNDAiIHk9IjY1OCIgZm9udC1zaXplPSIxNSI+QSBmbGF0IGJhdHRlcnktdW5kZXItZXZlcnl0aGluZyBzdGFjayBtYXkgZmFpbC48L3RleHQ+PHRleHQgeD0iMzAiIHk9IjczMCIgZm9udC1zaXplPSIxNyI+SGFwdGljIGV2ZW50cyBtYXkgY29ycnVwdCBvcHRpY2FsLCBlbGVjdHJvZGUsIElNVSBhbmQgYWNvdXN0aWMgc2lnbmFsczogdGltZXN0YW1wIHRoZW0gYW5kIHZhbGlkYXRlIHF1YWxpdHkgcmVjb3ZlcnkuPC90ZXh0PjwvZz48L3N2Zz4=" /></p>
+<p>상면은 안테나 외곽, ESP32-S3 모듈, 전원/충전, IMU, Mic/Light의 바깥쪽 포트, DRV2605L를 배치한다. <strong>EDA AFE를 전극 가까운 저잡음 영역에 추가</strong>한다. 하면은 EDA 전극 A/B와 PPG 광학 창을 피부에 접촉시킨다.</p>
+<p>배터리를 PCB 전체 밑에 깔면 안테나 keep-out과 PPG 광학 경로를 막을 수 있다. 배터리는 그 영역을 피한 구획 또는 별도 기구/플렉스 구조로 검토한다. 안테나 keep-out은 모든 PCB층과 기구 금속·배터리·나사·케이블에 대해 선택 모듈 도면을 적용한다. 임의의 거리 mm는 제시하지 않는다. 상세 검토는 <a href="PCB_LAYOUT.md">PCB_LAYOUT.md</a>에 있다.</p>
+<h2 id="5-bom">5. 전원·충전·BOM</h2>
+<p>150mAh 셀은 계산용 예일 뿐 확정 부품이 아니다. 셀의 허용 충전·방전·보호·온도·커넥터 극성과 충전 IC의 설정을 맞춘다. PMIC/LDO/충전기 기능이 겹칠 수 있으므로 세 IC를 무조건 따로 넣지 않는다. 배터리 측 평균전류·효율·피크·발열을 구분해 시험해야 한다.</p>
+<p><a href="BOM.csv">BOM.csv</a>는 ESP32-S3 우선으로 개정했다. 공식 개발보드의 $15는 <strong>제조사 표의 sample reference price</strong>이지 계약 견적·배송가가 아니다. GSR $10.90/IMU $9.95/150mAh 셀 $5.95는 소매 참고다. 이들을 합친 $41.80 역시 <strong>PPG·Mic·Light·진동/driver·실제EDA·전원·PCB·외장·조립·검사·배송·세금·인증·앱개발을 제외한 부분 참고 소계</strong>다. 완성 제품 가격으로 쓰지 않는다. 기존 nRF 보드가 포함된 소계는 현행 설계에 적용하지 않는다.</p>
+<p><a href="ASSUMPTIONS.md">ASSUMPTIONS.md</a>의 전류는 ESP32-S3를 포함한 새 구조의 임의 시나리오다. 이전 저전력MCU 시나리오를 ESP32-S3 수명으로 가져오지 않는다. 실제 전류·배터리 수명·온도·충전 호환성은 미검증이다.</p>
+<h2 id="6">6. 앱·로깅·검증 범위</h2>
+<p>앱은 측정불가, 연결끊김, 오래된 데이터, 연구 점수를 구분한다. 알림 수신 대상·담당자 인계·접근통제·암호화·삭제·보존기간을 정한다. local log는 raw audio 없이 특징·품질·모델 버전·시각·진동/상태 event를 제한된 순환 버퍼에 저장한다. 예컨대 100float특징400byte+메타데이터64byte를15초마다 기록하면 하루약2.67MB(십진수)라는 <strong>계산 예</strong>이며 실제 기록 포맷·압축·flash 예약에 따라 달라진다.</p>
+<p>현재 모델은 성인 스트레스 분류용이다. 아동 위험 확률·멜트다운60초 경고로 바꾸어 부르지 않는다. 보호자 동의·가능한 아동 assent·철회·기관 윤리·착용/피부 검토와 별도 onset 자료, 독립 전향검증이 필요하다.</p>
+<p>공식 근거: <a href="https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf">ESP32-S3 데이터시트</a>, <a href="https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s3/esp32-s3-devkitc-1/user_guide_v1.1.html">개발보드 변형</a>, <a href="https://www.espressif.com/en/products/devkits/esp32-s3-series/esp32-s3-devkitc-1">제조사 sample참고가격</a>, <a href="https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32s3/pcb-layout-design.html">하드웨어 배치 지침</a>, <a href="https://www.analog.com/en/products/max30102.html">MAX30102</a>, <a href="https://www.st.com/resource/en/datasheet/lsm6ds3tr-c.pdf">LSM6DS3TR-C</a>, <a href="https://www.ti.com/product/DRV2605L">DRV2605L</a>, <a href="https://wiki.seeedstudio.com/Grove-GSR_Sensor/">Grove GSR 교정 주의</a>. 조회일2026-10-23.</p></main></body></html>

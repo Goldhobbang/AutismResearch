@@ -1,0 +1,7 @@
+scenario,battery_capacity_mAh,usable_fraction,assumed_mean_battery_current_mA,theoretical_h,evidence
+ESP32S3_BLE_low_PPG,150,0.8,7.827222,15.3311,L3 hypothetical; not measured
+ESP32S3_BLE_low_PPG,300,0.8,7.827222,30.6622,L3 hypothetical; not measured
+ESP32S3_BLE_example,150,0.8,10.827222,11.0832,L3 hypothetical; not measured
+ESP32S3_BLE_example,300,0.8,10.827222,22.1664,L3 hypothetical; not measured
+ESP32S3_BLE_high_PPG,150,0.8,16.827222,7.1313,L3 hypothetical; not measured
+ESP32S3_BLE_high_PPG,300,0.8,16.827222,14.2626,L3 hypothetical; not measured

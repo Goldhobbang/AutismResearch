@@ -1,0 +1,13 @@
+dataset: Wearable Device Dataset from Induced Stress and Structured Exercise
+version: 1.0.1
+status: gated_by_verified_segment_manifest_and_participant_identity
+window_s: 60
+hop_s: 15
+labels: {positive: audited_stress_task, negative: audited_aerobic_or_anaerobic_task}
+rest_and_ambiguous: excluded_from_primary_binary_task
+outer_split: subject_LOSO_all_sessions_together
+inner_split: subject_GroupShuffleSplit
+seed: 42
+sensor_comparison: [eda_ppg, all]
+exercise_error_by_subtype: required
+ASD_event_metrics: null

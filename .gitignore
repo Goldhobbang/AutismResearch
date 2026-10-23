@@ -1,0 +1,8 @@
+data/
+results/**/*.joblib
+results/synthetic_test/
+results/synthetic_smoke/
+__pycache__/
+*.pyc
+.venv/
+*.zip

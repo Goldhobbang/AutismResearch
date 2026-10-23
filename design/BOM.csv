@@ -1,0 +1,14 @@
+﻿item,scenario,part_or_module,quantity,unit_price,currency,price_status,moq_status,checked_date,official_url,limitations
+BLE MCU board,ESP32S3 BLE-only,ESP32-S3-DevKitC-1-N8R8,1,15,USD,manufacturer sample reference; not quote,unverified,2026-10-23,https://www.espressif.com/en/products/devkits/esp32-s3-series/esp32-s3-devkitc-1,Flash8MB PSRAM8MB variant; development board not final wrist PCB; shipping/tax excluded
+GSR learning module,ESP32S3 BLE-only,Seeed Grove GSR 101020052,1,10.9,USD,official retail page,single retail selection; contract MOQ not established,2026-10-23,https://www.seeedstudio.com/Grove-GSR-sensor-p-1614.html,desk learning only; electrode/AFE calibration and child wear safety unverified
+IMU board,ESP32S3 BLE-only,Adafruit LSM6DS3TR-C 4503,1,9.95,USD,official retail page,1-9 retail tier; contract MOQ not established,2026-10-23,https://www.adafruit.com/product/4503,native rates differ from E4; gyro not required
+Battery candidate,ESP32S3 BLE-only,Adafruit 3.7V 150mAh 1317,1,5.95,USD,official retail page,1-9 retail tier; contract MOQ not established,2026-10-23,https://www.adafruit.com/product/1317,charger <=150mA; charge current and system compatibility unverified
+PPG raw sensor,ESP32S3 BLE-only,MAX30102 chip or documented raw-access module,1,,USD,not priced,unverified,2026-10-23,https://www.analog.com/media/en/technical-documentation/data-sheets/max30102.pdf,chip versus module power/logic and raw BVP access must be verified
+EDA AFE and electrodes,ESP32S3 BLE-only,custom wrist electrode/AFE,1,,USD,not selected,unverified,2026-10-23,https://wiki.seeedstudio.com/Grove-GSR_Sensor/,Grove module does not resolve wrist safety or calibrated microSiemens
+Power path/charger/regulators,ESP32S3 BLE-only,unselected,1,,USD,not selected,unverified,2026-10-23,,board charger compatibility not confirmed; may require redesign
+PCB/enclosure/strap/connectors,ESP32S3 BLE-only,custom,1,,USD,quotation required,unverified,2026-10-23,,manufacturing assembly shipping taxes certification software excluded
+Digital Mic,ESP32S3 BLE-only,"I2S/PDM-compatible MEMS module, exact model TBD",1,,USD,not priced,unverified,2026-10-23,,raw frames volatile only; no raw audio logging
+Light,ESP32S3 BLE-only,VEML7700-class ambient light candidate,1,,USD,not priced,unverified,2026-10-23,https://www.vishay.com/docs/84286/veml7700.pdf,outward aperture; integration time and own-light interference to verify
+Haptic driver,ESP32S3 BLE-only,DRV2605L,1,,USD,not priced,unverified,2026-10-23,https://www.ti.com/product/DRV2605L,"ERM/LRA selection, motor calibration and peak power unresolved"
+Haptic actuator,ESP32S3 BLE-only,"compatible LRA or ERM, TBD",1,,USD,not priced,unverified,2026-10-23,,not directly driven by MCU; child haptic default disabled
+Local logging,ESP32S3 BLE-only,module flash partition,1,,USD,not priced,unverified,2026-10-23,,not a second flash chip by default; capacity/endurance/encryption to verify

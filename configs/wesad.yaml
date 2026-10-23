@@ -1,0 +1,18 @@
+# Human-readable preregistered settings; CLI arguments are saved in config.json.
+dataset: WESAD
+version: official ICMI2018 distribution
+window_s: 60
+hop_s: 15
+interval: '[start,end) at decision end; no samples at or after end'
+labels: {positive: [2], negative: [1, 3], mixed: excluded}
+quality: common_QC_valid_for_all_sensor_combinations
+outer_split: LOSO
+inner_split: GroupShuffleSplit
+inner_validation_fraction: 0.25
+seed: 42
+threshold_baseline: 0.5
+threshold_main: inner_validation_F1_grid_0.05_to_0.95
+models: [dummy, lr, rf]
+sensor_ablation_LR: [eda, ppg, acc, eda_ppg, eda_acc, ppg_acc, all]
+refit_validation_after_threshold: false
+ASD_event_metrics: null

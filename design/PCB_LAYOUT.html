@@ -1,0 +1,77 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PCB_LAYOUT</title><style>body{margin:0;background:#f0f5f8;color:#173346;font:16px/1.85 system-ui,-apple-system,"Segoe UI",sans-serif}main{max-width:1420px;margin:auto;padding:36px;background:white}h1{font-size:2rem;line-height:1.45;color:#153a50}h2{margin-top:3rem;padding-top:1rem;border-top:2px solid #c6d9e4;color:#175b72}h3{margin-top:2rem}a{color:#08679a;overflow-wrap:anywhere}table{border-collapse:collapse;display:block;overflow-x:auto;font-size:.91rem;margin:1.4rem 0}th,td{border:1px solid #cedce5;padding:10px;vertical-align:top;min-width:100px}th{background:#eaf3f7;text-align:left}tr:nth-child(even){background:#f8fafc}pre{background:#172c3b;color:#f1f7fa;padding:18px;overflow-x:auto;border-radius:7px;font-size:.88rem;line-height:1.6}code{font-family:Consolas,monospace}blockquote{border-left:4px solid #2e8798;margin-left:0;padding:12px 22px;background:#eef7fa}.toc{background:#edf5f8;padding:15px 24px;border-radius:9px}img{max-width:100%;height:auto}.status{font-size:.88rem;color:#546e7d}@media(max-width:700px){main{padding:18px}h1{font-size:1.5rem}}@media print{main{padding:0}body{font-size:10pt}table{display:table;font-size:8pt}th,td{min-width:0;padding:5px}pre{white-space:pre-wrap;background:#f0f0f0;color:black}.toc{display:none}h2{break-after:avoid}}</style></head><body><main><p class="status">2026-10-23 | ESP32-S3 BLE-only | 미제작 설계 · 실제 데이터 평가 보류</p><div class="toc">
+<ul>
+<li><a href="#_1">상면·하면·적층 배치 수정안</a><ul>
+<li><a href="#1">1. 상면 (바깥쪽)</a></li>
+<li><a href="#2">2. 하면 (피부 접촉면)</a></li>
+<li><a href="#3">3. 배터리 적층 — 반드시 측면에서 확인</a></li>
+<li><a href="#4">4. 데이터 품질과 배치의 연결</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<h1 id="_1">상면·하면·적층 배치 수정안</h1>
+<p>기준: 2026-10-23 사용자 구상. <strong>배치 개념도이며 실제 PCB·기구 CAD, 확정 치수, Gerber, DFM 또는 RF 검증 결과가 아니다.</strong> 현재 제품 범위는 BLE-only, ESP32-S3다.</p>
+<h2 id="1">1. 상면 (바깥쪽)</h2>
+<table>
+<thead>
+<tr>
+<th>영역</th>
+<th>배치 제안</th>
+<th>이유·검증할 점</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>가장자리 안테나</td>
+<td>PCB 안테나가 있는 ESP32-S3 모듈의 안테나 끝을 외곽으로 배치</td>
+<td>선택 모듈의 제조사 keep-out을 따른다. 해당 영역의 모든 PCB층·주변 기구·금속·배터리·나사·케이블까지 검토한다. 단순히 상면만 비우면 충분하다고 가정하지 않는다</td>
+</tr>
+<tr>
+<td>ESP32-S3</td>
+<td>ESP32-S3-WROOM-1-N8R8 계열 모듈을 개발 후보로 검토</td>
+<td>모듈형이면 Flash/PSRAM이 모듈 안에 포함된다. 별도 Flash/PSRAM 두 블록을 다시 올릴 필요가 없다. SoC 단독 설계는 별도 선택이다</td>
+</tr>
+<tr>
+<td>EDA AFE</td>
+<td>하면 전극 접점/연결부 가까운 조용한 영역</td>
+<td>입력 배선은 짧게 하고, 충전·스위칭 전원·RF·모터 배선에서 분리한다. 누설·오염·습기·전극 접촉을 고려한다. guard의 필요성과 구현은 AFE 확정 후 검토한다</td>
+</tr>
+<tr>
+<td>PMIC/충전</td>
+<td>배터리 커넥터 가까이, 광학·피부 접촉부에서 열 영향을 줄이는 위치</td>
+<td>PMIC/LDO/charge IC의 기능 중복을 피한다. 실제 rail·충전전류·보호·power-path·온도감시를 회로로 확인한다</td>
+</tr>
+<tr>
+<td>IMU</td>
+<td>기구에 단단히 고정된 위치, 모터 진동이 과도하게 전달되지 않는 곳</td>
+<td>중심에 무조건 놓는 것이 정답은 아니다. 축 방향·기구 결합·진동 artifact를 실측한다</td>
+</tr>
+<tr>
+<td>Mic/Light</td>
+<td>바깥쪽 전용 음향 포트·조도 개구부 근처</td>
+<td>마이크를 밀폐 배터리 뒤에 넣거나 조도센서를 불투명 케이스 안에 넣지 않는다. 방수막/메시·차광 구조·자체 LED/화면광·손목마찰 영향을 검토한다</td>
+</tr>
+<tr>
+<td>DRV2605L/진동</td>
+<td>모터와 연결이 짧고 PPG/전극부와 기계적으로 간섭이 적은 영역</td>
+<td>MCU GPIO 직접 구동 금지. 선택 LRA/ERM의 정격·구동·보정·전원 피크를 맞춘다. 진동 구간을 로그에 기록한다</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2">2. 하면 (피부 접촉면)</h2>
+<ul>
+<li><strong>EDA 전극 A/B:</strong> 피부에 안정적으로 접촉하고 PPG 창과 전기·광학·기구 간섭이 적도록 배치한다. 간격·면적·재료·압력은 미확정이며 착용·피부·교정 검토가 필요하다. 손목 EDA를 손가락 EDA와 동일하게 취급하지 않는다.</li>
+<li><strong>PPG optical window:</strong> LED/광검출기의 광학 경로가 피부로 열려 있어야 한다. 불필요한 주변광·내부 광 누설을 줄이는 차광 가스켓/분리 구조를 검토한다. 투명 플라스틱을 단순히 덮는 것만으로 검증된 광학부가 완성되지는 않는다.</li>
+<li><strong>접촉과 기구:</strong> 돌출 높이·스트랩 압력·피부색·털·땀·움직임·세척·재료·열을 평가한다. 아동 착용 안전성은 부품 판매 사양으로 보장되지 않는다.</li>
+</ul>
+<h2 id="3">3. 배터리 적층 — 반드시 측면에서 확인</h2>
+<p><code>Battery Below</code>를 PCB 전체 밑에 채우면 안테나 금속 keep-out과 PPG 광학 경로를 침범할 수 있다. 제안은 배터리를 <strong>안테나와 PPG 개구부를 피한 인접 영역</strong>에 두거나 분리 기판/플렉스·기구 구조를 검토하는 것이다. EDA 접점까지의 배선도 동시에 확인한다.</p>
+<p>측면 개념: 상부 케이스(음향·조도 개구부) → PCB/센서 → 배터리가 차지하는 제한된 구획 + 별도의 PPG/전극 피부 경로 → 피부 접촉면. 실제로 이 구성이 들어가는지 판단할 외형 치수·셀 치수·광학 높이·스트랩 구조는 아직 없다.</p>
+<h2 id="4">4. 데이터 품질과 배치의 연결</h2>
+<ul>
+<li>진동 중/직후에는 PPG·EDA·IMU·마이크가 영향을 받을 수 있다. haptic event timestamp를 남기고 해당 구간의 품질 보류·재안정화 시간을 실험으로 정한다. 고정 회복시간을 근거 없이 보장하지 않는다.</li>
+<li>충전 상태·RF 송신·LED 전류 변경·센서 재시작·패킷 유실을 로그에 남긴다. 가능하면 충전 중 착용하지 않는 연구 흐름을 검토한다.</li>
+<li>Light/Mic는 감각 과부하 정답 센서가 아니다. 환경 맥락·품질 보조로부터 검증하며 추가 예측력을 별도 실험한다.</li>
+</ul>
+<p>도면: <a href="PCB_LAYOUT.svg">PCB_LAYOUT.svg</a>, 블록도: <a href="SYSTEM_BLOCK.svg">SYSTEM_BLOCK.svg</a>.</p>
+<p>공식 근거: <a href="https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s3/esp32-s3-devkitc-1/user_guide_v1.1.html">ESP32-S3-DevKitC-1 v1.1</a>, <a href="https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf">ESP32-S3-WROOM-1 데이터시트</a>, <a href="https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32s3/pcb-layout-design.html">Espressif 하드웨어 설계 지침</a>, <a href="https://www.ti.com/product/DRV2605L">DRV2605L</a>, <a href="https://www.analog.com/en/products/max30102.html">MAX30102</a>. 개념도에 임의의 keep-out mm를 적지 않았으며 최종 모듈 도면의 수치를 적용해야 한다.</p></main></body></html>

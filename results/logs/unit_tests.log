@@ -1,0 +1,24 @@
+test_all_outer_subjects_once_and_disjoint (test_group_split.GroupSplitTest.test_all_outer_subjects_once_and_disjoint) ... ok
+test_preprocess_not_fit_on_test (test_group_split.GroupSplitTest.test_preprocess_not_fit_on_test) ... ok
+test_threshold_only_uses_passed_validation (test_group_split.GroupSplitTest.test_threshold_only_uses_passed_validation) ... ok
+test_exact_transition_end_excluded (test_label_bounds.LabelBoundsTests.test_exact_transition_end_excluded) ... ok
+test_invalid_sensor_features_masked (test_label_bounds.LabelBoundsTests.test_invalid_sensor_features_masked) ... ok
+test_one_sample_mixture_rejected (test_label_bounds.LabelBoundsTests.test_one_sample_mixture_rejected) ... ok
+test_quality_cutoff_and_motion_ambiguity (test_label_bounds.LabelBoundsTests.test_quality_cutoff_and_motion_ambiguity) ... ok
+test_unsupported_phase_and_truncated_labels (test_label_bounds.LabelBoundsTests.test_unsupported_phase_and_truncated_labels) ... ok
+test_auroc_not_accuracy (test_metrics_undefined.MetricDefinitionTests.test_auroc_not_accuracy) ... ok
+test_no_alerts_has_undefined_precision_not_perfect_or_zero (test_metrics_undefined.MetricDefinitionTests.test_no_alerts_has_undefined_precision_not_perfect_or_zero) ... ok
+test_single_class_auc_is_not_fabricated (test_metrics_undefined.MetricDefinitionTests.test_single_class_auc_is_not_fabricated) ... ok
+test_future_and_exact_endpoint_never_used (test_no_future.NoFutureTests.test_future_and_exact_endpoint_never_used) ... ok
+test_outside_history_never_used (test_no_future.NoFutureTests.test_outside_history_never_used) ... ok
+test_missing_quality_gate_fails_closed (test_sensor_ablation.AblationTest.test_missing_quality_gate_fails_closed) ... ok
+test_shared_windows_and_no_metadata_features (test_sensor_ablation.AblationTest.test_shared_windows_and_no_metadata_features) ... ok
+test_invalid_interval (test_time_alignment.TimeAlignmentTests.test_invalid_interval) ... ok
+test_native_rates_share_same_time_interval (test_time_alignment.TimeAlignmentTests.test_native_rates_share_same_time_interval) ... ok
+test_non_grid_boundaries (test_time_alignment.TimeAlignmentTests.test_non_grid_boundaries) ... ok
+test_utc_and_epoch_parse (test_time_alignment.TimeAlignmentTests.test_utc_and_epoch_parse) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.167s
+
+OK

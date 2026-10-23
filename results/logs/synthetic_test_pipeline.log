@@ -1,0 +1,65 @@
+S2 27 windows 0.08 s
+S3 27 windows 0.07 s
+S4 27 windows 0.07 s
+S5 27 windows 0.08 s
+S6 27 windows 0.08 s
+S7 27 windows 0.07 s
+Saved /workspace/AutismResearch/results/synthetic_test/synthetic_test_features.csv
+fold=1/6 subject=S2 model=dummy sensors=all fit_s=0.003
+fold=1/6 subject=S2 model=lr sensors=all fit_s=0.005
+fold=1/6 subject=S2 model=rf sensors=all fit_s=0.297
+fold=1/6 subject=S2 model=lr sensors=eda fit_s=0.006
+fold=1/6 subject=S2 model=lr sensors=ppg fit_s=0.004
+fold=1/6 subject=S2 model=lr sensors=acc fit_s=0.006
+fold=1/6 subject=S2 model=lr sensors=eda_ppg fit_s=0.005
+fold=1/6 subject=S2 model=lr sensors=eda_acc fit_s=0.005
+fold=1/6 subject=S2 model=lr sensors=ppg_acc fit_s=0.005
+fold=2/6 subject=S3 model=dummy sensors=all fit_s=0.003
+fold=2/6 subject=S3 model=lr sensors=all fit_s=0.005
+fold=2/6 subject=S3 model=rf sensors=all fit_s=0.301
+fold=2/6 subject=S3 model=lr sensors=eda fit_s=0.005
+fold=2/6 subject=S3 model=lr sensors=ppg fit_s=0.004
+fold=2/6 subject=S3 model=lr sensors=acc fit_s=0.019
+fold=2/6 subject=S3 model=lr sensors=eda_ppg fit_s=0.004
+fold=2/6 subject=S3 model=lr sensors=eda_acc fit_s=0.005
+fold=2/6 subject=S3 model=lr sensors=ppg_acc fit_s=0.006
+fold=3/6 subject=S4 model=dummy sensors=all fit_s=0.003
+fold=3/6 subject=S4 model=lr sensors=all fit_s=0.005
+fold=3/6 subject=S4 model=rf sensors=all fit_s=0.335
+fold=3/6 subject=S4 model=lr sensors=eda fit_s=0.019
+fold=3/6 subject=S4 model=lr sensors=ppg fit_s=0.004
+fold=3/6 subject=S4 model=lr sensors=acc fit_s=0.005
+fold=3/6 subject=S4 model=lr sensors=eda_ppg fit_s=0.006
+fold=3/6 subject=S4 model=lr sensors=eda_acc fit_s=0.004
+fold=3/6 subject=S4 model=lr sensors=ppg_acc fit_s=0.005
+fold=4/6 subject=S5 model=dummy sensors=all fit_s=0.002
+fold=4/6 subject=S5 model=lr sensors=all fit_s=0.005
+fold=4/6 subject=S5 model=rf sensors=all fit_s=0.305
+fold=4/6 subject=S5 model=lr sensors=eda fit_s=0.006
+fold=4/6 subject=S5 model=lr sensors=ppg fit_s=0.004
+fold=4/6 subject=S5 model=lr sensors=acc fit_s=0.006
+fold=4/6 subject=S5 model=lr sensors=eda_ppg fit_s=0.004
+fold=4/6 subject=S5 model=lr sensors=eda_acc fit_s=0.006
+fold=4/6 subject=S5 model=lr sensors=ppg_acc fit_s=0.004
+fold=5/6 subject=S6 model=dummy sensors=all fit_s=0.003
+fold=5/6 subject=S6 model=lr sensors=all fit_s=0.006
+fold=5/6 subject=S6 model=rf sensors=all fit_s=0.318
+fold=5/6 subject=S6 model=lr sensors=eda fit_s=0.006
+fold=5/6 subject=S6 model=lr sensors=ppg fit_s=0.005
+fold=5/6 subject=S6 model=lr sensors=acc fit_s=0.005
+fold=5/6 subject=S6 model=lr sensors=eda_ppg fit_s=0.005
+fold=5/6 subject=S6 model=lr sensors=eda_acc fit_s=0.004
+fold=5/6 subject=S6 model=lr sensors=ppg_acc fit_s=0.005
+fold=6/6 subject=S7 model=dummy sensors=all fit_s=0.003
+fold=6/6 subject=S7 model=lr sensors=all fit_s=0.005
+fold=6/6 subject=S7 model=rf sensors=all fit_s=0.314
+fold=6/6 subject=S7 model=lr sensors=eda fit_s=0.009
+fold=6/6 subject=S7 model=lr sensors=ppg fit_s=0.005
+fold=6/6 subject=S7 model=lr sensors=acc fit_s=0.006
+fold=6/6 subject=S7 model=lr sensors=eda_ppg fit_s=0.010
+fold=6/6 subject=S7 model=lr sensors=eda_acc fit_s=0.006
+fold=6/6 subject=S7 model=lr sensors=ppg_acc fit_s=0.005
+DONE: Adult stress classification only. Results: /workspace/AutismResearch/results/synthetic_test/synthetic_test_evaluation
+{'task': 'adult stress replay; not meltdown forecasting', 'mode': 'causal raw-window feature recomputation plus model inference', 'subject': 'S2', 'alerts': 2, 'quality_suppressed_windows': 0, 'alerts_in_scored_nonstress': 0, 'scored_nonstress_hours': 0.058333333333333334, 'stress_alerts_per_scored_nonstress_hour': 0.0, 'unscored_alerts': 0, 'cooldown_s': 60, 'consecutive_threshold_exceedances': 2, 'asd_event_precision': None, 'asd_event_recall': None, 'asd_false_alarms_day': None, 'asd_lead_time': None, 'notes': 'Feature lookback only; file replay faster than wall clock. No BLE/device/caregiver test. Labels do not gate alerts; sensor quality does.', 'feature_and_inference_p50_ms': 4.942908002703916, 'feature_and_inference_p95_ms': 5.865895899478346}
+PASS synthetic_test: extraction, 6-subject LOSO, 9 configurations, 7 sensor sets, outputs, raw replay.
+These are software checks; no real physiological performance was measured.
