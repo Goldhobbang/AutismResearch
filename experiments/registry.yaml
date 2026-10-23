@@ -1,0 +1,61 @@
+version: "1.0"
+updated_utc: "2026-10-24T03:55:00Z"
+
+experiments:
+  - id: "EXP-D1-BASE"
+    title: "WESAD ICMI2018 15-Subject LOSO Core Baseline"
+    domain: "D1: Adult Current Stress Classification"
+    status: "COMPLETED"
+    dataset: "WESAD"
+    participants: 15
+    features: "data/processed/wesad_features.csv"
+    window_s: 60
+    hop_s: 15
+    models: ["dummy", "lr", "rf"]
+    sensors: ["all", "eda", "ppg", "acc", "eda_ppg", "eda_acc", "ppg_acc"]
+    primary_metric: "subject_mean_auprc"
+    results_dir: "results/baselines/wesad_20261024/"
+
+  - id: "EXP-D1-REPRO"
+    title: "WESAD Independent Reproducibility Run in New Output Directory"
+    domain: "D1: Adult Current Stress Classification"
+    status: "READY"
+    dataset: "WESAD"
+    output_dir: "results/phase2/wesad_repro"
+    plan: "core"
+    verification: "Compare per_subject.csv and metrics.json against frozen baseline"
+
+  - id: "EXP-D1-ACC-CONF"
+    title: "WESAD ACC Feature Decomposition and Task Confounding Audit"
+    domain: "D1: Adult Current Stress Classification"
+    status: "IN_PROGRESS"
+    dataset: "WESAD"
+    hypotheses:
+      - "H-ACC-1: ACC high performance is driven by dynamic energy vs static posture differences between stress and amusement."
+      - "H-ACC-2: Motion intensity differences between baseline (sitting reading) and stress (TSST speaking/arithmetic) confound classification."
+    output_dir: "results/phase2/acc"
+    subfeatures: ["acc_raw_axes", "acc_magnitude", "acc_dynamic_energy", "acc_jerk", "acc_spectrum"]
+
+  - id: "EXP-D1-THRESH"
+    title: "Threshold Optimization, Calibration, and Alert Policies for High-FPR Subjects (S7, S3, S10)"
+    domain: "D1: Adult Current Stress Classification"
+    status: "PLANNED"
+    dataset: "WESAD"
+    policies: ["fixed_05", "tuned_f1", "platt_calibrated", "consecutive_two", "cooldown_60s"]
+    output_dir: "results/phase2/threshold"
+    target: "Reduce S7 and population FPR without excessive loss of stress recall"
+
+  - id: "EXP-D2-PHYS-AUDIT"
+    title: "PhysioNet Wearable Stress/Exercise v1.0.1 Acquisition and Schema Verification"
+    domain: "D2: Stress vs Exercise Discrimination"
+    status: "BLOCKED_NETWORK_OR_PROCEED"
+    dataset: "PhysioNet-1.0.1"
+    output_dir: "data/raw/physionet"
+    gate: "License ODC-By 1.0, tags.csv segment restoration, participant group matching"
+
+  - id: "EXP-D3-ASD-SURVEY"
+    title: "ASD Wearable Behavior Forecasting Candidate Audit (Kartha, Goodwin, Imbiriba, ASC-emotion)"
+    domain: "D3: ASD Behavioral Event Forecasting"
+    status: "IN_PROGRESS"
+    gate: "Wearable signals + verified event onset timestamps + research consent"
+    decision_rule: "If no approved wearable onset dataset, mark D3 as BLOCKED_NOT_EVALUATED"

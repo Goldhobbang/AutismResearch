@@ -1,0 +1,12 @@
+{
+  "subject": "S7",
+  "lr_all_auprc": 1.0,
+  "lr_all_auroc": 1.0,
+  "lr_all_f1": 0.4875,
+  "lr_all_fpr": 0.8541666666666666,
+  "lr_all_threshold": 0.3499999999999999,
+  "nonstress_prob_median": 0.9128358211108443,
+  "nonstress_prob_q90": 0.994148551518532,
+  "stress_prob_median": 0.999999969722174,
+  "cause_summary": "S7 features exhibit strong systematic baseline elevation. While the ranking is near perfect (AUROC 1.0, AUPRC 1.0), S7 baseline/amusement probabilities are shifted upward (median > threshold), causing almost all non-stress windows to trigger false alarms under an uncalibrated population threshold."
+}

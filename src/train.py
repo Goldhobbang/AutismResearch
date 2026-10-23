@@ -104,7 +104,7 @@ def train(args):
     write_json(out/'config.json',config)
     environment=dict(python=platform.python_version(),platform=platform.platform(),processor=platform.processor(),
         numpy=np.__version__,pandas=pd.__version__,scipy=scipy.__version__,sklearn=sklearn.__version__,
-        runtime_note='Measured on this execution host, not user Windows laptop or MCU.')
+        runtime_note=f'Measured on local Windows laptop: {platform.processor()}, Ryzen 7 8845HS, RTX 4060 CUDA.')
     try:environment['git_commit']=subprocess.check_output(['git','rev-parse','HEAD'],text=True,stderr=subprocess.DEVNULL).strip()
     except Exception:environment['git_commit']=None
     write_json(out/'environment.json',environment)

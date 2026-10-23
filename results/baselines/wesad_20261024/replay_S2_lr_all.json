@@ -1,0 +1,20 @@
+{
+  "task": "adult stress replay; not meltdown forecasting",
+  "mode": "causal raw-window feature recomputation plus model inference",
+  "subject": "S2",
+  "alerts": 38,
+  "quality_suppressed_windows": 0,
+  "alerts_in_scored_nonstress": 5,
+  "scored_nonstress_hours": 0.38333333333333336,
+  "stress_alerts_per_scored_nonstress_hour": 13.043478260869565,
+  "unscored_alerts": 24,
+  "cooldown_s": 60,
+  "consecutive_threshold_exceedances": 2,
+  "asd_event_precision": null,
+  "asd_event_recall": null,
+  "asd_false_alarms_day": null,
+  "asd_lead_time": null,
+  "notes": "Feature lookback only; file replay faster than wall clock. No BLE/device/caregiver test. Labels do not gate alerts; sensor quality does.",
+  "feature_and_inference_p50_ms": 9.483750000072177,
+  "feature_and_inference_p95_ms": 13.151674997789087
+}

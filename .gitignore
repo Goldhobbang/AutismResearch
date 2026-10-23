@@ -1,4 +1,7 @@
-data/
+data/raw/
+data/processed/wesad*
+data/processed/segment_manifest.csv
+data/processed/subject_manifest.csv
 results/**/*.joblib
 results/synthetic_test/
 results/synthetic_smoke/

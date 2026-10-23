@@ -1,0 +1,63 @@
+{
+  "features": "data/processed/wesad_features.csv",
+  "out": "results/phase2/wesad_repro",
+  "plan": "core",
+  "models": [
+    "dummy",
+    "lr",
+    "rf"
+  ],
+  "sensors": [
+    "all"
+  ],
+  "expected_subjects": 15,
+  "dataset_version": "WESAD_ICMI2018",
+  "jobs": 8,
+  "task": "adult current stress classification",
+  "seed": 42,
+  "dataset": "WESAD",
+  "shared_window_policy": "y in {0,1} AND qc_common_valid; identical for every model/sensor",
+  "outer_split": "LOSO",
+  "inner_split": "one GroupShuffleSplit, test_size=.25, seed=42+outer_fold",
+  "threshold_rule": "validation F1 max over .05:.01:.95; largest threshold on ties; dummy=.5",
+  "model_refit": "No refit on inner validation after threshold selection",
+  "pairs": [
+    [
+      "dummy",
+      "all"
+    ],
+    [
+      "lr",
+      "all"
+    ],
+    [
+      "rf",
+      "all"
+    ],
+    [
+      "lr",
+      "eda"
+    ],
+    [
+      "lr",
+      "ppg"
+    ],
+    [
+      "lr",
+      "acc"
+    ],
+    [
+      "lr",
+      "eda_ppg"
+    ],
+    [
+      "lr",
+      "eda_acc"
+    ],
+    [
+      "lr",
+      "ppg_acc"
+    ]
+  ],
+  "feature_sha256": "7e15b2ee93d18d782476984f78fd1a17825f49449c5f10ffc4cf029effc0786a"
+}

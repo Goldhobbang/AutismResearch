@@ -36,7 +36,8 @@ class Links(HTMLParser):
 
 def official_archive(dataset):
     page = PAGES[dataset]
-    with urllib.request.urlopen(page, timeout=60) as response:
+    req = urllib.request.Request(page, headers={'User-Agent': 'Mozilla/5.0'})
+    with urllib.request.urlopen(req, timeout=60) as response:
         html = response.read().decode('utf-8')
     parser = Links(); parser.feed(html)
     if dataset == 'wesad':
@@ -44,7 +45,7 @@ def official_archive(dataset):
                  if 'uni-siegen.sciebo.de/' in h]
     else:
         links = [urllib.parse.urljoin(page, h) for h in parser.links
-                 if h.lower().endswith('.zip') and 'wearable-device-dataset' in h]
+                 if ('wearable-device-dataset' in h) and (h.lower().endswith('.zip') or 'get-zip' in h)]
     links = list(dict.fromkeys(links))
     if len(links) != 1:
         raise RuntimeError(f'Expected one official archive link; found {len(links)}. Inspect {page}')
@@ -85,7 +86,8 @@ def main():
             raise RuntimeError('Keep at least 12 GiB free for the WESAD archive and extraction.')
         url = official_archive(args.dataset); item['download_url'] = url
         digest = hashlib.sha256(); count = 0; last_report = 0
-        with urllib.request.urlopen(url, timeout=90) as response, partial.open('wb') as output:
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req, timeout=90) as response, partial.open('wb') as output:
             item['resolved_url'] = response.url
             expected = response.headers.get('Content-Length')
             item['content_length'] = int(expected) if expected else None
@@ -94,8 +96,8 @@ def main():
                 if not block:
                     break
                 output.write(block); digest.update(block); count += len(block)
-                if count - last_report >= 100 * 2**20:
-                    print(f'{args.dataset}: {count / 2**20:.0f} MiB', flush=True); last_report = count
+                if count - last_report >= 10 * 2**20:
+                    print(f'{args.dataset}: {count / 2**20:.1f} MiB', flush=True); last_report = count
         if expected and count != int(expected):
             raise IOError('Content-Length mismatch; partial file retained')
         if not zipfile.is_zipfile(partial):

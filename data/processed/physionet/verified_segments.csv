@@ -1,0 +1,180 @@
+dataset,subject,session,task,version,start_utc,end_utc,start_s,end_s,label,annotator_evidence,confidence,verified,exclusion_reason
+PhysioNet-1.0.1,S01,S01_STRESS,Baseline,V1,NA,NA,0,300,baseline,Resting baseline sitting quiet,High,True,
+PhysioNet-1.0.1,S01,S01_STRESS,Stroop,V1,NA,NA,300,600,stress,Cognitive color-word conflict test,High,True,
+PhysioNet-1.0.1,S01,S01_STRESS,First Rest,V1,NA,NA,600,780,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S01,S01_STRESS,TMCT,V1,NA,NA,780,1080,stress,Trier Mental Challenge Test (arithmetic stress),High,True,
+PhysioNet-1.0.1,S01,S01_STRESS,Second Rest,V1,NA,NA,1080,1260,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S01,S01_STRESS,Real Opinion,V1,NA,NA,1260,1440,stress_prep,Speech preparation on personal opinion,Medium,False,Speech preparation transition
+PhysioNet-1.0.1,S01,S01_STRESS,Opposite Opinion,V1,NA,NA,1440,1620,stress,Public argumentation against own opinion,High,True,
+PhysioNet-1.0.1,S01,S01_STRESS,Subtract,V1,NA,NA,1620,1920,stress,Serial subtraction arithmetic under harassment,High,True,
+PhysioNet-1.0.1,S02,S02_STRESS,Baseline,V1,NA,NA,0,300,baseline,Resting baseline sitting quiet,Low,False,Duplicated raw values per data_constraints.txt
+PhysioNet-1.0.1,S02,S02_STRESS,Stroop,V1,NA,NA,300,600,stress,Cognitive color-word conflict test,Low,False,Duplicated raw values per data_constraints.txt
+PhysioNet-1.0.1,S02,S02_STRESS,First Rest,V1,NA,NA,600,780,rest,Recovery rest period,Low,False,Duplicated raw values per data_constraints.txt
+PhysioNet-1.0.1,S02,S02_STRESS,TMCT,V1,NA,NA,780,1080,stress,Trier Mental Challenge Test (arithmetic stress),Low,False,Duplicated raw values per data_constraints.txt
+PhysioNet-1.0.1,S02,S02_STRESS,Second Rest,V1,NA,NA,1080,1260,rest,Recovery rest period,Low,False,Duplicated raw values per data_constraints.txt
+PhysioNet-1.0.1,S02,S02_STRESS,Real Opinion,V1,NA,NA,1260,1440,stress_prep,Speech preparation on personal opinion,Low,False,Duplicated raw values per data_constraints.txt
+PhysioNet-1.0.1,S02,S02_STRESS,Opposite Opinion,V1,NA,NA,1440,1620,stress,Public argumentation against own opinion,Low,False,Duplicated raw values per data_constraints.txt
+PhysioNet-1.0.1,S02,S02_STRESS,Subtract,V1,NA,NA,1620,1920,stress,Serial subtraction arithmetic under harassment,Low,False,Duplicated raw values per data_constraints.txt
+PhysioNet-1.0.1,S03,S03_STRESS,Baseline,V1,NA,NA,0,300,baseline,Resting baseline sitting quiet,High,True,
+PhysioNet-1.0.1,S03,S03_STRESS,Stroop,V1,NA,NA,300,600,stress,Cognitive color-word conflict test,High,True,
+PhysioNet-1.0.1,S03,S03_STRESS,First Rest,V1,NA,NA,600,780,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S03,S03_STRESS,TMCT,V1,NA,NA,780,1080,stress,Trier Mental Challenge Test (arithmetic stress),High,True,
+PhysioNet-1.0.1,S03,S03_STRESS,Second Rest,V1,NA,NA,1080,1260,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S03,S03_STRESS,Real Opinion,V1,NA,NA,1260,1440,stress_prep,Speech preparation on personal opinion,Medium,False,Speech preparation transition
+PhysioNet-1.0.1,S03,S03_STRESS,Opposite Opinion,V1,NA,NA,1440,1620,stress,Public argumentation against own opinion,High,True,
+PhysioNet-1.0.1,S03,S03_STRESS,Subtract,V1,NA,NA,1620,1920,stress,Serial subtraction arithmetic under harassment,High,True,
+PhysioNet-1.0.1,S04,S04_STRESS,Baseline,V1,NA,NA,0,300,baseline,Resting baseline sitting quiet,High,True,
+PhysioNet-1.0.1,S04,S04_STRESS,Stroop,V1,NA,NA,300,600,stress,Cognitive color-word conflict test,High,True,
+PhysioNet-1.0.1,S04,S04_STRESS,First Rest,V1,NA,NA,600,780,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S04,S04_STRESS,TMCT,V1,NA,NA,780,1080,stress,Trier Mental Challenge Test (arithmetic stress),High,True,
+PhysioNet-1.0.1,S04,S04_STRESS,Second Rest,V1,NA,NA,1080,1260,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S04,S04_STRESS,Real Opinion,V1,NA,NA,1260,1440,stress_prep,Speech preparation on personal opinion,Medium,False,Speech preparation transition
+PhysioNet-1.0.1,S04,S04_STRESS,Opposite Opinion,V1,NA,NA,1440,1620,stress,Public argumentation against own opinion,High,True,
+PhysioNet-1.0.1,S04,S04_STRESS,Subtract,V1,NA,NA,1620,1920,stress,Serial subtraction arithmetic under harassment,High,True,
+PhysioNet-1.0.1,S05,S05_STRESS,Baseline,V1,NA,NA,0,300,baseline,Resting baseline sitting quiet,High,True,
+PhysioNet-1.0.1,S05,S05_STRESS,Stroop,V1,NA,NA,300,600,stress,Cognitive color-word conflict test,High,True,
+PhysioNet-1.0.1,S05,S05_STRESS,First Rest,V1,NA,NA,600,780,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S05,S05_STRESS,TMCT,V1,NA,NA,780,1080,stress,Trier Mental Challenge Test (arithmetic stress),High,True,
+PhysioNet-1.0.1,S05,S05_STRESS,Second Rest,V1,NA,NA,1080,1260,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S05,S05_STRESS,Real Opinion,V1,NA,NA,1260,1440,stress_prep,Speech preparation on personal opinion,Medium,False,Speech preparation transition
+PhysioNet-1.0.1,S05,S05_STRESS,Opposite Opinion,V1,NA,NA,1440,1620,stress,Public argumentation against own opinion,High,True,
+PhysioNet-1.0.1,S05,S05_STRESS,Subtract,V1,NA,NA,1620,1920,stress,Serial subtraction arithmetic under harassment,High,True,
+PhysioNet-1.0.1,S06,S06_STRESS,Baseline,V1,NA,NA,0,300,baseline,Resting baseline sitting quiet,High,True,
+PhysioNet-1.0.1,S06,S06_STRESS,Stroop,V1,NA,NA,300,600,stress,Cognitive color-word conflict test,High,True,
+PhysioNet-1.0.1,S06,S06_STRESS,First Rest,V1,NA,NA,600,780,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S06,S06_STRESS,TMCT,V1,NA,NA,780,1080,stress,Trier Mental Challenge Test (arithmetic stress),High,True,
+PhysioNet-1.0.1,S06,S06_STRESS,Second Rest,V1,NA,NA,1080,1260,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S06,S06_STRESS,Real Opinion,V1,NA,NA,1260,1440,stress_prep,Speech preparation on personal opinion,Medium,False,Speech preparation transition
+PhysioNet-1.0.1,S06,S06_STRESS,Opposite Opinion,V1,NA,NA,1440,1620,stress,Public argumentation against own opinion,High,True,
+PhysioNet-1.0.1,S06,S06_STRESS,Subtract,V1,NA,NA,1620,1920,stress,Serial subtraction arithmetic under harassment,High,True,
+PhysioNet-1.0.1,S07,S07_STRESS,Baseline,V1,NA,NA,0,300,baseline,Resting baseline sitting quiet,High,True,
+PhysioNet-1.0.1,S07,S07_STRESS,Stroop,V1,NA,NA,300,600,stress,Cognitive color-word conflict test,High,True,
+PhysioNet-1.0.1,S07,S07_STRESS,First Rest,V1,NA,NA,600,780,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S07,S07_STRESS,TMCT,V1,NA,NA,780,1080,stress,Trier Mental Challenge Test (arithmetic stress),High,True,
+PhysioNet-1.0.1,S07,S07_STRESS,Second Rest,V1,NA,NA,1080,1260,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S07,S07_STRESS,Real Opinion,V1,NA,NA,1260,1440,stress_prep,Speech preparation on personal opinion,Medium,False,Speech preparation transition
+PhysioNet-1.0.1,S07,S07_STRESS,Opposite Opinion,V1,NA,NA,1440,1620,stress,Public argumentation against own opinion,High,True,
+PhysioNet-1.0.1,S07,S07_STRESS,Subtract,V1,NA,NA,1620,1920,stress,Serial subtraction arithmetic under harassment,High,True,
+PhysioNet-1.0.1,S08,S08_STRESS,Baseline,V1,NA,NA,0,300,baseline,Resting baseline sitting quiet,High,True,
+PhysioNet-1.0.1,S08,S08_STRESS,Stroop,V1,NA,NA,300,600,stress,Cognitive color-word conflict test,High,True,
+PhysioNet-1.0.1,S08,S08_STRESS,First Rest,V1,NA,NA,600,780,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S08,S08_STRESS,TMCT,V1,NA,NA,780,1080,stress,Trier Mental Challenge Test (arithmetic stress),High,True,
+PhysioNet-1.0.1,S08,S08_STRESS,Second Rest,V1,NA,NA,1080,1260,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S08,S08_STRESS,Real Opinion,V1,NA,NA,1260,1440,stress_prep,Speech preparation on personal opinion,Medium,False,Speech preparation transition
+PhysioNet-1.0.1,S08,S08_STRESS,Opposite Opinion,V1,NA,NA,1440,1620,stress,Public argumentation against own opinion,High,True,
+PhysioNet-1.0.1,S08,S08_STRESS,Subtract,V1,NA,NA,1620,1920,stress,Serial subtraction arithmetic under harassment,High,True,
+PhysioNet-1.0.1,S09,S09_STRESS,Baseline,V1,NA,NA,0,300,baseline,Resting baseline sitting quiet,High,True,
+PhysioNet-1.0.1,S09,S09_STRESS,Stroop,V1,NA,NA,300,600,stress,Cognitive color-word conflict test,High,True,
+PhysioNet-1.0.1,S09,S09_STRESS,First Rest,V1,NA,NA,600,780,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S09,S09_STRESS,TMCT,V1,NA,NA,780,1080,stress,Trier Mental Challenge Test (arithmetic stress),High,True,
+PhysioNet-1.0.1,S09,S09_STRESS,Second Rest,V1,NA,NA,1080,1260,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S09,S09_STRESS,Real Opinion,V1,NA,NA,1260,1440,stress_prep,Speech preparation on personal opinion,Medium,False,Speech preparation transition
+PhysioNet-1.0.1,S09,S09_STRESS,Opposite Opinion,V1,NA,NA,1440,1620,stress,Public argumentation against own opinion,High,True,
+PhysioNet-1.0.1,S09,S09_STRESS,Subtract,V1,NA,NA,1620,1920,stress,Serial subtraction arithmetic under harassment,High,True,
+PhysioNet-1.0.1,S10,S10_STRESS,Baseline,V1,NA,NA,0,300,baseline,Resting baseline sitting quiet,High,True,
+PhysioNet-1.0.1,S10,S10_STRESS,Stroop,V1,NA,NA,300,600,stress,Cognitive color-word conflict test,High,True,
+PhysioNet-1.0.1,S10,S10_STRESS,First Rest,V1,NA,NA,600,780,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S10,S10_STRESS,TMCT,V1,NA,NA,780,1080,stress,Trier Mental Challenge Test (arithmetic stress),High,True,
+PhysioNet-1.0.1,S10,S10_STRESS,Second Rest,V1,NA,NA,1080,1260,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S10,S10_STRESS,Real Opinion,V1,NA,NA,1260,1440,stress_prep,Speech preparation on personal opinion,Medium,False,Speech preparation transition
+PhysioNet-1.0.1,S10,S10_STRESS,Opposite Opinion,V1,NA,NA,1440,1620,stress,Public argumentation against own opinion,High,True,
+PhysioNet-1.0.1,S10,S10_STRESS,Subtract,V1,NA,NA,1620,1920,stress,Serial subtraction arithmetic under harassment,High,True,
+PhysioNet-1.0.1,S11,S11_STRESS,Baseline,V1,NA,NA,0,300,baseline,Resting baseline sitting quiet,High,True,
+PhysioNet-1.0.1,S11,S11_STRESS,Stroop,V1,NA,NA,300,600,stress,Cognitive color-word conflict test,High,True,
+PhysioNet-1.0.1,S11,S11_STRESS,First Rest,V1,NA,NA,600,780,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S11,S11_STRESS,TMCT,V1,NA,NA,780,1080,stress,Trier Mental Challenge Test (arithmetic stress),High,True,
+PhysioNet-1.0.1,S11,S11_STRESS,Second Rest,V1,NA,NA,1080,1260,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S11,S11_STRESS,Real Opinion,V1,NA,NA,1260,1440,stress_prep,Speech preparation on personal opinion,Medium,False,Speech preparation transition
+PhysioNet-1.0.1,S11,S11_STRESS,Opposite Opinion,V1,NA,NA,1440,1620,stress,Public argumentation against own opinion,High,True,
+PhysioNet-1.0.1,S11,S11_STRESS,Subtract,V1,NA,NA,1620,1920,stress,Serial subtraction arithmetic under harassment,High,True,
+PhysioNet-1.0.1,S12,S12_STRESS,Baseline,V1,NA,NA,0,300,baseline,Resting baseline sitting quiet,High,True,
+PhysioNet-1.0.1,S12,S12_STRESS,Stroop,V1,NA,NA,300,600,stress,Cognitive color-word conflict test,High,True,
+PhysioNet-1.0.1,S12,S12_STRESS,First Rest,V1,NA,NA,600,780,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S12,S12_STRESS,TMCT,V1,NA,NA,780,1080,stress,Trier Mental Challenge Test (arithmetic stress),High,True,
+PhysioNet-1.0.1,S12,S12_STRESS,Second Rest,V1,NA,NA,1080,1260,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S12,S12_STRESS,Real Opinion,V1,NA,NA,1260,1440,stress_prep,Speech preparation on personal opinion,Medium,False,Speech preparation transition
+PhysioNet-1.0.1,S12,S12_STRESS,Opposite Opinion,V1,NA,NA,1440,1620,stress,Public argumentation against own opinion,High,True,
+PhysioNet-1.0.1,S12,S12_STRESS,Subtract,V1,NA,NA,1620,1920,stress,Serial subtraction arithmetic under harassment,High,True,
+PhysioNet-1.0.1,S13,S13_STRESS,Baseline,V1,NA,NA,0,300,baseline,Resting baseline sitting quiet,High,True,
+PhysioNet-1.0.1,S13,S13_STRESS,Stroop,V1,NA,NA,300,600,stress,Cognitive color-word conflict test,High,True,
+PhysioNet-1.0.1,S13,S13_STRESS,First Rest,V1,NA,NA,600,780,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S13,S13_STRESS,TMCT,V1,NA,NA,780,1080,stress,Trier Mental Challenge Test (arithmetic stress),High,True,
+PhysioNet-1.0.1,S13,S13_STRESS,Second Rest,V1,NA,NA,1080,1260,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S13,S13_STRESS,Real Opinion,V1,NA,NA,1260,1440,stress_prep,Speech preparation on personal opinion,Medium,False,Speech preparation transition
+PhysioNet-1.0.1,S13,S13_STRESS,Opposite Opinion,V1,NA,NA,1440,1620,stress,Public argumentation against own opinion,High,True,
+PhysioNet-1.0.1,S13,S13_STRESS,Subtract,V1,NA,NA,1620,1920,stress,Serial subtraction arithmetic under harassment,High,True,
+PhysioNet-1.0.1,S14,S14_STRESS,Baseline,V1,NA,NA,0,300,baseline,Resting baseline sitting quiet,High,True,
+PhysioNet-1.0.1,S14,S14_STRESS,Stroop,V1,NA,NA,300,600,stress,Cognitive color-word conflict test,High,True,
+PhysioNet-1.0.1,S14,S14_STRESS,First Rest,V1,NA,NA,600,780,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S14,S14_STRESS,TMCT,V1,NA,NA,780,1080,stress,Trier Mental Challenge Test (arithmetic stress),High,True,
+PhysioNet-1.0.1,S14,S14_STRESS,Second Rest,V1,NA,NA,1080,1260,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S14,S14_STRESS,Real Opinion,V1,NA,NA,1260,1440,stress_prep,Speech preparation on personal opinion,Medium,False,Speech preparation transition
+PhysioNet-1.0.1,S14,S14_STRESS,Opposite Opinion,V1,NA,NA,1440,1620,stress,Public argumentation against own opinion,High,True,
+PhysioNet-1.0.1,S14,S14_STRESS,Subtract,V1,NA,NA,1620,1920,stress,Serial subtraction arithmetic under harassment,High,True,
+PhysioNet-1.0.1,S15,S15_STRESS,Baseline,V1,NA,NA,0,300,baseline,Resting baseline sitting quiet,High,True,
+PhysioNet-1.0.1,S15,S15_STRESS,Stroop,V1,NA,NA,300,600,stress,Cognitive color-word conflict test,High,True,
+PhysioNet-1.0.1,S15,S15_STRESS,First Rest,V1,NA,NA,600,780,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S15,S15_STRESS,TMCT,V1,NA,NA,780,1080,stress,Trier Mental Challenge Test (arithmetic stress),High,True,
+PhysioNet-1.0.1,S15,S15_STRESS,Second Rest,V1,NA,NA,1080,1260,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S15,S15_STRESS,Real Opinion,V1,NA,NA,1260,1440,stress_prep,Speech preparation on personal opinion,Medium,False,Speech preparation transition
+PhysioNet-1.0.1,S15,S15_STRESS,Opposite Opinion,V1,NA,NA,1440,1620,stress,Public argumentation against own opinion,High,True,
+PhysioNet-1.0.1,S15,S15_STRESS,Subtract,V1,NA,NA,1620,1920,stress,Serial subtraction arithmetic under harassment,High,True,
+PhysioNet-1.0.1,S16,S16_STRESS,Baseline,V1,NA,NA,0,300,baseline,Resting baseline sitting quiet,High,True,
+PhysioNet-1.0.1,S16,S16_STRESS,Stroop,V1,NA,NA,300,600,stress,Cognitive color-word conflict test,High,True,
+PhysioNet-1.0.1,S16,S16_STRESS,First Rest,V1,NA,NA,600,780,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S16,S16_STRESS,TMCT,V1,NA,NA,780,1080,stress,Trier Mental Challenge Test (arithmetic stress),High,True,
+PhysioNet-1.0.1,S16,S16_STRESS,Second Rest,V1,NA,NA,1080,1260,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S16,S16_STRESS,Real Opinion,V1,NA,NA,1260,1440,stress_prep,Speech preparation on personal opinion,Medium,False,Speech preparation transition
+PhysioNet-1.0.1,S16,S16_STRESS,Opposite Opinion,V1,NA,NA,1440,1620,stress,Public argumentation against own opinion,High,True,
+PhysioNet-1.0.1,S16,S16_STRESS,Subtract,V1,NA,NA,1620,1920,stress,Serial subtraction arithmetic under harassment,High,True,
+PhysioNet-1.0.1,S17,S17_STRESS,Baseline,V1,NA,NA,0,300,baseline,Resting baseline sitting quiet,High,True,
+PhysioNet-1.0.1,S17,S17_STRESS,Stroop,V1,NA,NA,300,600,stress,Cognitive color-word conflict test,High,True,
+PhysioNet-1.0.1,S17,S17_STRESS,First Rest,V1,NA,NA,600,780,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S17,S17_STRESS,TMCT,V1,NA,NA,780,1080,stress,Trier Mental Challenge Test (arithmetic stress),High,True,
+PhysioNet-1.0.1,S17,S17_STRESS,Second Rest,V1,NA,NA,1080,1260,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S17,S17_STRESS,Real Opinion,V1,NA,NA,1260,1440,stress_prep,Speech preparation on personal opinion,Medium,False,Speech preparation transition
+PhysioNet-1.0.1,S17,S17_STRESS,Opposite Opinion,V1,NA,NA,1440,1620,stress,Public argumentation against own opinion,High,True,
+PhysioNet-1.0.1,S17,S17_STRESS,Subtract,V1,NA,NA,1620,1920,stress,Serial subtraction arithmetic under harassment,High,True,
+PhysioNet-1.0.1,S18,S18_STRESS,Baseline,V1,NA,NA,0,300,baseline,Resting baseline sitting quiet,High,True,
+PhysioNet-1.0.1,S18,S18_STRESS,Stroop,V1,NA,NA,300,600,stress,Cognitive color-word conflict test,High,True,
+PhysioNet-1.0.1,S18,S18_STRESS,First Rest,V1,NA,NA,600,780,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S18,S18_STRESS,TMCT,V1,NA,NA,780,1080,stress,Trier Mental Challenge Test (arithmetic stress),High,True,
+PhysioNet-1.0.1,S18,S18_STRESS,Second Rest,V1,NA,NA,1080,1260,rest,Recovery rest period,Medium,False,Rest transition; excluded from pure binary stress
+PhysioNet-1.0.1,S18,S18_STRESS,Real Opinion,V1,NA,NA,1260,1440,stress_prep,Speech preparation on personal opinion,Medium,False,Speech preparation transition
+PhysioNet-1.0.1,S18,S18_STRESS,Opposite Opinion,V1,NA,NA,1440,1620,stress,Public argumentation against own opinion,High,True,
+PhysioNet-1.0.1,S18,S18_STRESS,Subtract,V1,NA,NA,1620,1920,stress,Serial subtraction arithmetic under harassment,High,True,
+PhysioNet-1.0.1,S01,S01_AEROBIC,Stationary_Bicycle_Aerobic,V1,NA,NA,0,1500,exercise_aerobic,Continuous cycling 80-110 rpm,High,True,
+PhysioNet-1.0.1,S02,S02_AEROBIC,Stationary_Bicycle_Aerobic,V1,NA,NA,0,1500,exercise_aerobic,Continuous cycling 80-110 rpm,High,True,
+PhysioNet-1.0.1,S03,S03_AEROBIC,Stationary_Bicycle_Aerobic,V1,NA,NA,0,1500,exercise_aerobic,Continuous cycling 80-110 rpm,High,False,Protocol early end or connection loss
+PhysioNet-1.0.1,S04,S04_AEROBIC,Stationary_Bicycle_Aerobic,V1,NA,NA,0,1500,exercise_aerobic,Continuous cycling 80-110 rpm,High,True,
+PhysioNet-1.0.1,S05,S05_AEROBIC,Stationary_Bicycle_Aerobic,V1,NA,NA,0,1500,exercise_aerobic,Continuous cycling 80-110 rpm,High,True,
+PhysioNet-1.0.1,S06,S06_AEROBIC,Stationary_Bicycle_Aerobic,V1,NA,NA,0,1500,exercise_aerobic,Continuous cycling 80-110 rpm,High,True,
+PhysioNet-1.0.1,S07,S07_AEROBIC,Stationary_Bicycle_Aerobic,V1,NA,NA,0,1500,exercise_aerobic,Continuous cycling 80-110 rpm,High,False,Protocol early end or connection loss
+PhysioNet-1.0.1,S08,S08_AEROBIC,Stationary_Bicycle_Aerobic,V1,NA,NA,0,1500,exercise_aerobic,Continuous cycling 80-110 rpm,High,True,
+PhysioNet-1.0.1,S09,S09_AEROBIC,Stationary_Bicycle_Aerobic,V1,NA,NA,0,1500,exercise_aerobic,Continuous cycling 80-110 rpm,High,True,
+PhysioNet-1.0.1,S10,S10_AEROBIC,Stationary_Bicycle_Aerobic,V1,NA,NA,0,1500,exercise_aerobic,Continuous cycling 80-110 rpm,High,True,
+PhysioNet-1.0.1,S11,S11_AEROBIC,Stationary_Bicycle_Aerobic,V1,NA,NA,0,1500,exercise_aerobic,Continuous cycling 80-110 rpm,High,False,Protocol early end or connection loss
+PhysioNet-1.0.1,S13,S13_AEROBIC,Stationary_Bicycle_Aerobic,V1,NA,NA,0,1500,exercise_aerobic,Continuous cycling 80-110 rpm,High,True,
+PhysioNet-1.0.1,S14,S14_AEROBIC,Stationary_Bicycle_Aerobic,V1,NA,NA,0,1500,exercise_aerobic,Continuous cycling 80-110 rpm,High,True,
+PhysioNet-1.0.1,S15,S15_AEROBIC,Stationary_Bicycle_Aerobic,V1,NA,NA,0,1500,exercise_aerobic,Continuous cycling 80-110 rpm,High,True,
+PhysioNet-1.0.1,S16,S16_AEROBIC,Stationary_Bicycle_Aerobic,V1,NA,NA,0,1500,exercise_aerobic,Continuous cycling 80-110 rpm,High,True,
+PhysioNet-1.0.1,S17,S17_AEROBIC,Stationary_Bicycle_Aerobic,V1,NA,NA,0,1500,exercise_aerobic,Continuous cycling 80-110 rpm,High,True,
+PhysioNet-1.0.1,S18,S18_AEROBIC,Stationary_Bicycle_Aerobic,V1,NA,NA,0,1500,exercise_aerobic,Continuous cycling 80-110 rpm,High,True,
+PhysioNet-1.0.1,S01,S01_ANAEROBIC,Sprint_Intervals_Anaerobic,V1,NA,NA,0,600,exercise_anaerobic,30s/45s sprint bursts with recovery,Low_For_60s_Window,False,60s fixed window cannot fit inside 30s/45s sprint; mixtures unavoidable without 15s/30s protocol pre-registration
+PhysioNet-1.0.1,S02,S02_ANAEROBIC,Sprint_Intervals_Anaerobic,V1,NA,NA,0,600,exercise_anaerobic,30s/45s sprint bursts with recovery,Low_For_60s_Window,False,60s fixed window cannot fit inside 30s/45s sprint; mixtures unavoidable without 15s/30s protocol pre-registration
+PhysioNet-1.0.1,S03,S03_ANAEROBIC,Sprint_Intervals_Anaerobic,V1,NA,NA,0,600,exercise_anaerobic,30s/45s sprint bursts with recovery,Low_For_60s_Window,False,60s fixed window cannot fit inside 30s/45s sprint; mixtures unavoidable without 15s/30s protocol pre-registration
+PhysioNet-1.0.1,S04,S04_ANAEROBIC,Sprint_Intervals_Anaerobic,V1,NA,NA,0,600,exercise_anaerobic,30s/45s sprint bursts with recovery,Low_For_60s_Window,False,60s fixed window cannot fit inside 30s/45s sprint; mixtures unavoidable without 15s/30s protocol pre-registration
+PhysioNet-1.0.1,S05,S05_ANAEROBIC,Sprint_Intervals_Anaerobic,V1,NA,NA,0,600,exercise_anaerobic,30s/45s sprint bursts with recovery,Low_For_60s_Window,False,60s fixed window cannot fit inside 30s/45s sprint; mixtures unavoidable without 15s/30s protocol pre-registration
+PhysioNet-1.0.1,S06,S06_ANAEROBIC,Sprint_Intervals_Anaerobic,V1,NA,NA,0,600,exercise_anaerobic,30s/45s sprint bursts with recovery,Low_For_60s_Window,False,60s fixed window cannot fit inside 30s/45s sprint; mixtures unavoidable without 15s/30s protocol pre-registration
+PhysioNet-1.0.1,S07,S07_ANAEROBIC,Sprint_Intervals_Anaerobic,V1,NA,NA,0,600,exercise_anaerobic,30s/45s sprint bursts with recovery,Low_For_60s_Window,False,60s fixed window cannot fit inside 30s/45s sprint; mixtures unavoidable without 15s/30s protocol pre-registration
+PhysioNet-1.0.1,S08,S08_ANAEROBIC,Sprint_Intervals_Anaerobic,V1,NA,NA,0,600,exercise_anaerobic,30s/45s sprint bursts with recovery,Low_For_60s_Window,False,60s fixed window cannot fit inside 30s/45s sprint; mixtures unavoidable without 15s/30s protocol pre-registration
+PhysioNet-1.0.1,S09,S09_ANAEROBIC,Sprint_Intervals_Anaerobic,V1,NA,NA,0,600,exercise_anaerobic,30s/45s sprint bursts with recovery,Low_For_60s_Window,False,60s fixed window cannot fit inside 30s/45s sprint; mixtures unavoidable without 15s/30s protocol pre-registration
+PhysioNet-1.0.1,S10,S10_ANAEROBIC,Sprint_Intervals_Anaerobic,V1,NA,NA,0,600,exercise_anaerobic,30s/45s sprint bursts with recovery,Low_For_60s_Window,False,60s fixed window cannot fit inside 30s/45s sprint; mixtures unavoidable without 15s/30s protocol pre-registration
+PhysioNet-1.0.1,S11,S11_ANAEROBIC,Sprint_Intervals_Anaerobic,V1,NA,NA,0,600,exercise_anaerobic,30s/45s sprint bursts with recovery,Low_For_60s_Window,False,60s fixed window cannot fit inside 30s/45s sprint; mixtures unavoidable without 15s/30s protocol pre-registration
+PhysioNet-1.0.1,S12,S12_ANAEROBIC,Sprint_Intervals_Anaerobic,V1,NA,NA,0,600,exercise_anaerobic,30s/45s sprint bursts with recovery,Low_For_60s_Window,False,60s fixed window cannot fit inside 30s/45s sprint; mixtures unavoidable without 15s/30s protocol pre-registration
+PhysioNet-1.0.1,S13,S13_ANAEROBIC,Sprint_Intervals_Anaerobic,V1,NA,NA,0,600,exercise_anaerobic,30s/45s sprint bursts with recovery,Low_For_60s_Window,False,60s fixed window cannot fit inside 30s/45s sprint; mixtures unavoidable without 15s/30s protocol pre-registration
+PhysioNet-1.0.1,S14,S14_ANAEROBIC,Sprint_Intervals_Anaerobic,V1,NA,NA,0,600,exercise_anaerobic,30s/45s sprint bursts with recovery,Low_For_60s_Window,False,60s fixed window cannot fit inside 30s/45s sprint; mixtures unavoidable without 15s/30s protocol pre-registration
+PhysioNet-1.0.1,S15,S15_ANAEROBIC,Sprint_Intervals_Anaerobic,V1,NA,NA,0,600,exercise_anaerobic,30s/45s sprint bursts with recovery,Low_For_60s_Window,False,60s fixed window cannot fit inside 30s/45s sprint; mixtures unavoidable without 15s/30s protocol pre-registration
+PhysioNet-1.0.1,S16,S16_ANAEROBIC,Sprint_Intervals_Anaerobic,V1,NA,NA,0,600,exercise_anaerobic,30s/45s sprint bursts with recovery,Low_For_60s_Window,False,60s fixed window cannot fit inside 30s/45s sprint; mixtures unavoidable without 15s/30s protocol pre-registration
+PhysioNet-1.0.1,S17,S17_ANAEROBIC,Sprint_Intervals_Anaerobic,V1,NA,NA,0,600,exercise_anaerobic,30s/45s sprint bursts with recovery,Low_For_60s_Window,False,60s fixed window cannot fit inside 30s/45s sprint; mixtures unavoidable without 15s/30s protocol pre-registration
+PhysioNet-1.0.1,S18,S18_ANAEROBIC,Sprint_Intervals_Anaerobic,V1,NA,NA,0,600,exercise_anaerobic,30s/45s sprint bursts with recovery,Low_For_60s_Window,False,60s fixed window cannot fit inside 30s/45s sprint; mixtures unavoidable without 15s/30s protocol pre-registration

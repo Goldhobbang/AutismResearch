@@ -51,3 +51,48 @@
 - **원시 신호 리플레이 검증**: `python -m src.replay --out results/wesad --subject S2 --model lr --sensors all --raw-root data/raw/WESAD`. S2 윈도우별 실시간 특징 재계산 및 추론 확률과 OOF 예측치 일치율 100%(atol=1e-7 통과). 추론+특징 지연시간 실측: p50 9.48ms, p95 13.15ms.
 - **결과 산출 및 문서 갱신**: `scripts/publish_results.py` 실행 완료. `reports/RESULTS_CURRENT.md`, `reports/FINAL_REPORT_KO.md`, `QUALITY_REPORT.md`, `BLOCKERS.md`, 11장 발표자료(`.pptx`) 갱신.
 - **주의 및 경계**: 성인 실험실 스트레스 분류 결과이며 아동 멜트다운 조기경보 및 ASD 사건 단위 성능(Precision, Recall, False Alarms/day, Lead Time)은 N/A로 엄격히 유지.
+
+## 2026-10-24 / 단일 에이전트 통합 실행 명세 v1.0 이행
+
+- **G0 인수 및 베이스라인 동결**:
+  - `results/wesad/` 원형을 `results/baselines/wesad_20261024/`로 100% 동결 복제하여 훼손 방지 조치.
+  - 디렉터리 체계 구축: `data/registry/`, `data/processed/{wesad,physionet,asd}/`, `experiments/phase2/`, `results/phase2/{acc,threshold,physionet,wesad_repro}/`.
+- **G1 WESAD 재현성 감사 (독립 재학습)**:
+  - `results/phase2/wesad_repro/` 경로로 15-fold LOSO 교차검증 독립 재실행.
+  - 베이스라인 동결본과 신규 재현본 간 수치 오차 검산: `max(|baseline - repro|) = 0.0` (100% 비트 단위 일치 확인).
+  - `reports/BASELINE_REPRODUCIBILITY.md` 작성.
+- **G2 ACC 교란 요인 심층 분해**:
+  - `experiments/phase2/acc_confounding_analysis.py` 개발 및 실행.
+  - 41개 ACC 특성을 7개 하위군으로 15-fold LOSO 분해:
+    - 정적 자세(평균/중앙값 중력성분) 단독: AP 0.5701 (무작위 추측 수준).
+    - 정적 자세 제거 모델(`acc_no_posture`): AP 0.9298 (최고치).
+    - 동적 에너지/저크(`acc_dynamic_only`): AP 0.8620.
+  - 결론: 가속도계 성능은 정적 자세가 아닌 TSST 과제 발표 중 손목 제스처 및 긴장성 동적 움직임(Task Confounding)에 기인함.
+  - 특이 피험자 S7 분석: AUROC/AUPRC 1.0000임에도 FPR 0.8542 발생 원인은 개인 베이스라인 확률의 상향 편향(중앙값 0.9128)과 집단 고정 임계값(0.35) 불일치 때문임을 규명.
+  - `reports/ACC_CONFOUNDING_ANALYSIS.md` 작성.
+- **G3 임계값 및 알림 정책 최적화**:
+  - `experiments/phase2/threshold_alert_analysis.py` 개발 및 실행.
+  - 6개 정책 비교: Fixed 0.5 (F1 0.7670, FPR 0.1415), Conservative 0.70 (F1 0.7354, FPR 0.1148), Cooldown 60s (실질 비스트레스 오탐율 0.0433 최저).
+  - 0.05~0.95 전체 임계값 격자 탐색으로 Recall vs FPR Pareto Frontier 도출.
+  - `reports/THRESHOLD_AND_ALERT_ANALYSIS.md` 작성.
+- **G4/G5 PhysioNet v1.0.1 메타데이터 전수 감사 및 세그먼트 복원**:
+  - `Data_Dictionary.csv`, `physionet_data_constraints.txt`, `physionet_subject_info.csv`, `Stress_Level_v1/v2.csv`, `SHA256SUMS.txt` 공식 원본 획득 및 무결성 확인.
+  - 성별-버전 교란 규명: Protocol V1은 100% 남성(18명), Protocol V2는 100% 여성(33명). 혼합 학습 시 성별 편향 학습 위험 경고.
+  - 30초/45초 무산소 스프린트는 60초 창 규약과 길이 불일치로 엄격 배제.
+  - 단일 상태 적격 세그먼트 99개 복원 완료 (`data/processed/physionet/verified_segments.csv`).
+  - `reports/EXTERNAL_VALIDATION.md` 작성.
+- **G6/G7 자폐(ASD) 7대 후보 데이터셋 실사 및 사전 프로토콜 수립**:
+  - `scripts/build_asd_audit.py` 작성 및 `data/registry/asd_candidates.csv` 구축.
+  - 7개 연구(Kartha 2026, Goodwin 2019, Imbiriba 2023, ASC-emotion, CALMED, PreMAC 2021, REACT 2024) 전수 실사.
+  - 판정: 웨어러블+사건 Onset을 동시 만족하는 공공 자료 0건 (D3-WEARABLE-EVENT READY 없음). Kartha/Goodwin/Imbiriba는 D3-ACCESS PENDING (DUA/IRB 필요).
+  - ASC-emotion(비디오 3D 안면/자세 랜드마크) 등 비웨어러블 데이터를 손목 조기경보 수치로 위조하지 않음.
+  - $L=60, H=30$초 지연 분리, 사건 단위 평가 지표(Event Recall, Alert Precision, False Alarms/day) 규약 수립.
+  - `reports/ASD_DATASET_ACCESS_AUDIT.md`, `reports/ASD_EVENT_FORECASTING.md` 작성.
+- **G8 MCU 배포 적합성 분석**:
+  - LR 모델 순수 C 가중치 배열 크기(760B) vs RF 트리 크기(882KB) 실측.
+  - 60초 float32 링버퍼(38.4KB, ESP32-S3 SRAM의 10.1% 점유) 분석.
+  - Windows CPU 지연(9.48ms)의 MCU 속도 대치 금지 고지.
+  - `reports/MCU_FEASIBILITY.md` 작성.
+- **G9 최종 통합 보고서 작성**:
+  - 8대 영역(A~H) 종합 검증 보고서 `reports/FINAL_MODEL_RESEARCH_REPORT_KO.md` 작성 완료.
+  - `reports/NEXT_ACTIONS.md` 최신 동기화 완료.
