@@ -4,11 +4,17 @@ on:
     paths:
       - 'experiments/phase3/experiment_d_calibration_strict.py'
       - 'tests/test_calibration_strict.py'
+      - 'tests/test_physionet_session_matching.py'
+      - 'experiments/phase3/physionet_multi_subject_audit.py'
+      - 'data/processed/physionet/verified_segments.csv'
       - '.github/workflows/phase3-strict.yml'
   pull_request:
     paths:
       - 'experiments/phase3/experiment_d_calibration_strict.py'
       - 'tests/test_calibration_strict.py'
+      - 'tests/test_physionet_session_matching.py'
+      - 'experiments/phase3/physionet_multi_subject_audit.py'
+      - 'data/processed/physionet/verified_segments.csv'
       - '.github/workflows/phase3-strict.yml'
 jobs:
   synthetic-protocol-tests:
@@ -28,3 +34,5 @@ jobs:
           python -m py_compile experiments/phase3/physionet_multi_subject_audit.py
       - name: Test synthetic protocol boundaries
         run: python -m unittest discover -s tests -p "test_calibration_strict.py" -v
+      - name: Test PhysioNet manifest session matching
+        run: python -m unittest discover -s tests -p "test_physionet_session_matching.py" -v
