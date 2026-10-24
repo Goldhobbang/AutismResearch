@@ -63,7 +63,7 @@ def main():
         )
     s2 = df.loc[df.subject.eq("S2"), ["policy", "stress_f1", "stress_recall", "fpr"]]
     entries += [
-        "", "## S2 실패 방지 검토", "", s2.to_markdown(index=False), "",
+        "", "## S2 실패 방지 검토", "", s2.to_csv(index=False).strip(), "",
         "Cold Start 확률 0.90 이상 OR 정책은 탐색적 비교군이다. "
         "오경보 증가 위험이 있으며 보증된 안전정책이 아니다.",
         "", "## 주의사항", "",
