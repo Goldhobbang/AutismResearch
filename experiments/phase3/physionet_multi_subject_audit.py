@@ -129,10 +129,9 @@ def main():
             if g.empty:
                 continue
             good, reason = verified_raw(subject, session, hashes)
-            manifest.append({"subject": subject, "session": session,
-                             "status": "eligible" if good else "excluded",
-                             "reason": reason})
             if not good:
+                manifest.append({"subject": subject, "session": session,
+                                 "status": "excluded", "reason": reason})
                 continue
             try:
                 f = extract_windows_for_session(subject, session, g)
@@ -141,6 +140,8 @@ def main():
                                      "status": "excluded", "reason": "no_valid_windows"})
                     continue
                 frames.append(f)
+                manifest.append({"subject": subject, "session": session,
+                                 "status": "eligible", "reason": reason})
             except Exception as exc:
                 manifest.append({"subject": subject, "session": session,
                                  "status": "excluded", "reason": "extraction_error:" + str(exc)})

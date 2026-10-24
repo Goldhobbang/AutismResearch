@@ -1,0 +1,10 @@
+{
+  "source_features": "D:\\Autism\\data\\processed\\wesad_features.csv",
+  "source_cold_oof": "D:\\Autism\\results\\baselines\\wesad_20261024\\predictions.csv",
+  "calibration_seconds": 300.0,
+  "window_seconds": 60.0,
+  "hop_seconds": 15.0,
+  "guard_cold_prob": 0.9,
+  "thresholds": "fixed or frozen prior OOF; no held-out label-based tuning",
+  "note": "All numbers recomputed; STRICT outputs replace no prior results. Guard policy exploratory, not verified safety guarantee."
+}

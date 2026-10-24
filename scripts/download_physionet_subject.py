@@ -1,70 +1,148 @@
-import os
-import urllib.request
+"""Download and verify raw PhysioNet 1.0.1 files with official SHA256 checksums.
+Usage:
+    py scripts/download_physionet_subject.py --subject S01
+    py scripts/download_physionet_subject.py --subject S02 S03 S04
+    py scripts/download_physionet_subject.py --all-verified
+"""
+import argparse
 import hashlib
+import sys
+import urllib.request
 from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / 'data' / 'raw' / 'physionet_v1'
-DATA_DIR.mkdir(parents=True, exist_ok=True)
-
-# Load official SHA256SUMS.txt
-sums_path = ROOT / 'data' / 'registry' / 'SHA256SUMS.txt'
-official_hashes = {}
-with open(sums_path, 'r', encoding='utf-8') as f:
-    for line in f:
-        line = line.strip()
-        if not line:
-            continue
-        parts = line.split(maxsplit=1)
-        if len(parts) == 2:
-            h, p = parts
-            official_hashes[p] = h
-
+SUMS_PATH = ROOT / 'data' / 'registry' / 'SHA256SUMS.txt'
+SEGMENTS_PATH = ROOT / 'data' / 'processed' / 'physionet' / 'verified_segments.csv'
 BASE_URL = 'https://physionet.org/files/wearable-device-dataset/1.0.1/'
 
-def download_and_verify(rel_path):
+
+def load_official_hashes(path=SUMS_PATH):
+    hashes = {}
+    with open(path, 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            parts = line.split(maxsplit=1)
+            if len(parts) == 2:
+                h, p = parts
+                hashes[p.strip().lstrip('*')] = h.lower()
+    return hashes
+
+
+def download_and_verify_file(rel_path, official_hashes, max_retries=3):
     dest = DATA_DIR / rel_path
     dest.parent.mkdir(parents=True, exist_ok=True)
     expected_hash = official_hashes.get(rel_path)
-    
+
     if dest.exists() and expected_hash:
         with open(dest, 'rb') as f:
             curr_hash = hashlib.sha256(f.read()).hexdigest()
         if curr_hash == expected_hash:
-            print(f'[EXISTS & VERIFIED] {rel_path}')
+            print(f'[EXISTS & VERIFIED] {rel_path}', flush=True)
             return True
-            
+        else:
+            print(f'[CORRUPT/MISMATCH] {rel_path} (local {curr_hash[:8]} != {expected_hash[:8]}), re-downloading...', flush=True)
+
     url = BASE_URL + rel_path
-    print(f'[DOWNLOADING] {url} -> {dest}')
     req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-    
-    with urllib.request.urlopen(req, timeout=60) as resp, open(dest, 'wb') as out:
-        while True:
-            chunk = resp.read(65536)
-            if not chunk:
-                break
-            out.write(chunk)
-            
-    with open(dest, 'rb') as f:
-        file_hash = hashlib.sha256(f.read()).hexdigest()
-        
-    if expected_hash and file_hash != expected_hash:
-        raise ValueError(f'Hash mismatch for {rel_path}: got {file_hash}, expected {expected_hash}')
-        
-    print(f'[VERIFIED SHA256] {rel_path} ({file_hash[:16]}...)')
-    return True
+
+    for attempt in range(1, max_retries + 1):
+        try:
+            print(f'[DOWNLOADING] {url} -> {dest} (attempt {attempt}/{max_retries})', flush=True)
+            with urllib.request.urlopen(req, timeout=90) as resp, open(dest, 'wb') as out:
+                while True:
+                    chunk = resp.read(65536)
+                    if not chunk:
+                        break
+                    out.write(chunk)
+
+            with open(dest, 'rb') as f:
+                file_hash = hashlib.sha256(f.read()).hexdigest()
+
+            if expected_hash and file_hash != expected_hash:
+                raise ValueError(f'Hash mismatch for {rel_path}: got {file_hash}, expected {expected_hash}')
+
+            print(f'[VERIFIED SHA256] {rel_path} ({file_hash[:16]}...)', flush=True)
+            return True
+        except Exception as e:
+            print(f'[ERROR] attempt {attempt} failed for {rel_path}: {e}', flush=True)
+            if attempt == max_retries:
+                raise
+
+
+def get_verified_subjects():
+    if not SEGMENTS_PATH.exists():
+        return [f'S{i:02d}' for i in range(1, 19)]
+    df = pd.read_csv(SEGMENTS_PATH)
+    v = df[df['verified'].astype(str).str.lower().isin(['true', '1'])]
+    return sorted(v['subject'].unique().tolist())
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--subject', nargs='+', help='Subject ID(s), e.g. S01 S02')
+    parser.add_argument('--all-verified', action='store_true', help='Download all verified subjects (S01-S18)')
+    parser.add_argument('--dry-run', action='store_true', help='Only list files to download and size')
+    parser.add_argument('--workers', type=int, default=4, help='Number of parallel download threads')
+    args = parser.parse_args()
+
+    hashes = load_official_hashes()
+
+    if args.all_verified:
+        target_subs = get_verified_subjects()
+    elif args.subject:
+        target_subs = args.subject
+    else:
+        target_subs = ['S01']
+
+    print(f"Target subjects: {target_subs}", flush=True)
+
+    files = []
+    for sub in target_subs:
+        for session in ['STRESS', 'AEROBIC']:
+            for name in ['ACC.csv', 'BVP.csv', 'EDA.csv', 'tags.csv']:
+                rel_path = f"Wearable_Dataset/{session}/{sub}/{name}"
+                if rel_path in hashes:
+                    files.append(rel_path)
+
+    print(f"Total files registered: {len(files)}", flush=True)
+
+    if args.dry_run:
+        missing = 0
+        corrupt = 0
+        verified = 0
+        for p in files:
+            dest = DATA_DIR / p
+            exp = hashes.get(p)
+            if not dest.exists():
+                missing += 1
+            else:
+                with open(dest, 'rb') as f:
+                    h = hashlib.sha256(f.read()).hexdigest()
+                if h == exp:
+                    verified += 1
+                else:
+                    corrupt += 1
+        print(f"Status summary: Verified={verified}, Corrupt={corrupt}, Missing={missing}", flush=True)
+        return
+
+    print(f"Starting download with {args.workers} workers...", flush=True)
+    with ThreadPoolExecutor(max_workers=args.workers) as executor:
+        futures = {executor.submit(download_and_verify_file, p, hashes): p for p in files}
+        for fut in as_completed(futures):
+            p = futures[fut]
+            try:
+                fut.result()
+            except Exception as e:
+                print(f"[FATAL] Failed to download {p}: {e}", flush=True)
+                sys.exit(1)
+
+    print("\nAll target files successfully downloaded and verified with official SHA256!", flush=True)
+
 
 if __name__ == '__main__':
-    # Test downloading S01 STRESS and AEROBIC
-    files_to_download = [
-        'Wearable_Dataset/STRESS/S01/ACC.csv',
-        'Wearable_Dataset/STRESS/S01/BVP.csv',
-        'Wearable_Dataset/STRESS/S01/EDA.csv',
-        'Wearable_Dataset/STRESS/S01/tags.csv',
-        'Wearable_Dataset/AEROBIC/S01/ACC.csv',
-        'Wearable_Dataset/AEROBIC/S01/BVP.csv',
-        'Wearable_Dataset/AEROBIC/S01/EDA.csv',
-        'Wearable_Dataset/AEROBIC/S01/tags.csv',
-    ]
-    for rel_path in files_to_download:
-        download_and_verify(rel_path)
+    main()
