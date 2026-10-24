@@ -58,6 +58,11 @@ def verified_raw(subject, session, hashes):
     return True, "verified"
 
 
+def select_verified_session_segments(group, subject, session):
+    """Manifest uses subject-prefixed names, e.g. S01_STRESS."""
+    return group.loc[group["session"].eq(f"{subject}_{session}")].copy()
+
+
 def compute_subject_metrics(subject, frame):
     records = []
     stress = frame[frame.session.eq("STRESS") & frame.label.isin(["stress", "baseline"])]
@@ -120,7 +125,7 @@ def main():
         for session in ("STRESS", "AEROBIC"):
             # Manifest encodes subject-prefixed sessions, e.g. S01_STRESS.
             # Preserve subject grouping; do not match plain STRESS/AEROBIC.
-            g = group[group.session.eq(f"{subject}_{session}")]
+            g = select_verified_session_segments(group, subject, session)
             if g.empty:
                 continue
             good, reason = verified_raw(subject, session, hashes)
