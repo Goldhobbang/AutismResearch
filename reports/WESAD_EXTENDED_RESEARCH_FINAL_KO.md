@@ -74,7 +74,9 @@
 - 개인별 기저치 편차가 극심하므로 `feature_delta_5min`과 같은 실시간 온디바이스 개인화 보정 알고리즘의 필수 결합.
 
 ### Q10. 모든 코드, 실험 결과, 보고서가 포함된 Git 커밋 해시와 푸시 결과
-- 최종 커밋 SHA 및 푸시 완료 내역은 본 보고서 말미에 명시.
+- **커밋 SHA**: `3ef3522` (`feat(phase3): implement multiclass, physiological, deep learning, and baseline calibration studies`)
+- **원격 저장소 푸시 완료**: `https://github.com/Goldhobbang/AutismResearch` (main branch)
+- **산출물 무결성**: 원시 신호 및 대용량 가중치는 Git 제외 규칙 준수, 모든 재현 스크립트, 결과 CSV, 상세 보고서 6종 온전히 보존.
 
 ---
 
