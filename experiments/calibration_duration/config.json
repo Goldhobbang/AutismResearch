@@ -1,0 +1,45 @@
+{
+  "experiment_name": "calibration_duration_comparison",
+  "created_at": "2026-10-25T04:10:00Z",
+  "research_questions": [
+    "Does cold-start (uncalibrated) work across cohorts?",
+    "Which duration (1m, 3m, 5m, 10m or sub-3m) best balances F1, Recall, Baseline FPR, and waiting latency?",
+    "Is longer calibration always better, or does it hit diminishing returns / overfit to early transients?",
+    "Does calibration reduce worst-case participant failures as well as average performance?",
+    "Do WESAD and PhysioNet show consistent trends across calibration lengths?"
+  ],
+  "wesad": {
+    "total_subjects": 15,
+    "eligible_subjects": ["S10", "S11", "S13", "S14", "S15", "S16", "S17", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9"],
+    "durations_s": [0, 60, 180, 300, 600],
+    "common_eval_offsets_s": {
+      "set_10m": 600,
+      "set_5m": 300,
+      "set_3m": 180,
+      "set_1m": 60
+    }
+  },
+  "physionet_tag_aligned": {
+    "total_subjects": 18,
+    "excluded_subjects": {"S02": "Duplicated raw values per data_constraints.txt"},
+    "eligible_subjects": ["S01", "S03", "S04", "S05", "S06", "S07", "S08", "S09", "S10", "S11", "S12", "S13", "S14", "S15", "S16", "S17", "S18"],
+    "audited_baseline_mean_s": 191.2,
+    "audited_baseline_range_s": [163.0, 247.0],
+    "durations_s": [0, 60, 90, 120],
+    "na_durations_s": {
+      "300": "N/A: Tag-aligned baseline is 163-247s. 300s (5m) exceeds baseline for 100% of participants.",
+      "600": "N/A: Tag-aligned baseline is 163-247s. 600s (10m) exceeds baseline for 100% of participants."
+    },
+    "common_eval_offsets_s": {
+      "set_120s": 120,
+      "set_90s": 90,
+      "set_60s": 60
+    }
+  },
+  "models": [
+    "LR_Calib_Physio",
+    "RF_Calib_Physio"
+  ],
+  "feature_definition": "Personal delta of log-compressed features (eda_log_delta, hr_bpm_delta, ppg_band_delta, etc.) relative to calibration baseline mean",
+  "motion_gate": "none_for_calibration_duration_isolation"
+}
