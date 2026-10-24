@@ -66,9 +66,10 @@ def compute_subject_metrics(subject, frame):
         col = f"prob_{m}"
         if col not in frame:
             continue
-        if len(stress) and stress.label.nunique() == 2:
-            y = stress.label.eq("stress").to_numpy(dtype=int)
-            p = stress[col].to_numpy(dtype=float)
+        available_stress = stress.loc[stress[col].notna()]
+        if len(available_stress) and available_stress.label.nunique() == 2:
+            y = available_stress.label.eq("stress").to_numpy(dtype=int)
+            p = available_stress[col].to_numpy(dtype=float)
             if not np.isfinite(p).all():
                 raise ValueError(f"Nonfinite probabilities {subject} {m}")
             records.append({
@@ -81,8 +82,9 @@ def compute_subject_metrics(subject, frame):
                 "baseline_fpr": float(np.mean((p >= .5)[y == 0])),
                 "mean_probability": float(p.mean())
             })
-        if len(exercise):
-            p = exercise[col].to_numpy(dtype=float)
+        available_exercise = exercise.loc[exercise[col].notna()]
+        if len(available_exercise):
+            p = available_exercise[col].to_numpy(dtype=float)
             if not np.isfinite(p).all():
                 raise ValueError(f"Nonfinite exercise probabilities {subject} {m}")
             records.append({
@@ -137,9 +139,9 @@ def main():
                                  "status": "excluded", "reason": "extraction_error:" + str(exc)})
         if not frames:
             continue
-        frame = pd.concat(frames, ignore_index=True)
-        # Existing Phase 2 extraction semantics; do not redefine labels or timestamps.
-        evaluated = evaluate_models_on_windows(frame)
+        # Evaluate sessions independently so aerobic missing BVP does not
+        # suppress BVP-inclusive evaluation in fully instrumented STRESS data.
+        evaluated = pd.concat([evaluate_models_on_windows(f) for f in frames], ignore_index=True)
         all_preds.append(evaluated)
         all_metrics.extend(compute_subject_metrics(subject, evaluated))
     OUT.mkdir(parents=True, exist_ok=True)
