@@ -118,7 +118,9 @@ def main():
     for subject, group in segments.groupby("subject"):
         frames = []
         for session in ("STRESS", "AEROBIC"):
-            g = group[group.session.eq(session)]
+            # Manifest encodes subject-prefixed sessions, e.g. S01_STRESS.
+            # Preserve subject grouping; do not match plain STRESS/AEROBIC.
+            g = group[group.session.eq(f"{subject}_{session}")]
             if g.empty:
                 continue
             good, reason = verified_raw(subject, session, hashes)
