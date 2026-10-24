@@ -5,6 +5,8 @@ on:
       - 'experiments/phase3/experiment_d_calibration_strict.py'
       - 'tests/test_calibration_strict.py'
       - 'tests/test_physionet_session_matching.py'
+      - 'tests/test_physionet_feature_names.py'
+      - 'experiments/phase2/zero_shot_physionet.py'
       - 'experiments/phase3/physionet_multi_subject_audit.py'
       - 'data/processed/physionet/verified_segments.csv'
       - '.github/workflows/phase3-strict.yml'
@@ -13,6 +15,8 @@ on:
       - 'experiments/phase3/experiment_d_calibration_strict.py'
       - 'tests/test_calibration_strict.py'
       - 'tests/test_physionet_session_matching.py'
+      - 'tests/test_physionet_feature_names.py'
+      - 'experiments/phase2/zero_shot_physionet.py'
       - 'experiments/phase3/physionet_multi_subject_audit.py'
       - 'data/processed/physionet/verified_segments.csv'
       - '.github/workflows/phase3-strict.yml'
@@ -36,3 +40,5 @@ jobs:
         run: python -m unittest discover -s tests -p "test_calibration_strict.py" -v
       - name: Test PhysioNet manifest session matching
         run: python -m unittest discover -s tests -p "test_physionet_session_matching.py" -v
+      - name: Test named-feature inference compatibility
+        run: python -m unittest discover -s tests -p "test_physionet_feature_names.py" -v
