@@ -114,7 +114,9 @@ def evaluate_models_on_windows(df_windows):
             cols = model_dict['columns']
             thresh = model_dict['threshold']
             
-            X = df_windows[cols].values
+            # The WESAD sklearn pipeline was fitted with named DataFrame columns.
+            # Preserve both feature labels and the exact saved feature ordering.
+            X = df_windows.loc[:, cols]
             prob = pipe.predict_proba(X)[:, 1]
             fold_probs.append(prob)
             thresholds.append(thresh)
