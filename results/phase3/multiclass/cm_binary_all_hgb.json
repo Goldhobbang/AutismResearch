@@ -1,0 +1,19 @@
+{
+  "task": "binary",
+  "sensors": "all",
+  "model": "hgb",
+  "class_names": [
+    "Non-Stress",
+    "Stress"
+  ],
+  "matrix": [
+    [
+      1241,
+      183
+    ],
+    [
+      208,
+      399
+    ]
+  ]
+}

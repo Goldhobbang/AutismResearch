@@ -1,0 +1,19 @@
+{
+  "task": "binary",
+  "sensors": "all",
+  "model": "lgbm",
+  "class_names": [
+    "Non-Stress",
+    "Stress"
+  ],
+  "matrix": [
+    [
+      1196,
+      228
+    ],
+    [
+      201,
+      406
+    ]
+  ]
+}

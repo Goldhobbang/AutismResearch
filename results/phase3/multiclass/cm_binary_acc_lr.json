@@ -1,0 +1,19 @@
+{
+  "task": "binary",
+  "sensors": "acc",
+  "model": "lr",
+  "class_names": [
+    "Non-Stress",
+    "Stress"
+  ],
+  "matrix": [
+    [
+      1263,
+      161
+    ],
+    [
+      103,
+      504
+    ]
+  ]
+}

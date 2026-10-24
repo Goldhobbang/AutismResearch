@@ -1,0 +1,19 @@
+{
+  "task": "binary",
+  "sensors": "physio",
+  "model": "lgbm",
+  "class_names": [
+    "Non-Stress",
+    "Stress"
+  ],
+  "matrix": [
+    [
+      1145,
+      279
+    ],
+    [
+      190,
+      417
+    ]
+  ]
+}

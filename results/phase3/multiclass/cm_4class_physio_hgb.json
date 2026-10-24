@@ -1,0 +1,37 @@
+{
+  "task": "4class",
+  "sensors": "physio",
+  "model": "hgb",
+  "class_names": [
+    "Baseline",
+    "Stress",
+    "Amusement",
+    "Meditation"
+  ],
+  "matrix": [
+    [
+      773,
+      161,
+      41,
+      138
+    ],
+    [
+      168,
+      393,
+      20,
+      26
+    ],
+    [
+      120,
+      62,
+      16,
+      113
+    ],
+    [
+      227,
+      38,
+      55,
+      345
+    ]
+  ]
+}

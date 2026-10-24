@@ -1,0 +1,37 @@
+{
+  "task": "4class",
+  "sensors": "acc",
+  "model": "rf",
+  "class_names": [
+    "Baseline",
+    "Stress",
+    "Amusement",
+    "Meditation"
+  ],
+  "matrix": [
+    [
+      855,
+      67,
+      150,
+      41
+    ],
+    [
+      104,
+      436,
+      45,
+      22
+    ],
+    [
+      142,
+      29,
+      34,
+      106
+    ],
+    [
+      70,
+      11,
+      112,
+      472
+    ]
+  ]
+}

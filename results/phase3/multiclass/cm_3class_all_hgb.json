@@ -1,0 +1,27 @@
+{
+  "task": "3class",
+  "sensors": "all",
+  "model": "hgb",
+  "class_names": [
+    "Baseline",
+    "Stress",
+    "Amusement"
+  ],
+  "matrix": [
+    [
+      926,
+      112,
+      75
+    ],
+    [
+      115,
+      448,
+      44
+    ],
+    [
+      188,
+      73,
+      50
+    ]
+  ]
+}

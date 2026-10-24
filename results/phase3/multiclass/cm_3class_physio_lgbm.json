@@ -1,0 +1,27 @@
+{
+  "task": "3class",
+  "sensors": "physio",
+  "model": "lgbm",
+  "class_names": [
+    "Baseline",
+    "Stress",
+    "Amusement"
+  ],
+  "matrix": [
+    [
+      778,
+      228,
+      107
+    ],
+    [
+      146,
+      411,
+      50
+    ],
+    [
+      126,
+      86,
+      99
+    ]
+  ]
+}

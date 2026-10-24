@@ -1,0 +1,27 @@
+{
+  "task": "3class",
+  "sensors": "acc",
+  "model": "lgbm",
+  "class_names": [
+    "Baseline",
+    "Stress",
+    "Amusement"
+  ],
+  "matrix": [
+    [
+      893,
+      94,
+      126
+    ],
+    [
+      138,
+      418,
+      51
+    ],
+    [
+      209,
+      46,
+      56
+    ]
+  ]
+}

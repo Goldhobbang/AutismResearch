@@ -1,0 +1,19 @@
+{
+  "task": "binary",
+  "sensors": "all",
+  "model": "dummy",
+  "class_names": [
+    "Non-Stress",
+    "Stress"
+  ],
+  "matrix": [
+    [
+      1424,
+      0
+    ],
+    [
+      607,
+      0
+    ]
+  ]
+}
