@@ -1,0 +1,138 @@
+dataset,subject,session,task,version,start_utc,end_utc,start_s,end_s,label,annotator_evidence,confidence,verified,exclusion_reason
+PhysioNet-1.0.1,S01,S01_STRESS,Pre_Protocol_Setup,V1,1361350519.00,1361350890.00,0,371,setup,Watch strapping and pre-baseline setup before tag[0],Medium,False,Pre-protocol device setup motion; not resting baseline
+PhysioNet-1.0.1,S01,S01_STRESS,Baseline,V1,1361350890.00,1361351137.00,371,618,baseline,Official resting baseline between tag[0] and tag[1],High,True,
+PhysioNet-1.0.1,S01,S01_STRESS,Stroop,V1,1361351312.00,1361351417.00,793,898,stress,Official Stroop color-word test between tag[2] and tag[3],High,True,
+PhysioNet-1.0.1,S01,S01_STRESS,First Rest,V1,1361351417.00,1361351857.00,898,1338,rest,Official First Rest recovery between tag[3] and tag[4],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S01,S01_STRESS,TMCT,V1,1361351857.00,1361351982.00,1338,1463,stress,Official Trier Mental Challenge Test between tag[4] and tag[5],High,True,
+PhysioNet-1.0.1,S01,S01_STRESS,Second Rest,V1,1361351982.00,1361352289.00,1463,1770,rest,Official Second Rest recovery between tag[5] and tag[6],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S01,S01_STRESS,Opinion_Subtract_Block,V1,1361352289.00,1361352466.00,1770,1947,stress,Official continuous Opinion + Opposite Opinion + Subtract block (tag[6]..tag[11]),High,True,
+PhysioNet-1.0.1,S02,S02_STRESS,Excluded_Session,V1,NA,NA,0,3096,excluded,Official exclusion rule,Low,False,Duplicated raw values per data_constraints.txt
+PhysioNet-1.0.1,S03,S03_STRESS,Pre_Protocol_Setup,V1,1362557053.00,1362557331.00,0,278,setup,Watch strapping and pre-baseline setup before tag[0],Medium,False,Pre-protocol device setup motion; not resting baseline
+PhysioNet-1.0.1,S03,S03_STRESS,Baseline,V1,1362557331.00,1362557518.00,278,465,baseline,Official resting baseline between tag[0] and tag[1],High,True,
+PhysioNet-1.0.1,S03,S03_STRESS,Stroop,V1,1362557605.00,1362557709.00,552,656,stress,Official Stroop color-word test between tag[2] and tag[3],High,True,
+PhysioNet-1.0.1,S03,S03_STRESS,First Rest,V1,1362557709.00,1362557965.00,656,912,rest,Official First Rest recovery between tag[3] and tag[4],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S03,S03_STRESS,TMCT,V1,1362557965.00,1362558093.00,912,1040,stress,Official Trier Mental Challenge Test between tag[4] and tag[5],High,True,
+PhysioNet-1.0.1,S03,S03_STRESS,Second Rest,V1,1362558093.00,1362558388.00,1040,1335,rest,Official Second Rest recovery between tag[5] and tag[6],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S03,S03_STRESS,Opinion_Subtract_Block,V1,1362558388.00,1362558535.00,1335,1482,stress,Official continuous Opinion + Opposite Opinion + Subtract block (tag[6]..tag[11]),High,True,
+PhysioNet-1.0.1,S04,S04_STRESS,Pre_Protocol_Setup,V1,1361676229.00,1361676410.00,0,181,setup,Watch strapping and pre-baseline setup before tag[0],Medium,False,Pre-protocol device setup motion; not resting baseline
+PhysioNet-1.0.1,S04,S04_STRESS,Baseline,V1,1361676410.00,1361676590.00,181,361,baseline,Official resting baseline between tag[0] and tag[1],High,True,
+PhysioNet-1.0.1,S04,S04_STRESS,Stroop,V1,1361676748.00,1361676844.00,519,615,stress,Official Stroop color-word test between tag[2] and tag[3],High,True,
+PhysioNet-1.0.1,S04,S04_STRESS,First Rest,V1,1361676844.00,1361677218.00,615,989,rest,Official First Rest recovery between tag[3] and tag[4],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S04,S04_STRESS,TMCT,V1,1361677218.00,1361677355.00,989,1126,stress,Official Trier Mental Challenge Test between tag[4] and tag[5],High,True,
+PhysioNet-1.0.1,S04,S04_STRESS,Second Rest,V1,1361677355.00,1361677699.00,1126,1470,rest,Official Second Rest recovery between tag[5] and tag[6],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S04,S04_STRESS,Opinion_Subtract_Block,V1,1361677699.00,1361677894.00,1470,1665,stress,Official continuous Opinion + Opposite Opinion + Subtract block (tag[6]..tag[11]),High,True,
+PhysioNet-1.0.1,S05,S05_STRESS,Pre_Protocol_Setup,V1,1361587586.00,1361587782.00,0,196,setup,Watch strapping and pre-baseline setup before tag[0],Medium,False,Pre-protocol device setup motion; not resting baseline
+PhysioNet-1.0.1,S05,S05_STRESS,Baseline,V1,1361587782.00,1361587965.00,196,379,baseline,Official resting baseline between tag[0] and tag[1],High,True,
+PhysioNet-1.0.1,S05,S05_STRESS,Stroop,V1,1361588064.00,1361588176.00,478,590,stress,Official Stroop color-word test between tag[2] and tag[3],High,True,
+PhysioNet-1.0.1,S05,S05_STRESS,First Rest,V1,1361588176.00,1361588512.00,590,926,rest,Official First Rest recovery between tag[3] and tag[4],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S05,S05_STRESS,TMCT,V1,1361588512.00,1361588681.00,926,1095,stress,Official Trier Mental Challenge Test between tag[4] and tag[5],High,True,
+PhysioNet-1.0.1,S05,S05_STRESS,Second Rest,V1,1361588681.00,1361588908.00,1095,1322,rest,Official Second Rest recovery between tag[5] and tag[6],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S05,S05_STRESS,Opinion_Subtract_Block,V1,1361588908.00,1361589111.00,1322,1525,stress,Official continuous Opinion + Opposite Opinion + Subtract block (tag[6]..tag[11]),High,True,
+PhysioNet-1.0.1,S06,S06_STRESS,Pre_Protocol_Setup,V1,1361589779.00,1361589834.00,0,55,setup,Watch strapping and pre-baseline setup before tag[0],Medium,False,Pre-protocol device setup motion; not resting baseline
+PhysioNet-1.0.1,S06,S06_STRESS,Baseline,V1,1361589834.00,1361590027.00,55,248,baseline,Official resting baseline between tag[0] and tag[1],High,True,
+PhysioNet-1.0.1,S06,S06_STRESS,Stroop,V1,1361590113.00,1361590241.00,334,462,stress,Official Stroop color-word test between tag[2] and tag[3],High,True,
+PhysioNet-1.0.1,S06,S06_STRESS,First Rest,V1,1361590241.00,1361590575.00,462,796,rest,Official First Rest recovery between tag[3] and tag[4],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S06,S06_STRESS,TMCT,V1,1361590575.00,1361590715.00,796,936,stress,Official Trier Mental Challenge Test between tag[4] and tag[5],High,True,
+PhysioNet-1.0.1,S06,S06_STRESS,Second Rest,V1,1361590715.00,1361591020.00,936,1241,rest,Official Second Rest recovery between tag[5] and tag[6],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S06,S06_STRESS,Opinion_Subtract_Block,V1,1361591020.00,1361591175.00,1241,1396,stress,Official continuous Opinion + Opposite Opinion + Subtract block (tag[6]..tag[11]),High,True,
+PhysioNet-1.0.1,S07,S07_STRESS,Pre_Protocol_Setup,V1,1361674075.00,1361674190.00,0,115,setup,Watch strapping and pre-baseline setup before tag[0],Medium,False,Pre-protocol device setup motion; not resting baseline
+PhysioNet-1.0.1,S07,S07_STRESS,Baseline,V1,1361674190.00,1361674353.00,115,278,baseline,Official resting baseline between tag[0] and tag[1],High,True,
+PhysioNet-1.0.1,S07,S07_STRESS,Stroop,V1,1361674464.00,1361674567.00,389,492,stress,Official Stroop color-word test between tag[2] and tag[3],High,True,
+PhysioNet-1.0.1,S07,S07_STRESS,First Rest,V1,1361674567.00,1361674839.00,492,764,rest,Official First Rest recovery between tag[3] and tag[4],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S07,S07_STRESS,TMCT,V1,1361674839.00,1361674968.00,764,893,stress,Official Trier Mental Challenge Test between tag[4] and tag[5],High,True,
+PhysioNet-1.0.1,S07,S07_STRESS,Second Rest,V1,1361674968.00,1361675253.00,893,1178,rest,Official Second Rest recovery between tag[5] and tag[6],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S07,S07_STRESS,Opinion_Subtract_Block,V1,1361675253.00,1361675433.00,1178,1358,stress,Official continuous Opinion + Opposite Opinion + Subtract block (tag[6]..tag[11]),High,True,
+PhysioNet-1.0.1,S08,S08_STRESS,Pre_Protocol_Setup,V1,1361602924.00,1361602968.00,0,44,setup,Watch strapping and pre-baseline setup before tag[0],Medium,False,Pre-protocol device setup motion; not resting baseline
+PhysioNet-1.0.1,S08,S08_STRESS,Baseline,V1,1361602968.00,1361603144.00,44,220,baseline,Official resting baseline between tag[0] and tag[1],High,True,
+PhysioNet-1.0.1,S08,S08_STRESS,Stroop,V1,1361603289.00,1361603394.00,365,470,stress,Official Stroop color-word test between tag[2] and tag[3],High,True,
+PhysioNet-1.0.1,S08,S08_STRESS,First Rest,V1,1361603394.00,1361603683.00,470,759,rest,Official First Rest recovery between tag[3] and tag[4],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S08,S08_STRESS,TMCT,V1,1361603683.00,1361603838.00,759,914,stress,Official Trier Mental Challenge Test between tag[4] and tag[5],High,True,
+PhysioNet-1.0.1,S08,S08_STRESS,Second Rest,V1,1361603838.00,1361604106.00,914,1182,rest,Official Second Rest recovery between tag[5] and tag[6],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S08,S08_STRESS,Opinion_Subtract_Block,V1,1361604106.00,1361604262.00,1182,1338,stress,Official continuous Opinion + Opposite Opinion + Subtract block (tag[6]..tag[11]),High,True,
+PhysioNet-1.0.1,S09,S09_STRESS,Pre_Protocol_Setup,V1,1361672128.00,1361672282.00,0,154,setup,Watch strapping and pre-baseline setup before tag[0],Medium,False,Pre-protocol device setup motion; not resting baseline
+PhysioNet-1.0.1,S09,S09_STRESS,Baseline,V1,1361672282.00,1361672474.00,154,346,baseline,Official resting baseline between tag[0] and tag[1],High,True,
+PhysioNet-1.0.1,S09,S09_STRESS,Stroop,V1,1361672573.00,1361672672.00,445,544,stress,Official Stroop color-word test between tag[2] and tag[3],High,True,
+PhysioNet-1.0.1,S09,S09_STRESS,First Rest,V1,1361672672.00,1361672914.00,544,786,rest,Official First Rest recovery between tag[3] and tag[4],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S09,S09_STRESS,TMCT,V1,1361672914.00,1361673045.00,786,917,stress,Official Trier Mental Challenge Test between tag[4] and tag[5],High,True,
+PhysioNet-1.0.1,S09,S09_STRESS,Second Rest,V1,1361673045.00,1361673323.00,917,1195,rest,Official Second Rest recovery between tag[5] and tag[6],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S09,S09_STRESS,Opinion_Subtract_Block,V1,1361673323.00,1361673500.00,1195,1372,stress,Official continuous Opinion + Opposite Opinion + Subtract block (tag[6]..tag[11]),High,True,
+PhysioNet-1.0.1,S10,S10_STRESS,Pre_Protocol_Setup,V1,1361610207.00,1361610274.00,0,67,setup,Watch strapping and pre-baseline setup before tag[0],Medium,False,Pre-protocol device setup motion; not resting baseline
+PhysioNet-1.0.1,S10,S10_STRESS,Baseline,V1,1361610274.00,1361610458.00,67,251,baseline,Official resting baseline between tag[0] and tag[1],High,True,
+PhysioNet-1.0.1,S10,S10_STRESS,Stroop,V1,1361610567.00,1361610684.00,360,477,stress,Official Stroop color-word test between tag[2] and tag[3],High,True,
+PhysioNet-1.0.1,S10,S10_STRESS,First Rest,V1,1361610684.00,1361611046.00,477,839,rest,Official First Rest recovery between tag[3] and tag[4],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S10,S10_STRESS,TMCT,V1,1361611046.00,1361611181.00,839,974,stress,Official Trier Mental Challenge Test between tag[4] and tag[5],High,True,
+PhysioNet-1.0.1,S10,S10_STRESS,Second Rest,V1,1361611181.00,1361611550.00,974,1343,rest,Official Second Rest recovery between tag[5] and tag[6],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S10,S10_STRESS,Opinion_Subtract_Block,V1,1361611550.00,1361611700.00,1343,1493,stress,Official continuous Opinion + Opposite Opinion + Subtract block (tag[6]..tag[11]),High,True,
+PhysioNet-1.0.1,S11,S11_STRESS,Pre_Protocol_Setup,V1,1361667105.00,1361667129.00,0,24,setup,Watch strapping and pre-baseline setup before tag[0],Medium,False,Pre-protocol device setup motion; not resting baseline
+PhysioNet-1.0.1,S11,S11_STRESS,Baseline,V1,1361667129.00,1361667299.00,24,194,baseline,Official resting baseline between tag[0] and tag[1],High,True,
+PhysioNet-1.0.1,S11,S11_STRESS,Stroop,V1,1361667408.00,1361667560.00,303,455,stress,Official Stroop color-word test between tag[2] and tag[3],High,True,
+PhysioNet-1.0.1,S11,S11_STRESS,First Rest,V1,1361667560.00,1361667839.00,455,734,rest,Official First Rest recovery between tag[3] and tag[4],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S11,S11_STRESS,TMCT,V1,1361667839.00,1361667990.00,734,885,stress,Official Trier Mental Challenge Test between tag[4] and tag[5],High,True,
+PhysioNet-1.0.1,S11,S11_STRESS,Second Rest,V1,1361667990.00,1361668240.00,885,1135,rest,Official Second Rest recovery between tag[5] and tag[6],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S11,S11_STRESS,Opinion_Subtract_Block,V1,1361668240.00,1361668405.00,1135,1300,stress,Official continuous Opinion + Opposite Opinion + Subtract block (tag[6]..tag[11]),High,True,
+PhysioNet-1.0.1,S12,S12_STRESS,Pre_Protocol_Setup,V1,1361669196.00,1361669301.00,0,105,setup,Watch strapping and pre-baseline setup before tag[0],Medium,False,Pre-protocol device setup motion; not resting baseline
+PhysioNet-1.0.1,S12,S12_STRESS,Baseline,V1,1361669301.00,1361669500.00,105,304,baseline,Official resting baseline between tag[0] and tag[1],High,True,
+PhysioNet-1.0.1,S12,S12_STRESS,Stroop,V1,1361669603.00,1361669712.00,407,516,stress,Official Stroop color-word test between tag[2] and tag[3],High,True,
+PhysioNet-1.0.1,S12,S12_STRESS,First Rest,V1,1361669712.00,1361670067.00,516,871,rest,Official First Rest recovery between tag[3] and tag[4],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S12,S12_STRESS,TMCT,V1,1361670067.00,1361670198.00,871,1002,stress,Official Trier Mental Challenge Test between tag[4] and tag[5],High,True,
+PhysioNet-1.0.1,S12,S12_STRESS,Second Rest,V1,1361670198.00,1361670537.00,1002,1341,rest,Official Second Rest recovery between tag[5] and tag[6],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S12,S12_STRESS,Opinion_Subtract_Block,V1,1361670537.00,1361670711.00,1341,1515,stress,Official continuous Opinion + Opposite Opinion + Subtract block (tag[6]..tag[11]),High,True,
+PhysioNet-1.0.1,S13,S13_STRESS,Pre_Protocol_Setup,V1,1361693144.00,1361693317.00,0,173,setup,Watch strapping and pre-baseline setup before tag[0],Medium,False,Pre-protocol device setup motion; not resting baseline
+PhysioNet-1.0.1,S13,S13_STRESS,Baseline,V1,1361693317.00,1361693526.00,173,382,baseline,Official resting baseline between tag[0] and tag[1],High,True,
+PhysioNet-1.0.1,S13,S13_STRESS,Stroop,V1,1361693645.00,1361693758.00,501,614,stress,Official Stroop color-word test between tag[2] and tag[3],High,True,
+PhysioNet-1.0.1,S13,S13_STRESS,First Rest,V1,1361693758.00,1361694119.00,614,975,rest,Official First Rest recovery between tag[3] and tag[4],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S13,S13_STRESS,TMCT,V1,1361694119.00,1361694246.00,975,1102,stress,Official Trier Mental Challenge Test between tag[4] and tag[5],High,True,
+PhysioNet-1.0.1,S13,S13_STRESS,Second Rest,V1,1361694246.00,1361694543.00,1102,1399,rest,Official Second Rest recovery between tag[5] and tag[6],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S13,S13_STRESS,Opinion_Subtract_Block,V1,1361694543.00,1361694706.00,1399,1562,stress,Official continuous Opinion + Opposite Opinion + Subtract block (tag[6]..tag[11]),High,True,
+PhysioNet-1.0.1,S14,S14_STRESS,Pre_Protocol_Setup,V1,1361695061.00,1361695263.00,0,202,setup,Watch strapping and pre-baseline setup before tag[0],Medium,False,Pre-protocol device setup motion; not resting baseline
+PhysioNet-1.0.1,S14,S14_STRESS,Baseline,V1,1361695263.00,1361695473.00,202,412,baseline,Official resting baseline between tag[0] and tag[1],High,True,
+PhysioNet-1.0.1,S14,S14_STRESS,Stroop,V1,1361695599.00,1361695708.00,538,647,stress,Official Stroop color-word test between tag[2] and tag[3],High,True,
+PhysioNet-1.0.1,S14,S14_STRESS,First Rest,V1,1361695708.00,1361696060.00,647,999,rest,Official First Rest recovery between tag[3] and tag[4],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S14,S14_STRESS,TMCT,V1,1361696060.00,1361696197.00,999,1136,stress,Official Trier Mental Challenge Test between tag[4] and tag[5],High,True,
+PhysioNet-1.0.1,S14,S14_STRESS,Second Rest,V1,1361696197.00,1361696529.00,1136,1468,rest,Official Second Rest recovery between tag[5] and tag[6],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S14,S14_STRESS,Opinion_Subtract_Block,V1,1361696529.00,1361696677.00,1468,1616,stress,Official continuous Opinion + Opposite Opinion + Subtract block (tag[6]..tag[11]),High,True,
+PhysioNet-1.0.1,S15,S15_STRESS,Pre_Protocol_Setup,V1,1361759759.00,1361759957.00,0,198,setup,Watch strapping and pre-baseline setup before tag[0],Medium,False,Pre-protocol device setup motion; not resting baseline
+PhysioNet-1.0.1,S15,S15_STRESS,Baseline,V1,1361759957.00,1361760164.00,198,405,baseline,Official resting baseline between tag[0] and tag[1],High,True,
+PhysioNet-1.0.1,S15,S15_STRESS,Stroop,V1,1361760235.00,1361760345.00,476,586,stress,Official Stroop color-word test between tag[2] and tag[3],High,True,
+PhysioNet-1.0.1,S15,S15_STRESS,First Rest,V1,1361760345.00,1361760696.00,586,937,rest,Official First Rest recovery between tag[3] and tag[4],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S15,S15_STRESS,TMCT,V1,1361760696.00,1361760858.00,937,1099,stress,Official Trier Mental Challenge Test between tag[4] and tag[5],High,True,
+PhysioNet-1.0.1,S15,S15_STRESS,Second Rest,V1,1361760858.00,1361761168.00,1099,1409,rest,Official Second Rest recovery between tag[5] and tag[6],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S15,S15_STRESS,Opinion_Subtract_Block,V1,1361761168.00,1361761327.00,1409,1568,stress,Official continuous Opinion + Opposite Opinion + Subtract block (tag[6]..tag[11]),High,True,
+PhysioNet-1.0.1,S16,S16_STRESS,Pre_Protocol_Setup,V1,1361769354.00,1361769684.00,0,330,setup,Watch strapping and pre-baseline setup before tag[0],Medium,False,Pre-protocol device setup motion; not resting baseline
+PhysioNet-1.0.1,S16,S16_STRESS,Baseline,V1,1361769684.00,1361769877.00,330,523,baseline,Official resting baseline between tag[0] and tag[1],High,True,
+PhysioNet-1.0.1,S16,S16_STRESS,Stroop,V1,1361769980.00,1361770081.00,626,727,stress,Official Stroop color-word test between tag[2] and tag[3],High,True,
+PhysioNet-1.0.1,S16,S16_STRESS,First Rest,V1,1361770081.00,1361770313.00,727,959,rest,Official First Rest recovery between tag[3] and tag[4],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S16,S16_STRESS,TMCT,V1,1361770313.00,1361770465.00,959,1111,stress,Official Trier Mental Challenge Test between tag[4] and tag[5],High,True,
+PhysioNet-1.0.1,S16,S16_STRESS,Second Rest,V1,1361770465.00,1361770811.00,1111,1457,rest,Official Second Rest recovery between tag[5] and tag[6],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S16,S16_STRESS,Opinion_Subtract_Block,V1,1361770811.00,1361770963.00,1457,1609,stress,Official continuous Opinion + Opposite Opinion + Subtract block (tag[6]..tag[11]),High,True,
+PhysioNet-1.0.1,S17,S17_STRESS,Pre_Protocol_Setup,V1,1361785208.00,1361785510.00,0,302,setup,Watch strapping and pre-baseline setup before tag[0],Medium,False,Pre-protocol device setup motion; not resting baseline
+PhysioNet-1.0.1,S17,S17_STRESS,Baseline,V1,1361785510.00,1361785684.00,302,476,baseline,Official resting baseline between tag[0] and tag[1],High,True,
+PhysioNet-1.0.1,S17,S17_STRESS,Stroop,V1,1361785786.00,1361785878.00,578,670,stress,Official Stroop color-word test between tag[2] and tag[3],High,True,
+PhysioNet-1.0.1,S17,S17_STRESS,First Rest,V1,1361785878.00,1361786156.00,670,948,rest,Official First Rest recovery between tag[3] and tag[4],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S17,S17_STRESS,TMCT,V1,1361786156.00,1361786315.00,948,1107,stress,Official Trier Mental Challenge Test between tag[4] and tag[5],High,True,
+PhysioNet-1.0.1,S17,S17_STRESS,Second Rest,V1,1361786315.00,1361786624.00,1107,1416,rest,Official Second Rest recovery between tag[5] and tag[6],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S17,S17_STRESS,Opinion_Subtract_Block,V1,1361786624.00,1361786767.00,1416,1559,stress,Official continuous Opinion + Opposite Opinion + Subtract block (tag[6]..tag[11]),High,True,
+PhysioNet-1.0.1,S18,S18_STRESS,Pre_Protocol_Setup,V1,1361787456.00,1361787693.00,0,237,setup,Watch strapping and pre-baseline setup before tag[0],Medium,False,Pre-protocol device setup motion; not resting baseline
+PhysioNet-1.0.1,S18,S18_STRESS,Baseline,V1,1361787693.00,1361787877.00,237,421,baseline,Official resting baseline between tag[0] and tag[1],High,True,
+PhysioNet-1.0.1,S18,S18_STRESS,Stroop,V1,1361787973.00,1361788087.00,517,631,stress,Official Stroop color-word test between tag[2] and tag[3],High,True,
+PhysioNet-1.0.1,S18,S18_STRESS,First Rest,V1,1361788087.00,1361788404.00,631,948,rest,Official First Rest recovery between tag[3] and tag[4],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S18,S18_STRESS,TMCT,V1,1361788404.00,1361788562.00,948,1106,stress,Official Trier Mental Challenge Test between tag[4] and tag[5],High,True,
+PhysioNet-1.0.1,S18,S18_STRESS,Second Rest,V1,1361788562.00,1361788876.00,1106,1420,rest,Official Second Rest recovery between tag[5] and tag[6],Medium,False,Recovery rest transition; excluded from pure binary stress vs baseline
+PhysioNet-1.0.1,S18,S18_STRESS,Opinion_Subtract_Block,V1,1361788876.00,1361789022.00,1420,1566,stress,Official continuous Opinion + Opposite Opinion + Subtract block (tag[6]..tag[11]),High,True,
+PhysioNet-1.0.1,S01,S01_AEROBIC,Stationary_Bicycle_Aerobic,V1,1362300396.00,1362302134.00,179,1917,exercise_aerobic,Tag-aligned stationary cycling protocol per Wearable_Dataset.ipynb,High,True,
+PhysioNet-1.0.1,S02,S02_AEROBIC,Stationary_Bicycle_Aerobic,V1,1361610940.00,1361612679.00,179,1918,exercise_aerobic,Tag-aligned stationary cycling protocol per Wearable_Dataset.ipynb,High,True,
+PhysioNet-1.0.1,S03,S03_AEROBIC,Stationary_Bicycle_Aerobic,V1,1361351348.00,1361352785.00,0,1437,exercise_aerobic,Tag-aligned stationary cycling protocol per Wearable_Dataset.ipynb,Low,False,Protocol early end or connection loss per data_constraints.txt
+PhysioNet-1.0.1,S04,S04_AEROBIC,Stationary_Bicycle_Aerobic,V1,1361580799.00,1361582532.00,183,1916,exercise_aerobic,Tag-aligned stationary cycling protocol per Wearable_Dataset.ipynb,High,True,
+PhysioNet-1.0.1,S05,S05_AEROBIC,Stationary_Bicycle_Aerobic,V1,1361760056.00,1361761760.00,179,1883,exercise_aerobic,Tag-aligned stationary cycling protocol per Wearable_Dataset.ipynb,High,True,
+PhysioNet-1.0.1,S06,S06_AEROBIC,Stationary_Bicycle_Aerobic,V1,1361785306.00,1361787071.00,181,1946,exercise_aerobic,Tag-aligned stationary cycling protocol per Wearable_Dataset.ipynb,High,True,
+PhysioNet-1.0.1,S07,S07_AEROBIC,Stationary_Bicycle_Aerobic,V1,1361588055.00,1361589555.00,0,1500,exercise_aerobic,Tag-aligned stationary cycling protocol per Wearable_Dataset.ipynb,Low,False,Protocol early end or connection loss per data_constraints.txt
+PhysioNet-1.0.1,S08,S08_AEROBIC,Stationary_Bicycle_Aerobic,V1,1361783036.00,1361784783.00,177,1924,exercise_aerobic,Tag-aligned stationary cycling protocol per Wearable_Dataset.ipynb,High,True,
+PhysioNet-1.0.1,S09,S09_AEROBIC,Stationary_Bicycle_Aerobic,V1,1361602378.00,1361604113.00,183,1918,exercise_aerobic,Tag-aligned stationary cycling protocol per Wearable_Dataset.ipynb,High,True,
+PhysioNet-1.0.1,S10,S10_AEROBIC,Stationary_Bicycle_Aerobic,V1,1362711989.00,1362713721.00,179,1911,exercise_aerobic,Tag-aligned stationary cycling protocol per Wearable_Dataset.ipynb,High,True,
+PhysioNet-1.0.1,S11,S11_AEROBIC,Stationary_Bicycle_Aerobic,V1,NA,NA,0,1500,exercise_aerobic,Tag-aligned stationary cycling protocol per Wearable_Dataset.ipynb,Low,False,Protocol early end or connection loss per data_constraints.txt
+PhysioNet-1.0.1,S13,S13_AEROBIC,Stationary_Bicycle_Aerobic,V1,1361769775.00,1361771506.00,219,1950,exercise_aerobic,Tag-aligned stationary cycling protocol per Wearable_Dataset.ipynb,High,True,
+PhysioNet-1.0.1,S14,S14_AEROBIC,Stationary_Bicycle_Aerobic,V1,1361936691.00,1361938487.00,181,1977,exercise_aerobic,Tag-aligned stationary cycling protocol per Wearable_Dataset.ipynb,High,True,
+PhysioNet-1.0.1,S15,S15_AEROBIC,Stationary_Bicycle_Aerobic,V1,1362716568.00,1362718301.00,184,1917,exercise_aerobic,Tag-aligned stationary cycling protocol per Wearable_Dataset.ipynb,High,True,
+PhysioNet-1.0.1,S16,S16_AEROBIC,Stationary_Bicycle_Aerobic,V1,1362214673.00,1362216416.00,182,1925,exercise_aerobic,Tag-aligned stationary cycling protocol per Wearable_Dataset.ipynb,High,True,
+PhysioNet-1.0.1,S17,S17_AEROBIC,Stationary_Bicycle_Aerobic,V1,1363168570.00,1363170319.00,172,1921,exercise_aerobic,Tag-aligned stationary cycling protocol per Wearable_Dataset.ipynb,High,True,
+PhysioNet-1.0.1,S18,S18_AEROBIC,Stationary_Bicycle_Aerobic,V1,1362709741.00,1362711479.00,175,1913,exercise_aerobic,Tag-aligned stationary cycling protocol per Wearable_Dataset.ipynb,High,True,

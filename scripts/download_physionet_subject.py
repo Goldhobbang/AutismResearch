@@ -16,7 +16,10 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / 'data' / 'raw' / 'physionet_v1'
 SUMS_PATH = ROOT / 'data' / 'registry' / 'SHA256SUMS.txt'
 SEGMENTS_PATH = ROOT / 'data' / 'processed' / 'physionet' / 'verified_segments.csv'
-BASE_URL = 'https://physionet.org/files/wearable-device-dataset/1.0.1/'
+BASE_URLS = [
+    'https://physionet-open.s3.amazonaws.com/wearable-device-dataset/1.0.1/',
+    'https://physionet.org/files/wearable-device-dataset/1.0.1/',
+]
 
 
 def load_official_hashes(path=SUMS_PATH):
@@ -46,26 +49,39 @@ def download_and_verify_file(rel_path, official_hashes, max_retries=3):
             return True
         else:
             print(f'[CORRUPT/MISMATCH] {rel_path} (local {curr_hash[:8]} != {expected_hash[:8]}), re-downloading...', flush=True)
+            dest.unlink(missing_ok=True)
 
-    url = BASE_URL + rel_path
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+    part_path = dest.with_suffix(dest.suffix + '.part')
 
     for attempt in range(1, max_retries + 1):
+        base_url = BASE_URLS[(attempt - 1) % len(BASE_URLS)]
+        url = base_url + rel_path
         try:
-            print(f'[DOWNLOADING] {url} -> {dest} (attempt {attempt}/{max_retries})', flush=True)
-            with urllib.request.urlopen(req, timeout=90) as resp, open(dest, 'wb') as out:
-                while True:
-                    chunk = resp.read(65536)
-                    if not chunk:
-                        break
-                    out.write(chunk)
+            existing_bytes = part_path.stat().st_size if part_path.exists() else 0
+            headers = {'User-Agent': 'Mozilla/5.0'}
+            if existing_bytes > 0:
+                headers['Range'] = f'bytes={existing_bytes}-'
 
-            with open(dest, 'rb') as f:
+            req = urllib.request.Request(url, headers=headers)
+            print(f'[DOWNLOADING] {url} -> {dest} (attempt {attempt}/{max_retries}, resume={existing_bytes})', flush=True)
+            with urllib.request.urlopen(req, timeout=90) as resp:
+                status = getattr(resp, 'status', 200)
+                mode = 'ab' if (existing_bytes > 0 and status == 206) else 'wb'
+                with open(part_path, mode) as out:
+                    while True:
+                        chunk = resp.read(65536)
+                        if not chunk:
+                            break
+                        out.write(chunk)
+
+            with open(part_path, 'rb') as f:
                 file_hash = hashlib.sha256(f.read()).hexdigest()
 
             if expected_hash and file_hash != expected_hash:
+                part_path.unlink(missing_ok=True)
                 raise ValueError(f'Hash mismatch for {rel_path}: got {file_hash}, expected {expected_hash}')
 
+            part_path.replace(dest)
             print(f'[VERIFIED SHA256] {rel_path} ({file_hash[:16]}...)', flush=True)
             return True
         except Exception as e:
@@ -104,7 +120,7 @@ def main():
     files = []
     for sub in target_subs:
         for session in ['STRESS', 'AEROBIC']:
-            for name in ['ACC.csv', 'BVP.csv', 'EDA.csv', 'tags.csv']:
+            for name in ['ACC.csv', 'BVP.csv', 'EDA.csv', 'TEMP.csv', 'HR.csv', 'IBI.csv', 'tags.csv']:
                 rel_path = f"Wearable_Dataset/{session}/{sub}/{name}"
                 if rel_path in hashes:
                     files.append(rel_path)

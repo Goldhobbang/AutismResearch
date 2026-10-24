@@ -11,9 +11,9 @@
 
 | 과제 구분 | 정의 | 현재 상태 | 주요 근거 |
 |---|---|:---:|---|
-| **D1** | 성인 실험실 스트레스 분류 (WESAD) | **완료 (VERIFIED)** | 15명 원본 무결성 검증, 15-fold LOSO 교차검증 (LR AP 0.9048, RF 0.8586, ACC 0.9245), 100% 비트 단위 독립 재현 완료 |
-| **D2** | 운동/일상활동과 스트레스 구별 (PhysioNet) | **검증 완료 (VERIFIED)** | 공식 원본 센서(EDA/BVP/ACC) 해시 검증 획득, 검증 세그먼트 Zero-shot 외부 검증(rf AUROC 0.601, eda 0.587) 및 유산소 운동 혼동 실측 완료 (ACC 모델의 100% 운동 오탐 및 계층적 Gating 필요성 실증) |
-| **D3** | 자폐 멜트다운 60초 사전 경보 (ASD Onset) | **차단/미실행 (BLOCKED)** | 손목 신호와 실제 행동 Onset을 결합한 공인 자료 부재로 학습 차단 유지. 정식 데이터 접근 신청 패키지(`ASD_DATA_ACCESS_APPLICATION_PACKAGE.md`) 완성 |
+| **D1** | 성인 실험실 스트레스 분류 (WESAD) | **완료 (VERIFIED)** | 15명 원본 무결성 검증, 15-fold LOSO 교차검증 (기존 `lr_all` AP 0.9048, AUROC 0.9519 $\rightarrow$ 고도화 `LR_Calib_Temporal` AP **0.9353**, AUROC **0.9634**; `RF_Calib_Temporal_RotInvACC` AP **0.9593**, AUROC **0.9813**) |
+| **D2** | 운동/일상활동과 스트레스 구별 (PhysioNet) | **18명 전수 확장 완료 (VERIFIED)** | V1 `S01~S18` 238개 원본 센서/태그 파일 SHA-256 100% 검증 완료. 적격 STRESS 17명·AEROBIC 14명 외부 검증에서 `Ensemble_Calib_Temporal` + `soft_dynamic` 게이트로 평균 AUROC **0.9156** (보정창 제외 `Strict_PostCal` **0.8154~0.8447**), Stress Recall **62.74%** (기존 `b46a2e9` `rf_all` **0.25%** 대비 완전 복구), 기저 FPR **2.16%**, 유산소 운동 오경보율 **1.27%** 달성 ([`FOLLOWUP_MODEL_ADVANCEMENT_REPORT_KO.md`](file:///D:/Autism/reports/FOLLOWUP_MODEL_ADVANCEMENT_REPORT_KO.md)) |
+| **D3** | 자폐 멜트다운 1·3·5분 사전 경보 (ASD Onset) | **차단/미실행 (BLOCKED)** | 손목 신호와 실제 행동 Onset을 결합한 공인 자료 부재로 학습 차단(`N/A`) 유지. 1·3·5분 선행 예측 기술성·문헌 분석([`ASD_EVENT_FORECASTING.md`](file:///D:/Autism/reports/ASD_EVENT_FORECASTING.md)) 및 정식 데이터 접근 신청 패키지([`ASD_DATA_ACCESS_APPLICATION_PACKAGE.md`](file:///D:/Autism/reports/ASD_DATA_ACCESS_APPLICATION_PACKAGE.md)) 완성 |
 
 ---
 

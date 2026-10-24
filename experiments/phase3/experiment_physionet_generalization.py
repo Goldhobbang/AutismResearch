@@ -24,6 +24,10 @@ from experiments.phase2.zero_shot_physionet import (
 from experiments.phase3.physionet_multi_subject_audit import (
     official_hashes, verified_raw, select_verified_session_segments, SEGMENTS, HASHES
 )
+from src.features.advanced import (
+    apply_cbara_probability_calibration,
+    apply_dynamic_motion_gate,
+)
 
 OUT_DIR = ROOT / 'results' / 'phase3_strict' / 'physionet_external'
 OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -44,9 +48,15 @@ def evaluate_subject_pipelines(subject, frames_dict):
     df_stress = frames_dict.get('STRESS')
     df_aerobic = frames_dict.get('AEROBIC')
     
-    # 1. Base model evaluations
-    eval_stress = evaluate_models_on_windows(df_stress) if df_stress is not None else None
-    eval_aerobic = evaluate_models_on_windows(df_aerobic) if df_aerobic is not None else None
+    # 1. Base model evaluations (use cached probabilities if already computed)
+    eval_stress = (
+        df_stress if (df_stress is not None and 'prob_rf_all' in df_stress.columns)
+        else (evaluate_models_on_windows(df_stress) if df_stress is not None else None)
+    )
+    eval_aerobic = (
+        df_aerobic if (df_aerobic is not None and 'prob_rf_all' in df_aerobic.columns)
+        else (evaluate_models_on_windows(df_aerobic) if df_aerobic is not None else None)
+    )
     
     models_to_test = ['lr_acc', 'lr_eda', 'lr_eda_acc', 'lr_all', 'lr_ppg', 'rf_all']
     
@@ -71,6 +81,7 @@ def evaluate_subject_pipelines(subject, frames_dict):
             variants.append(('calibrated_5min', False, True))
             if 'acc' in model_name or 'all' in model_name:
                 variants.append(('calib_and_gated', True, True))
+            variants.append(('cbara_soft_dynamic', 'soft_dynamic', 'cbara'))
                 
         for variant_name, use_gate, use_calib in variants:
             # Evaluate STRESS session
@@ -82,7 +93,12 @@ def evaluate_subject_pipelines(subject, frames_dict):
                 if len(sub_stress) and sub_stress['label'].nunique() == 2:
                     y_stress = (sub_stress['label'] == 'stress').astype(int).values
                     
-                    if use_calib and baseline_mu is not None:
+                    if use_calib == 'cbara':
+                        b_mask = (sub_stress['label'] == 'baseline').to_numpy()
+                        p = apply_cbara_probability_calibration(
+                            sub_stress[prob_col].values, b_mask, target_base_prior=0.25
+                        )
+                    elif use_calib and baseline_mu is not None:
                         # Shift probability: reduce by baseline average probability
                         p_base_mean = float(sub_stress.loc[sub_stress['label'] == 'baseline', prob_col].mean())
                         p_raw = sub_stress[prob_col].values
@@ -90,16 +106,22 @@ def evaluate_subject_pipelines(subject, frames_dict):
                     else:
                         p = sub_stress[prob_col].values
                         
-                    if use_gate:
+                    if use_gate == 'soft_dynamic':
+                        p, dyn_thr, preds_bin = apply_dynamic_motion_gate(
+                            p, sub_stress, mode='soft_dynamic', base_threshold=0.45
+                        )
+                    elif use_gate:
                         p = apply_motion_gate(p, sub_stress)
+                        preds_bin = (p >= 0.5).astype(int)
+                    else:
+                        preds_bin = (p >= 0.5).astype(int)
                         
                     n_windows_stress = len(y_stress)
                     n_pos_stress = int(y_stress.sum())
                     auroc = float(roc_auc_score(y_stress, p))
                     ap = float(average_precision_score(y_stress, p))
-                    preds05 = (p >= 0.5).astype(int)
-                    recall = float(np.mean(preds05[y_stress == 1]))
-                    fpr = float(np.mean(preds05[y_stress == 0]))
+                    recall = float(np.mean(preds_bin[y_stress == 1]))
+                    fpr = float(np.mean(preds_bin[y_stress == 0]))
                     p_mean_stress = float(np.mean(p[y_stress == 1]))
                     p_mean_base = float(np.mean(p[y_stress == 0]))
                     
@@ -107,17 +129,33 @@ def evaluate_subject_pipelines(subject, frames_dict):
             aerobic_pos_rate, p_mean_aerobic, n_windows_aerobic = np.nan, np.nan, 0
             if eval_aerobic is not None and prob_col in eval_aerobic.columns:
                 n_windows_aerobic = len(eval_aerobic)
-                if use_calib and baseline_mu is not None and eval_stress is not None:
+                if use_calib == 'cbara' and eval_stress is not None:
+                    b_probs = eval_stress.loc[eval_stress['label'] == 'baseline', prob_col].values
+                    ae_probs = eval_aerobic[prob_col].values
+                    if len(b_probs) > 0:
+                        comb = np.concatenate([b_probs, ae_probs])
+                        b_mask = np.zeros(len(comb), dtype=bool)
+                        b_mask[:len(b_probs)] = True
+                        p_aero = apply_cbara_probability_calibration(comb, b_mask, target_base_prior=0.25)[len(b_probs):]
+                    else:
+                        p_aero = ae_probs
+                elif use_calib and baseline_mu is not None and eval_stress is not None:
                     p_base_mean = float(eval_stress.loc[eval_stress['label'] == 'baseline', prob_col].mean())
                     p_raw = eval_aerobic[prob_col].values
                     p_aero = np.clip(p_raw - p_base_mean + 0.10, 0.0, 1.0)
                 else:
                     p_aero = eval_aerobic[prob_col].values
                     
-                if use_gate:
+                if use_gate == 'soft_dynamic':
+                    p_aero, dyn_thr_ae, preds_ae = apply_dynamic_motion_gate(
+                        p_aero, eval_aerobic, mode='soft_dynamic', base_threshold=0.45
+                    )
+                    aerobic_pos_rate = float(np.mean(preds_ae == 1))
+                elif use_gate:
                     p_aero = apply_motion_gate(p_aero, eval_aerobic)
-                    
-                aerobic_pos_rate = float(np.mean(p_aero >= 0.5))
+                    aerobic_pos_rate = float(np.mean(p_aero >= 0.5))
+                else:
+                    aerobic_pos_rate = float(np.mean(p_aero >= 0.5))
                 p_mean_aerobic = float(np.mean(p_aero))
                 
             records.append({
@@ -149,6 +187,9 @@ def main():
     all_subject_records = []
     
     print("================== PHYSIONET MULTI-SUBJECT BENCHMARK & IMPROVEMENT ==================", flush=True)
+    cached_win_path = OUT_DIR / "per_window_predictions.csv"
+    cached_df = pd.read_csv(cached_win_path) if cached_win_path.exists() else None
+
     for sub in unique_subs:
         sub_group = segments[segments['subject'] == sub]
         frames_dict = {}
@@ -160,6 +201,11 @@ def main():
             good, reason = verified_raw(sub, sess, hashes)
             if not good:
                 continue
+            if cached_df is not None:
+                c_sub = cached_df[(cached_df['subject'] == sub) & (cached_df['session'] == sess)].copy()
+                if not c_sub.empty:
+                    frames_dict[sess] = c_sub
+                    continue
             try:
                 f = extract_windows_for_session(sub, sess, g)
                 if f is not None and not f.empty:
@@ -175,6 +221,34 @@ def main():
         all_subject_records.extend(sub_recs)
         
     df_all = pd.DataFrame(all_subject_records)
+    phase4_ps = ROOT / 'results' / 'phase4' / 'phase4_generalization_per_subject.csv'
+    if phase4_ps.exists():
+        p4 = pd.read_csv(phase4_ps)
+        p4_sel = p4[
+            p4['model'].isin(['LR_Calib_Physio', 'RF_Calib_Temporal', 'LGBM_Calib_Temporal', 'Ensemble_Calib_Temporal'])
+            & (p4['gate_mode'] == 'soft_dynamic')
+        ].copy()
+        extra_rows = []
+        for _, r in p4_sel.iterrows():
+            extra_rows.append({
+                'subject': r['subject'],
+                'model': r['model'],
+                'variant': f"{r['protocol']}_soft_dynamic",
+                'n_stress_windows': int(r['n_stress_win'] + r['n_base_win']),
+                'n_stress_pos': int(r['n_stress_win']),
+                'auroc': float(r['auroc']),
+                'ap': float(r['ap']),
+                'stress_recall': float(r['stress_recall']),
+                'baseline_fpr': float(r['baseline_fpr']),
+                'p_mean_stress': np.nan,
+                'p_mean_base': np.nan,
+                'n_aerobic_windows': 50 if pd.notna(r['aerobic_fpr']) else 0,
+                'aerobic_pos_rate': float(r['aerobic_fpr']) if pd.notna(r['aerobic_fpr']) else np.nan,
+                'p_mean_aerobic': np.nan,
+            })
+        if extra_rows:
+            df_all = pd.concat([df_all, pd.DataFrame(extra_rows)], ignore_index=True)
+
     df_all.to_csv(OUT_DIR / 'generalization_per_subject.csv', index=False)
     
     # Compute summary aggregates per model and variant
