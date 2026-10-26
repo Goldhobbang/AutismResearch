@@ -1,0 +1,41 @@
+{
+  "all_passed": true,
+  "checks": [
+    {
+      "check": "protected_sha256_unchanged",
+      "n": 907,
+      "changed": [],
+      "passed": true
+    },
+    {
+      "check": "fixed_grid_30s_spacing",
+      "n_windows": 71274,
+      "max_abs_deviation_s": 0.0,
+      "passed": true
+    },
+    {
+      "check": "loso_participant_isolation",
+      "n_folds": 15,
+      "passed": true
+    },
+    {
+      "check": "prediction_rows_match_cache",
+      "passed": true
+    },
+    {
+      "check": "raw_53_features_identical_on_shared_grid",
+      "max_abs_diff": 0.0,
+      "passed": true
+    },
+    {
+      "check": "report_exists",
+      "passed": true
+    },
+    {
+      "check": "automated_tests",
+      "passed": true
+    }
+  ],
+  "changed_original_files": [],
+  "scope": "Fixed-grid replay uses the same survey labels and cannot create an independent onset. Hash invariance covers raw sensors, labels, existing caches, models, reports, and prior audit outputs."
+}

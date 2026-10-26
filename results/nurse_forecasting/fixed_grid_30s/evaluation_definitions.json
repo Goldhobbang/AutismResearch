@@ -1,0 +1,19 @@
+{
+  "events_denominator": 176,
+  "p1_positive_definition": "(60s, 180s] before survey-confirmed onset",
+  "active_endpoint": "any warning-active timestamp inside (onset-180s, onset-60s]",
+  "issued_endpoint": "first timestamp of a merged alert episode inside the same horizon",
+  "false_alarm": "unassigned episode with at least one evaluated negative window (active) or a negative first issuance (issued)",
+  "neutral": "episode containing only censored/unverified-by-label windows is not counted as FA",
+  "verified_negative": "CONFIRMED_NO_STRESS_0",
+  "unverified_background": "VERIFIED_NON_EVENT",
+  "motion_gates": [
+    "none",
+    "legacy_hard",
+    "soft_dynamic"
+  ],
+  "policies": [
+    "val_opt",
+    "hysteresis"
+  ]
+}

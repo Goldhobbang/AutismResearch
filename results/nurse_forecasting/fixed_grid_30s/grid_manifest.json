@@ -1,0 +1,17 @@
+{
+  "n_sessions_total": 609,
+  "n_sessions_ok": 526,
+  "n_sessions_error": 0,
+  "n_sessions_annotated": 214,
+  "n_windows_total": 147015,
+  "n_windows_annotated": 71274,
+  "positive_p1": 659,
+  "negative_verified": 2173,
+  "negative_unverified": 44519,
+  "fixed_step_s": 30.0,
+  "window_s": 180.0,
+  "n_features": 62,
+  "features_sha256": "7aedd60ae57b17e656fff112cda7ab1c52f63c1f3194496d082f4a9cc59498d1",
+  "features_annotated_sha256": "a7626be6a3d1e2011a0e574771eb24db81296f82a5f3c90934b844946b8f0332",
+  "seconds": 1276.0171273000014
+}
