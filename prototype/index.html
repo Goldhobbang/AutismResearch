@@ -24,9 +24,16 @@
   <!-- ============ DASHBOARD ============ -->
   <section class="screen active" id="s-home">
     <header class="top">
-      <div>
+      <div class="profile-control">
         <p class="eyebrow">모니터링 중</p>
-        <h1><span id="studentName">김선린</span> <span class="grade" id="studentClass">2학년 5반</span></h1>
+        <button class="profile-trigger" id="profileTrigger" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="profileMenu">
+          <span class="profile-heading">
+            <span id="studentName">김선린</span>
+            <span class="grade" id="studentClass">2학년 5반</span>
+          </span>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m5 7.5 5 5 5-5"/></svg>
+        </button>
+        <div class="profile-menu" id="profileMenu" role="menu" aria-label="학생 프로필" hidden></div>
       </div>
       <div class="link" id="linkChip"><i></i><span>손목밴드 연결됨</span><em id="batt">82%</em></div>
     </header>

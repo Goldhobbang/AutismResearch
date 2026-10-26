@@ -52,9 +52,20 @@ button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .screen.active{opacity:1;visibility:visible;transform:none;transition:opacity .3s,transform .3s}
 .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:max(24px,env(safe-area-inset-top)) 20px 10px;flex:none}
 .top>div:first-child{min-width:0}
-h1{white-space:nowrap}
-.top h1 .grade{display:block;margin:2px 0 0;font-size:12.5px}
-.top h1:has(.grade){line-height:1.15}
+.top>div:first-child{position:relative}
+.profile-trigger{display:flex;align-items:center;gap:6px;padding:0;text-align:left;white-space:nowrap;font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1.15}
+.profile-trigger:focus-visible{border-radius:4px}
+.profile-heading>span:first-child{display:block}
+.profile-trigger .grade{display:block;margin:2px 0 0;font-size:12.5px;line-height:1.3}
+.profile-trigger>svg{width:16px;height:16px;flex:none;margin-top:-13px;fill:none;stroke:var(--ink3);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.profile-trigger[aria-expanded=true]>svg{transform:rotate(180deg)}
+.profile-menu{position:absolute;z-index:40;top:100%;left:-8px;min-width:190px;margin-top:8px;padding:6px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:0 12px 32px rgba(20,32,28,.16)}
+.profile-menu[hidden]{display:none}
+.profile-option{display:flex;flex-direction:column;gap:2px;width:100%;padding:10px 12px;border-radius:11px}
+.profile-option:hover,.profile-option:focus-visible{background:var(--bg)}
+.profile-option[aria-current=true]{background:var(--safe-bg)}
+.profile-option-name{font-size:14px;font-weight:750;color:var(--ink)}
+.profile-option-class{font-size:11.5px;font-weight:600;color:var(--ink2)}
 .eyebrow{font-size:12px;color:var(--ink2);font-weight:600;margin-bottom:2px}
 h1{font-size:26px;font-weight:800;letter-spacing:-.03em}
 .grade{font-size:13px;font-weight:600;color:var(--ink3);margin-left:4px;letter-spacing:0}

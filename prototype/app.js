@@ -3,52 +3,63 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const app = $('#app');
-  const studentName = $('#studentName').textContent;
-  const studentClass = $('#studentClass').textContent;
   const TICK = 700;          // ms per sample
   const N = 36;              // samples shown in chart
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  const rnd = a => (Math.random() * 2 - 1) * a;
+  const nowStr = () => { const d = new Date(); return `${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`; };
+  const PROFILES = [
+    { id: 'kim-seonrin', name: '김선린', className: '2학년 5반', baseline: { hr: 80, eda: 1.6, risk: 17, mv: .12 }, previous: { hr: 96, eda: 2.8, risk: 52 } },
+    { id: 'lee-gyeongsan', name: '이경산', className: '2학년 3반', baseline: { hr: 88, eda: 2.0, risk: 24, mv: .18 }, previous: { hr: 101, eda: 3.1, risk: 47 } },
+    { id: 'kang-daegu', name: '강대구', className: '3학년 1반', baseline: { hr: 74, eda: 1.3, risk: 12, mv: .10 }, previous: { hr: 91, eda: 2.4, risk: 39 } }
+  ];
+  const profileById = new Map(PROFILES.map(profile => [profile.id, profile]));
+  const studentName = () => profileById.get(S.profileId).name;
+  const studentClass = () => profileById.get(S.profileId).className;
 
   /* ---------- Scenarios: target values as function of elapsed seconds ---------- */
   const ramp = (t, a, b, d) => a + (b - a) * Math.min(1, Math.max(0, t / d));
   const SCN = {
     calm: {
-      dur: 30, state: 'safe', ctx: '교실 · 수업 중', mv: 0.12,
-      at: t => ({ hr: 80, eda: 1.6, risk: 17, mv: 0.12 }),
+      dur: 30, state: 'safe', ctx: '교실 · 수업 중',
+      at: (t, baseline) => ({ ...baseline }),
       noise: { hr: 2.6, eda: .14, risk: 3, mv: .04 },
       msg: '평소 범위 안에서 안정적으로 유지되고 있어요.',
       insight: '최근 30초간 심박수와 피부전도가 개인 기준선 범위 안에 있습니다.'
     },
     stress: {
       dur: 40, ctx: '교실 · 소음 증가',
-      at: t => ({ hr: ramp(t, 80, 113, 18), eda: ramp(t, 1.6, 4.2, 18), risk: ramp(t, 17, 90, 18), mv: ramp(t, .12, .22, 18) }),
+      at: (t, b) => ({ hr: ramp(t, b.hr, b.hr + 33, 18), eda: ramp(t, b.eda, b.eda + 2.6, 18), risk: ramp(t, b.risk, 90, 18), mv: ramp(t, b.mv, b.mv + .1, 18) }),
       noise: { hr: 2.8, eda: .18, risk: 2.2, mv: .04 },
       alertAt: 17
     },
     exercise: {
       dur: 40, ctx: '운동장 · 체육 활동',
-      at: t => ({ hr: ramp(t, 80, 128, 14), eda: ramp(t, 1.6, 2.4, 14), risk: ramp(t, 17, 27, 14), mv: ramp(t, .12, .9, 10) }),
+      at: (t, b) => ({ hr: ramp(t, b.hr, b.hr + 48, 14), eda: ramp(t, b.eda, b.eda + .8, 14), risk: ramp(t, b.risk, b.risk + 10, 14), mv: ramp(t, b.mv, .9, 10) }),
       noise: { hr: 4, eda: .12, risk: 3, mv: .08 },
       alertAt: 12
     }
   };
 
-  /* ---------- State ---------- */
-  const S = {
-    scn: 'calm', t: 0, timer: null,
-    cur: { hr: 80, eda: 1.6, risk: 17, mv: .12 },
-    hrH: [], edaH: [],
-    alerts: [], filter: 'all', fired: false, uid: 1, openId: null
-  };
-  const seed = () => [{
-    id: 0, level: 'warn', title: '주의 상태 감지', time: '어제 14:08', ack: true,
-    body: `${studentName} 학생의 점심시간 이후 심박수가 일시적으로 올랐다가 기준선으로 돌아왔습니다.`,
-    hr: 96, eda: 2.8, risk: 52, ackTime: '어제 14:12'
-  }];
-  S.alerts = seed();
-
-  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-  const rnd = a => (Math.random() * 2 - 1) * a;
-  const nowStr = () => { const d = new Date(); return `${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`; };
+  function seed(profile) {
+    return [{
+      id: 0, level: 'warn', title: '주의 상태 감지', time: '어제 14:08', ack: true,
+      body: `${profile.name} 학생의 점심시간 이후 심박수가 일시적으로 올랐다가 기준선으로 돌아왔습니다.`,
+      ...profile.previous, ackTime: '어제 14:12'
+    }];
+  }
+  function createProfileState(profile) {
+    return {
+      profileId: profile.id, baseline: { ...profile.baseline },
+      scn: 'calm', t: 0,
+      cur: { ...profile.baseline },
+      hrH: Array.from({ length: N }, () => profile.baseline.hr + rnd(2.5)),
+      edaH: Array.from({ length: N }, () => profile.baseline.eda + rnd(.12)),
+      alerts: seed(profile), filter: 'all', fired: false, uid: 1, openId: null
+    };
+  }
+  const profileStates = new Map(PROFILES.map(profile => [profile.id, createProfileState(profile)]));
+  let S = profileStates.get(PROFILES[0].id);
 
   /* ---------- Level logic ---------- */
   function level() {
@@ -65,7 +76,7 @@
 
   /* ---------- Tick ---------- */
   function sample() {
-    const sc = SCN[S.scn], tg = sc.at(S.t), n = sc.noise, c = S.cur;
+    const sc = SCN[S.scn], tg = sc.at(S.t, S.baseline), n = sc.noise, c = S.cur;
     for (const k of ['hr', 'eda', 'risk', 'mv']) {
       c[k] += (tg[k] - c[k]) * .3 + rnd(n[k]) * .6;
     }
@@ -86,6 +97,8 @@
   function render() {
     const c = S.cur, lv = level();
     app.dataset.state = lv;
+    $('#studentName').textContent = studentName();
+    $('#studentClass').textContent = studentClass();
     const [label, msg] = TXT[lv];
     $('#stateText').textContent = label;
     $('#heroMsg').textContent = msg;
@@ -135,15 +148,17 @@
 
   /* ---------- Alerts ---------- */
   const COPY = {
-    risk: { title: '위험 징후 감지', body: `${studentName} 학생의 스트레스 관련 생체신호가 평소보다 높게 나타났습니다.`, body2: `${studentName} 학생의 상태를 확인하고, 필요하면 주변 자극을 줄이거나 휴식을 지원해 주세요.`, lbl: '위험' },
-    warn: { title: '주의 상태 감지', body: `${studentName} 학생의 심박수와 피부전도가 평소보다 올라가고 있습니다.`, body2: `${studentName} 학생의 상태를 한 번 살펴봐 주세요.`, lbl: '주의' },
+    risk: { title: '위험 징후 감지', body: name => `${name} 학생의 스트레스 관련 생체신호가 평소보다 높게 나타났습니다.`, body2: name => `${name} 학생의 상태를 확인하고, 필요하면 주변 자극을 줄이거나 휴식을 지원해 주세요.`, lbl: '위험' },
+    warn: { title: '주의 상태 감지', body: name => `${name} 학생의 심박수와 피부전도가 평소보다 올라가고 있습니다.`, body2: name => `${name} 학생의 상태를 한 번 살펴봐 주세요.`, lbl: '주의' },
     info: { title: '운동으로 인한 변화', body: '심박수가 올랐지만 움직임이 함께 증가해 운동에 의한 변화로 분석했습니다.', body2: '위험 알림은 보내지 않았고, 이 기록은 참고용입니다.', lbl: '참고' }
   };
   function raise(lv) {
-    const c = S.cur, cp = COPY[lv];
+    const c = S.cur, cp = COPY[lv], name = studentName();
     const a = {
       id: S.uid++, level: lv, title: cp.title, time: '방금', clock: nowStr(), ack: false,
-      body: cp.body, body2: cp.body2, hr: Math.round(c.hr), eda: +c.eda.toFixed(1), risk: Math.round(c.risk)
+      body: typeof cp.body === 'function' ? cp.body(name) : cp.body,
+      body2: typeof cp.body2 === 'function' ? cp.body2(name) : cp.body2,
+      hr: Math.round(c.hr), eda: +c.eda.toFixed(1), risk: Math.round(c.risk)
     };
     a.time = a.clock;
     S.alerts.unshift(a);
@@ -197,7 +212,7 @@
         <div><small>피부전도</small><b>${a.eda}</b><em>μS</em></div>
         <div><small>위험 점수</small><b>${a.risk}</b><em>/100</em></div>
       </div>
-      <p class="meta"><b>${studentName}</b> · ${studentClass} · ${a.time}${a.ack ? ' · ' + (a.ackTime || '') + ' 확인' : ''}<br>시연용 Mock 데이터입니다.</p>
+      <p class="meta"><b>${studentName()}</b> · ${studentClass()} · ${a.time}${a.ack ? ' · ' + (a.ackTime || '') + ' 확인' : ''}<br>시연용 Mock 데이터입니다.</p>
       <button class="ackbtn ${a.ack ? 'done' : isInfo ? 'blue' : ''}" id="ackBtn">${a.ack ? '✓ 확인 완료' : isInfo ? '기록 확인' : '확인 완료'}</button>
       <button class="close" id="closeSheet">닫기</button>`;
     $('#ackBtn').onclick = () => ack(id);
@@ -244,10 +259,10 @@
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `${studentName}_${studentClass.replaceAll(' ', '')}_마음결.png`;
+      link.download = `${studentName()}_${studentClass().replaceAll(' ', '')}_마음결.png`;
       link.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
-      showSaveStatus(`${studentName} 화면을 PNG로 저장했어요.`);
+      showSaveStatus(`${studentName()} 화면을 PNG로 저장했어요.`);
     } catch (error) {
       console.error('PNG 저장에 실패했습니다.', error);
       showSaveStatus('PNG 저장에 실패했어요. 다시 시도해 주세요.', true);
@@ -279,6 +294,58 @@
     closeSheet();
   }
   $$('[data-go]').forEach(b => b.addEventListener('click', () => go(b.dataset.go)));
+  const profileTrigger = $('#profileTrigger');
+  const profileMenu = $('#profileMenu');
+  function syncScenarioControls() {
+    app.dataset.scn = S.scn;
+    $$('.scn').forEach(b => b.classList.toggle('on', b.dataset.scn === S.scn));
+  }
+  function renderProfileMenu() {
+    profileMenu.innerHTML = PROFILES.map(profile => `
+      <button class="profile-option" type="button" role="menuitem" data-profile-id="${profile.id}" aria-current="${profile.id === S.profileId}">
+        <span class="profile-option-name">${profile.name}</span>
+        <span class="profile-option-class">${profile.className}</span>
+      </button>`).join('');
+  }
+  function closeProfileMenu(returnFocus = false) {
+    profileMenu.hidden = true;
+    profileTrigger.setAttribute('aria-expanded', 'false');
+    if (returnFocus) profileTrigger.focus();
+  }
+  function selectProfile(profileId) {
+    if (!profileStates.has(profileId) || profileId === S.profileId) {
+      closeProfileMenu(true);
+      return;
+    }
+    clearTimeout(bannerT);
+    hideBanner();
+    closeSheet();
+    closeProfileMenu();
+    S = profileStates.get(profileId);
+    renderProfileMenu();
+    render();
+    renderAlerts();
+    syncScenarioControls();
+    go('home');
+    profileTrigger.focus();
+  }
+  profileTrigger.addEventListener('click', () => {
+    const isOpen = profileTrigger.getAttribute('aria-expanded') === 'true';
+    profileMenu.hidden = isOpen;
+    profileTrigger.setAttribute('aria-expanded', String(!isOpen));
+    if (!isOpen) profileMenu.querySelector('[aria-current="true"]')?.focus();
+  });
+  profileMenu.addEventListener('click', event => {
+    const option = event.target.closest('[data-profile-id]');
+    if (option) selectProfile(option.dataset.profileId);
+  });
+  document.addEventListener('click', event => {
+    if (!profileMenu.hidden && !event.target.closest('.profile-control')) closeProfileMenu();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !profileMenu.hidden) closeProfileMenu(true);
+  });
+  renderProfileMenu();
   $$('#seg button').forEach(b => b.onclick = () => {
     S.filter = b.dataset.f; $$('#seg button').forEach(x => x.classList.toggle('on', x === b)); renderAlerts();
   });
@@ -286,26 +353,26 @@
   /* ---------- Scenario control ---------- */
   function setScenario(key) {
     S.scn = key; S.t = 0; S.fired = false;
-    app.dataset.scn = key;
-    $$('.scn').forEach(b => b.classList.toggle('on', b.dataset.scn === key));
+    syncScenarioControls();
     render();
   }
   $$('.scn').forEach(b => b.onclick = () => { setScenario(b.dataset.scn); });
   $('#replay').onclick = () => {
     // 현재 시나리오를 안정 상태에서 다시 시작
-    S.cur = { hr: 80, eda: 1.6, risk: 17, mv: .12 }; S.hrH = []; S.edaH = [];
+    S.cur = { ...S.baseline }; S.hrH = []; S.edaH = [];
     prefill(); setScenario(S.scn);
   };
-  $('#resetAll').onclick = () => { S.alerts = seed(); S.uid = 1; hideBanner(); renderAlerts(); };
+  $('#resetAll').onclick = () => { S.alerts = seed(profileById.get(S.profileId)); S.uid = 1; hideBanner(); renderAlerts(); };
 
   function prefill() {
-    for (let i = 0; i < N; i++) { S.hrH.push(80 + rnd(2.5)); S.edaH.push(1.6 + rnd(.12)); }
+    for (let i = 0; i < N; i++) { S.hrH.push(S.baseline.hr + rnd(2.5)); S.edaH.push(S.baseline.eda + rnd(.12)); }
   }
 
   /* ---------- Boot ---------- */
-  prefill(); renderAlerts(); setScenario('calm');
-  S.timer = setInterval(sample, TICK);
+  render(); renderAlerts(); setScenario('calm');
+  let simulationTimer = setInterval(sample, TICK);
   document.addEventListener('visibilitychange', () => {
-    clearInterval(S.timer); if (!document.hidden) S.timer = setInterval(sample, TICK);
+    clearInterval(simulationTimer);
+    if (!document.hidden) simulationTimer = setInterval(sample, TICK);
   });
 })();
