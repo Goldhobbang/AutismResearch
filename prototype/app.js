@@ -3,6 +3,8 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const app = $('#app');
+  const studentName = $('#studentName').textContent;
+  const studentClass = $('#studentClass').textContent;
   const TICK = 700;          // ms per sample
   const N = 36;              // samples shown in chart
 
@@ -39,7 +41,7 @@
   };
   const seed = () => [{
     id: 0, level: 'warn', title: '주의 상태 감지', time: '어제 14:08', ack: true,
-    body: '점심시간 이후 심박수가 일시적으로 올랐다가 기준선으로 돌아왔습니다.',
+    body: `${studentName} 학생의 점심시간 이후 심박수가 일시적으로 올랐다가 기준선으로 돌아왔습니다.`,
     hr: 96, eda: 2.8, risk: 52, ackTime: '어제 14:12'
   }];
   S.alerts = seed();
@@ -133,8 +135,8 @@
 
   /* ---------- Alerts ---------- */
   const COPY = {
-    risk: { title: '위험 징후 감지', body: '학생의 스트레스 관련 생체신호가 평소보다 높게 나타났습니다.', body2: '현재 학생의 상태를 확인하고, 필요하면 주변 자극을 줄이거나 휴식을 지원해 주세요.', lbl: '위험' },
-    warn: { title: '주의 상태 감지', body: '심박수와 피부전도가 평소보다 올라가고 있습니다.', body2: '학생의 상태를 한 번 살펴봐 주세요.', lbl: '주의' },
+    risk: { title: '위험 징후 감지', body: `${studentName} 학생의 스트레스 관련 생체신호가 평소보다 높게 나타났습니다.`, body2: `${studentName} 학생의 상태를 확인하고, 필요하면 주변 자극을 줄이거나 휴식을 지원해 주세요.`, lbl: '위험' },
+    warn: { title: '주의 상태 감지', body: `${studentName} 학생의 심박수와 피부전도가 평소보다 올라가고 있습니다.`, body2: `${studentName} 학생의 상태를 한 번 살펴봐 주세요.`, lbl: '주의' },
     info: { title: '운동으로 인한 변화', body: '심박수가 올랐지만 움직임이 함께 증가해 운동에 의한 변화로 분석했습니다.', body2: '위험 알림은 보내지 않았고, 이 기록은 참고용입니다.', lbl: '참고' }
   };
   function raise(lv) {
@@ -195,7 +197,7 @@
         <div><small>피부전도</small><b>${a.eda}</b><em>μS</em></div>
         <div><small>위험 점수</small><b>${a.risk}</b><em>/100</em></div>
       </div>
-      <p class="meta"><b>김하준</b> · 3학년 2반 · ${a.time}${a.ack ? ' · ' + (a.ackTime || '') + ' 확인' : ''}<br>시연용 Mock 데이터입니다.</p>
+      <p class="meta"><b>${studentName}</b> · ${studentClass} · ${a.time}${a.ack ? ' · ' + (a.ackTime || '') + ' 확인' : ''}<br>시연용 Mock 데이터입니다.</p>
       <button class="ackbtn ${a.ack ? 'done' : isInfo ? 'blue' : ''}" id="ackBtn">${a.ack ? '✓ 확인 완료' : isInfo ? '기록 확인' : '확인 완료'}</button>
       <button class="close" id="closeSheet">닫기</button>`;
     $('#ackBtn').onclick = () => ack(id);
@@ -208,6 +210,52 @@
     $('#sheet').setAttribute('aria-hidden', 'true'); S.openId = null;
   }
   $('#scrim').onclick = closeSheet;
+
+  const savePngButton = $('#savePng');
+  const savePngStatus = $('#savePngStatus');
+  let saveStatusTimer;
+
+  function showSaveStatus(message, isError = false) {
+    savePngStatus.textContent = message;
+    savePngStatus.classList.toggle('error', isError);
+    savePngStatus.classList.add('show');
+    clearTimeout(saveStatusTimer);
+    saveStatusTimer = setTimeout(() => savePngStatus.classList.remove('show'), 3500);
+  }
+  savePngButton.onclick = async () => {
+    if (typeof window.html2canvas !== 'function') {
+      showSaveStatus('PNG 저장 기능을 불러오지 못했어요. 인터넷 연결을 확인해 주세요.', true);
+      return;
+    }
+
+    savePngButton.disabled = true;
+    savePngButton.querySelector('span').textContent = '저장 중';
+    try {
+      await document.fonts.ready;
+      const canvas = await window.html2canvas(app, {
+        backgroundColor: null,
+        scale: 2,
+        useCORS: true,
+        logging: false
+      });
+      const blob = await new Promise((resolve, reject) => {
+        canvas.toBlob(result => result ? resolve(result) : reject(new Error('PNG image could not be created')), 'image/png');
+      });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${studentName}_${studentClass.replaceAll(' ', '')}_마음결.png`;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      showSaveStatus(`${studentName} 화면을 PNG로 저장했어요.`);
+    } catch (error) {
+      console.error('PNG 저장에 실패했습니다.', error);
+      showSaveStatus('PNG 저장에 실패했어요. 다시 시도해 주세요.', true);
+    } finally {
+      savePngButton.disabled = false;
+      savePngButton.querySelector('span').textContent = 'PNG 저장';
+    }
+  };
 
   function ack(id) {
     const a = S.alerts.find(x => x.id === id); if (!a || a.ack) return;

@@ -7,9 +7,12 @@
 <title>마음결 · 웨어러블 AI 위험 알림 (시연용)</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
+<script src="app.js" defer></script>
 </head>
 <body>
 <div class="stage">
+<div class="device-frame">
 <main class="phone" id="app" data-state="safe" data-scn="calm">
 
   <!-- In-app notification banner (not a real push) -->
@@ -23,7 +26,7 @@
     <header class="top">
       <div>
         <p class="eyebrow">모니터링 중</p>
-        <h1>윤호현 <span class="grade">2학년 5반</span></h1>
+        <h1><span id="studentName">김선린</span> <span class="grade" id="studentClass">2학년 5반</span></h1>
       </div>
       <div class="link" id="linkChip"><i></i><span>손목밴드 연결됨</span><em id="batt">82%</em></div>
     </header>
@@ -161,7 +164,12 @@
     <button class="tab" data-go="demo"><svg viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h2M10 12h10M4 18h10M18 18h2"/><circle cx="16" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="18" r="2"/></svg><span>시연 설정</span></button>
   </nav>
 </main>
-</div>
-<script src="app.js"></script>
-</body>
-</html>
+  <button class="save-png" id="savePng" type="button" aria-label="앱 화면을 PNG로 저장">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M8 5l1-2h6l1 2"/></svg>
+    <span>PNG 저장</span>
+  </button>
+  </div>
+  </div>
+  <p class="save-status" id="savePngStatus" role="status" aria-live="polite"></p>
+  </body>
+  </html>
