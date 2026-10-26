@@ -1,0 +1,29 @@
+{
+  "version": "1.0",
+  "window_s": 180,
+  "step_s": 30,
+  "positive_lead_s": "(60,180]",
+  "timestamp_zone": "UTC; logs Europe/Dublin",
+  "marker_log_tolerance_s": 120,
+  "log_only_boundary_guard_s": 60,
+  "minimum_finite_fraction": 0.95,
+  "maximum_missing_run_s": 5,
+  "threshold": 0.5,
+  "warning_policy": "p>=0.5 active; rising edge issues new warning; no label/event resets; retain previous state across sensor gaps",
+  "model_features": "EDA/HR/ACC basic statistics only, no time/ID/order/labels",
+  "schedule_diagnostic": "120-second elapsed-recording bins, train participants only, Laplace prior",
+  "splits": "outer LOSO; inner GroupShuffleSplit 20% validation, seed 42+fold; fixed threshold, no refit on validation",
+  "rf": {
+    "n_estimators": 200,
+    "max_depth": 6,
+    "min_samples_leaf": 8,
+    "class_weight": "balanced_subsample",
+    "random_state": 42
+  },
+  "lr": {
+    "C": 0.25,
+    "class_weight": "balanced",
+    "max_iter": 2000,
+    "random_state": 42
+  }
+}

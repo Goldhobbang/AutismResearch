@@ -1,0 +1,17 @@
+{
+  "repository": "https://github.com/italha-d/Stress-Predict-Dataset",
+  "commit": "f49d2eae603f90c3f0140fbbbae7c0480d651023",
+  "time_logs_sha256": "df03d3ace2f9f2812445ef9ebcddea742f6c05492dcf32c503189f2a9fdedd42",
+  "script_sha256": "213fef5e9c1324d51258f2ae19824a2a9538a17f54fa532ad2923ba98bed371b",
+  "python": "3.13.2",
+  "sklearn": "1.9.1",
+  "numpy": "2.5.4",
+  "pandas": "2.3.3",
+  "participants_downloaded": 35,
+  "participants_read": 35,
+  "failures": 0,
+  "final_run_script_sha256": "1db22304b513a43d2abe3221158a3bf33936e74c262de16409cf7e351e2c0cbe",
+  "report_script_sha256": "cb4b4d03d9f4510e9b15a93851d22b06833d548b33645749086ba3f18dc0b5e4",
+  "protocol_sha256": "5e13b9b63ea1fa4f6393bed0f4644a02413b1b7f897f9eac7fbbb3aba1e3610e",
+  "models_saved": 245
+}
