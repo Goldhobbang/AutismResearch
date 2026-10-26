@@ -13,16 +13,17 @@ html,body{height:100%}
 body{font-family:var(--font);color:var(--ink);background:#dfe6e3;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:left}
 button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-.stage{min-height:100dvh;display:flex;align-items:flex-start;justify-content:center;padding-top:58px}
-.device-frame{position:relative;width:100%;height:calc(100dvh - 58px)}
+.stage{min-height:100dvh;display:flex;align-items:flex-start;justify-content:center;padding-top:106px}
+.device-frame{position:relative;width:100%;height:calc(100dvh - 106px)}
 .phone{position:relative;width:100%;height:100%;background:var(--bg);overflow:hidden;
   transition:background .8s}
-.save-png{position:absolute;z-index:90;top:-47px;right:12px;display:inline-flex;align-items:center;gap:8px;
+.device-actions{position:absolute;z-index:90;top:-94px;right:12px;display:flex;flex-direction:column;align-items:stretch;gap:8px}
+.save-png,.demo-shortcut{display:inline-flex;align-items:center;justify-content:center;gap:8px;
   padding:10px 14px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:#17211e;color:#fff;
   box-shadow:0 5px 16px rgba(20,32,28,.18);font-size:13px;font-weight:700;white-space:nowrap;transition:transform .15s,background .2s}
-.save-png svg{width:17px;height:17px;fill:none;stroke:#78d3a8;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.save-png:hover{background:#25352e}
-.save-png:active{transform:scale(.97)}
+.save-png svg,.demo-shortcut svg{width:17px;height:17px;fill:none;stroke:#78d3a8;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.save-png:hover,.demo-shortcut:hover{background:#25352e}
+.save-png:active,.demo-shortcut:active{transform:scale(.97)}
 .save-png:disabled{cursor:wait;opacity:.75}
 .save-status{position:fixed;z-index:100;left:50%;bottom:22px;max-width:calc(100vw - 32px);padding:11px 16px;border-radius:14px;
   background:#17211e;color:#fff;font-size:13px;font-weight:600;text-align:center;box-shadow:0 8px 24px rgba(20,32,28,.2);
@@ -35,11 +36,11 @@ button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
   .phone{border-radius:44px;box-shadow:0 0 0 10px #17211e,0 30px 80px rgba(20,32,28,.3)}
 }
 @media(min-width:700px) and (max-width:899px){
-  .stage{align-items:flex-start;padding-top:58px}
-  .device-frame{height:calc(100dvh - 58px)}
+  .stage{align-items:flex-start;padding-top:106px}
+  .device-frame{height:calc(100dvh - 106px)}
 }
 @media(min-width:900px){
-  .save-png{top:-10px;right:auto;left:calc(100% + 26px)}
+  .device-actions{top:0;right:auto;left:calc(100% + 26px)}
 }
 .phone[data-state=safe]{--accent:var(--safe);--accent-bg:var(--safe-bg)}
 .phone[data-state=warn]{--accent:var(--warn);--accent-bg:var(--warn-bg)}

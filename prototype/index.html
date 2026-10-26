@@ -161,13 +161,18 @@
   <nav class="tabbar">
     <button class="tab on" data-go="home"><svg viewBox="0 0 24 24"><path d="M3 12h4l2-6 4 12 2.500-6H21"/></svg><span>모니터링</span></button>
     <button class="tab" data-go="alerts"><svg viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 0 1 12 0v6l1.500 2h-15zM10 21h4"/></svg><span>알림</span><u id="tabBadge"></u></button>
-    <button class="tab" data-go="demo"><svg viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h2M10 12h10M4 18h10M18 18h2"/><circle cx="16" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="18" r="2"/></svg><span>시연 설정</span></button>
   </nav>
 </main>
-  <button class="save-png" id="savePng" type="button" aria-label="앱 화면을 PNG로 저장">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M8 5l1-2h6l1 2"/></svg>
-    <span>PNG 저장</span>
-  </button>
+  <div class="device-actions">
+    <button class="save-png" id="savePng" type="button" aria-label="앱 화면을 PNG로 저장">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M8 5l1-2h6l1 2"/></svg>
+      <span>PNG 저장</span>
+    </button>
+    <button class="demo-shortcut" type="button" data-go="demo" aria-label="시연 설정 열기">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h2M10 12h10M4 18h10M18 18h2"/><circle cx="16" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="16" cy="18" r="2"/></svg>
+      <span>시연 설정</span>
+    </button>
+  </div>
   </div>
   </div>
   <p class="save-status" id="savePngStatus" role="status" aria-live="polite"></p>
