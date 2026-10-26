@@ -1,0 +1,34 @@
+﻿experiment,changed_factor,fixed,task,model,n_features,seconds,weight,threshold_mode
+balanced_full_grid,학습 클래스 가중치/임계값 후보 격자(각 대조쌍에서 하나씩),15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,62,31.69188100000065,balanced,full
+calibration_actual_180s,개인 기준선,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,16,9.51579589999892,balanced,legacy
+calibration_actual_300s,개인 기준선,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,16,9.421251099998699,balanced,legacy
+calibration_actual_60s,개인 기준선,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,16,9.524176200000511,balanced,legacy
+calibration_labelblind_same_method,개인 기준선,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,16,9.508785899999566,balanced,legacy
+calibration_quiet_initial300s,개인 기준선,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,16,9.567854000000807,balanced,legacy
+calibration_raw,개인 기준선,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,16,11.4331398000013,balanced,legacy
+clean_history300_refractory900,이전 사건 이후의 입력 이력 제외,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,62,23.67964850000135,balanced,legacy
+common171_P0,예측 구간/해당 구간의 라벨,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P0,LR,62,25.405966100001024,balanced,legacy
+common171_P1-A,예측 구간/해당 구간의 라벨,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1-A,LR,62,23.63727430000108,balanced,legacy
+common171_P1-B,예측 구간/해당 구간의 라벨,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1-B,LR,62,25.224549299999126,balanced,legacy
+common171_P1,예측 구간/해당 구간의 라벨,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,62,23.88115049999942,balanced,legacy
+common171_P2,예측 구간/해당 구간의 라벨,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P2,LR,62,23.98079560000042,balanced,legacy
+confirmed_zero_only,음성 출처,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,62,7.072107299998606,balanced,legacy
+horizon_P0,예측 구간/해당 구간의 라벨,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P0,LR,62,25.332339799999318,balanced,legacy
+horizon_P1-A,예측 구간/해당 구간의 라벨,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1-A,LR,62,23.65098500000022,balanced,legacy
+horizon_P1-B,예측 구간/해당 구간의 라벨,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1-B,LR,62,24.619099800000185,balanced,legacy
+horizon_P2,예측 구간/해당 구간의 라벨,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P2,LR,62,24.108837300000232,balanced,legacy
+labelblind_same_method,기준선에서 라벨 참조 제거,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,62,23.335752299999513,balanced,legacy
+legacy_matched_threads,재현/수치 환경,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,62,26.144826900001135,balanced,legacy
+legacy_reproduction,재현/수치 환경,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,62,21.470590599999923,balanced,legacy
+model_Dummy,분류기,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,Dummy,62,10.85732149999967,balanced,legacy
+model_LightGBM,분류기,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LightGBM,62,30.442119899998943,balanced,legacy
+model_RF,분류기,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,RF,62,292.58593309999924,balanced,legacy
+sensor_acc,센서/특징 열,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,15,11.950441400000273,balanced,legacy
+sensor_eda,센서/특징 열,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,26,15.694572000000335,balanced,legacy
+sensor_eda_ppg,센서/특징 열,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,47,20.644571000000724,balanced,legacy
+sensor_ppg,센서/특징 열,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,21,11.820991499998854,balanced,legacy
+simple_eda_slope,센서/특징 열,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,1,7.267768199999409,balanced,legacy
+simple_hr_change,센서/특징 열,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,1,7.02982239999983,balanced,legacy
+time_weighted_LR,학습/검증 시간 가중치,15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,62,22.273514099999375,balanced,legacy
+unweighted_full_grid,학습 클래스 가중치/임계값 후보 격자(각 대조쌍에서 하나씩),15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,62,24.172250100000383,,full
+unweighted_legacy_grid,학습 클래스 가중치/임계값 후보 격자(각 대조쌍에서 하나씩),15 LOSO; seed 42+fold; train-only imputer/scaler; same C/model unless model contrast; validation-only threshold; no test choice,P1,LR,62,15.512985199999093,,legacy

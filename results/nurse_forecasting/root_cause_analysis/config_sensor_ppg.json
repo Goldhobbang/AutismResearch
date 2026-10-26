@@ -1,0 +1,31 @@
+{
+  "experiment": "sensor_ppg",
+  "seconds": 11.820991499998854,
+  "task": "P1",
+  "model": "LR",
+  "weight": "balanced",
+  "threshold_mode": "legacy",
+  "columns": [
+    "ppg_mean",
+    "ppg_std",
+    "ppg_range",
+    "ppg_q10",
+    "ppg_q90",
+    "ppg_absdiff_per_s",
+    "ppg_peak_hz",
+    "ppg_band_fraction",
+    "hr_mean_bpm",
+    "hr_std_bpm",
+    "hr_range_bpm",
+    "hr_slope_bpm_per_s",
+    "hr_delta_recent60_bpm",
+    "hr_60s_mean_bpm",
+    "hr_300s_mean_bpm",
+    "ibi_rmssd_ms",
+    "ibi_sdnn_ms",
+    "ibi_valid_flag",
+    "hr_bpm_delta",
+    "ppg_band_delta",
+    "ppg_absdiff_log_ratio"
+  ]
+}

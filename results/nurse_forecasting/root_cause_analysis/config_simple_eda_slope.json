@@ -1,0 +1,11 @@
+{
+  "experiment": "simple_eda_slope",
+  "seconds": 7.267768199999409,
+  "task": "P1",
+  "model": "LR",
+  "weight": "balanced",
+  "threshold_mode": "legacy",
+  "columns": [
+    "eda_recent60_minus_prev120"
+  ]
+}

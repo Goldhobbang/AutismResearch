@@ -1,0 +1,44 @@
+{
+  "all_passed": true,
+  "checks": [
+    {
+      "check": "original_input_hashes_unchanged",
+      "n": 30,
+      "passed": true
+    },
+    {
+      "check": "raw_archive_hashes_unchanged",
+      "n": 609,
+      "passed": true
+    },
+    {
+      "check": "feature_windows_51234",
+      "passed": true
+    },
+    {
+      "check": "cached_labels_reproduced",
+      "passed": true
+    },
+    {
+      "check": "new_experiment_split_isolation",
+      "n_experiments": 33,
+      "passed": true
+    },
+    {
+      "check": "ten_nonempty_figures",
+      "passed": true
+    },
+    {
+      "check": "report_local_links",
+      "passed": true,
+      "broken": []
+    },
+    {
+      "check": "twenty_regression_tests",
+      "passed": true
+    }
+  ],
+  "changed_original_files": [],
+  "scope": "Local code/data/metric verification. Independent event truth and uniform-grid prospective replay remain unavailable.",
+  "report_sha256": "7d9fa06d0a7828033d9edc12afa680e0a69df01af7613a2118b4ff660271679e"
+}

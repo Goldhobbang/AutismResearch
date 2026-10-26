@@ -1,0 +1,10 @@
+# Keep the exact bytes used by the Nurses audit SHA256 evidence on every platform.
+src/forecasting/** -text whitespace=cr-at-eol
+src/features/nurse_forecasting.py -text whitespace=cr-at-eol
+src/loaders/nurse_stress.py -text whitespace=cr-at-eol
+experiments/nurse_forecasting/** -text whitespace=cr-at-eol
+results/nurse_forecasting/** -text whitespace=cr-at-eol
+reports/NURSE*.md -text whitespace=cr-at-eol
+tests/test_nurse*.py -text whitespace=cr-at-eol
+# Preserve the upstream source excerpt as forensic evidence, including its spacing.
+results/nurse_forecasting/root_cause_analysis/sources/upstream_predictor_source.py -whitespace

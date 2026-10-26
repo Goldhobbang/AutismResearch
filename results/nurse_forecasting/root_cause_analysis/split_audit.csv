@@ -1,0 +1,16 @@
+﻿fold,test,test_in_training,test_in_validation,train_val_overlap
+0,15,False,False,0
+1,5C,False,False,0
+2,6B,False,False,0
+3,6D,False,False,0
+4,7A,False,False,0
+5,7E,False,False,0
+6,83,False,False,0
+7,8B,False,False,0
+8,94,False,False,0
+9,BG,False,False,0
+10,CE,False,False,0
+11,DF,False,False,0
+12,E4,False,False,0
+13,EG,False,False,0
+14,F5,False,False,0

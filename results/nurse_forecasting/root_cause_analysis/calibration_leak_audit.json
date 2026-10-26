@@ -1,0 +1,10 @@
+{
+  "changed_all_windows": 420,
+  "changed_p1_eligible": 42,
+  "sessions": 4,
+  "cache_vs_current_max_abs": 4.263256414560601e-14,
+  "negative_qc_excluded": 61,
+  "positive_qc_excluded": 0,
+  "ibi_invalid_fraction": 0.2785259788421751,
+  "feature_missing_fraction": 0.0
+}

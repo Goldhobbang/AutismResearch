@@ -1,0 +1,16 @@
+﻿experiment,fold,test_subject,feature,coefficient
+simple_hr_change,0,15,hr_delta_recent60_bpm,0.07797609188280892
+simple_hr_change,1,5C,hr_delta_recent60_bpm,0.04994459761154628
+simple_hr_change,2,6B,hr_delta_recent60_bpm,0.03730319796279639
+simple_hr_change,3,6D,hr_delta_recent60_bpm,0.051456002408816724
+simple_hr_change,4,7A,hr_delta_recent60_bpm,0.0560937781348738
+simple_hr_change,5,7E,hr_delta_recent60_bpm,0.06010440314973698
+simple_hr_change,6,83,hr_delta_recent60_bpm,0.03293100240789371
+simple_hr_change,7,8B,hr_delta_recent60_bpm,0.07123304589684895
+simple_hr_change,8,94,hr_delta_recent60_bpm,0.07379699746280878
+simple_hr_change,9,BG,hr_delta_recent60_bpm,0.05309933632555993
+simple_hr_change,10,CE,hr_delta_recent60_bpm,0.0463960256061453
+simple_hr_change,11,DF,hr_delta_recent60_bpm,0.06977290749817373
+simple_hr_change,12,E4,hr_delta_recent60_bpm,0.06705587064031406
+simple_hr_change,13,EG,hr_delta_recent60_bpm,0.0699056893268033
+simple_hr_change,14,F5,hr_delta_recent60_bpm,0.0

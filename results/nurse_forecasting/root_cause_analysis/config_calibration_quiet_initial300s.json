@@ -1,0 +1,26 @@
+{
+  "experiment": "calibration_quiet_initial300s",
+  "seconds": 9.567854000000807,
+  "task": "P1",
+  "model": "LR",
+  "weight": "balanced",
+  "threshold_mode": "legacy",
+  "columns": [
+    "eda_log_delta",
+    "eda_log_std_delta",
+    "eda_pos_diff_log_delta",
+    "eda_scr_log_delta",
+    "eda_slope_norm",
+    "eda_iqr_log_delta",
+    "hr_bpm_delta",
+    "ppg_band_delta",
+    "ppg_absdiff_log_ratio",
+    "eda_recent60_minus_prev120",
+    "eda_log_slope",
+    "eda_rise_fraction",
+    "hr_slope_bpm_per_s",
+    "hr_delta_recent60_bpm",
+    "acc_motion_change_per_s",
+    "acc_unchanged_fraction"
+  ]
+}

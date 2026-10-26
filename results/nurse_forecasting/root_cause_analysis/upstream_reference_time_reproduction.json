@@ -1,0 +1,8 @@
+{
+  "source": "sources/upstream_predictor_source.py:60-63",
+  "raw_first_row_epoch": 1594213322.0,
+  "raw_second_row_sampling_rate": 4.0,
+  "upstream_reference_time_expression_value": 4.0,
+  "inference": "Public notebook reads sample rate as reference_time with these distributed raw files. This does NOT establish how SurveyResults.xlsx was produced.",
+  "minute_rounding_code_found": false
+}

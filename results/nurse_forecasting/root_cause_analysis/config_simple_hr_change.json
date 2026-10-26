@@ -1,0 +1,11 @@
+{
+  "experiment": "simple_hr_change",
+  "seconds": 7.02982239999983,
+  "task": "P1",
+  "model": "LR",
+  "weight": "balanced",
+  "threshold_mode": "legacy",
+  "columns": [
+    "hr_delta_recent60_bpm"
+  ]
+}

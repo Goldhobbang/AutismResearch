@@ -1,0 +1,11 @@
+{
+  "python": "3.13.2 (tags/v3.13.2:4f8bb39, Feb  4 2025, 15:23:48) [MSC v.1942 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "numpy": "2.5.4",
+  "pandas": "2.3.3",
+  "sklearn": "1.9.1",
+  "lightgbm": "4.7.0",
+  "seed": 42,
+  "date_kst": "2026-10-26",
+  "n_features": 62
+}

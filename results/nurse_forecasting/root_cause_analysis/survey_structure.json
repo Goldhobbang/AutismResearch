@@ -1,0 +1,15 @@
+{
+  "sheets": [
+    {
+      "name": "in",
+      "sheetId": "1",
+      "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}id": "rId1"
+    }
+  ],
+  "formula_cells": [],
+  "all_start_seconds_zero": true,
+  "all_end_seconds_zero": true,
+  "max_excel_rounding_error_s": 1.4551915228366852e-11,
+  "exact_duplicate_intervals": 3,
+  "duplicate_onsets": 6
+}

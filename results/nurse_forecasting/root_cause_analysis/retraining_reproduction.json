@@ -1,0 +1,6 @@
+{
+  "n": 27250,
+  "max_abs_prob_error": 0.010190449656214434,
+  "prediction_disagreements": 8,
+  "threshold_max_error": 0.0
+}

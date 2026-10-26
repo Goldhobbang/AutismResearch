@@ -1,0 +1,25 @@
+{
+  "experiment": "sensor_acc",
+  "seconds": 11.950441400000273,
+  "task": "P1",
+  "model": "LR",
+  "weight": "balanced",
+  "threshold_mode": "legacy",
+  "columns": [
+    "acc_mag_mean",
+    "acc_mag_median",
+    "acc_mag_std",
+    "acc_mag_range",
+    "acc_mag_q10",
+    "acc_mag_q90",
+    "acc_mag_slope",
+    "acc_mag_absdiff_per_s",
+    "acc_dynamic_energy",
+    "acc_motion_change_per_s",
+    "acc_unchanged_fraction",
+    "acc_peak_hz",
+    "acc_band_fraction",
+    "acc_60s_motion_change",
+    "acc_300s_motion_change"
+  ]
+}

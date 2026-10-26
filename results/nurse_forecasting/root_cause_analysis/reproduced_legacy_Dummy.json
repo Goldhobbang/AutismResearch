@@ -1,0 +1,19 @@
+{
+  "n_total_events": 176,
+  "n_detected_events": 0,
+  "n_missed_events": 176,
+  "event_recall": 0.0,
+  "total_alert_episodes": 0,
+  "true_hit_episodes": 0,
+  "false_alarm_episodes": 0,
+  "verified_non_event_hours": 390.35,
+  "false_alarms_per_hour": 0.0,
+  "alert_episode_precision": NaN,
+  "lead_time_mean_s": NaN,
+  "lead_time_median_s": NaN,
+  "lead_time_min_s": NaN,
+  "lead_time_max_s": NaN,
+  "n_events_warned_ge_60s": 0,
+  "n_events_warned_ge_180s": 0,
+  "lead_time_reliability_note": "Minute-rounded survey start timestamp (+-60s resolution)"
+}

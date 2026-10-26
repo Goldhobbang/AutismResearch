@@ -1,0 +1,6 @@
+﻿policy,n_total_events,n_detected_events,n_missed_events,event_recall,total_alert_episodes,true_hit_episodes,false_alarm_episodes,verified_non_event_hours,false_alarms_per_hour,alert_episode_precision,lead_time_mean_s,lead_time_median_s,lead_time_min_s,lead_time_max_s,n_events_warned_ge_60s,n_events_warned_ge_180s,lead_time_reliability_note
+val_opt,176,71,105,0.4034090909090909,682,70,612,390.35,1.5678237479185346,0.10263929618768329,146.3943661971831,155.0,62.0,180.0,71,3,Minute-rounded survey start timestamp (+-60s resolution)
+hysteresis,176,79,97,0.44886363636363635,467,78,389,390.35,0.9965415652619444,0.1670235546038544,152.16455696202533,160.0,62.0,180.0,79,3,Minute-rounded survey start timestamp (+-60s resolution)
+duration_2win,176,57,119,0.32386363636363635,520,56,464,390.35,1.1886768284872549,0.1076923076923077,122.66666666666667,128.0,61.0,150.0,57,0,Minute-rounded survey start timestamp (+-60s resolution)
+cooldown_300s,176,71,105,0.4034090909090909,1151,70,1081,390.35,2.7693095939541434,0.060816681146828845,146.3943661971831,155.0,62.0,180.0,71,3,Minute-rounded survey start timestamp (+-60s resolution)
+fixed_05,176,120,56,0.6818181818181818,1251,118,1133,390.35,2.9025233764570255,0.09432454036770584,149.64166666666668,158.0,68.0,180.0,120,3,Minute-rounded survey start timestamp (+-60s resolution)

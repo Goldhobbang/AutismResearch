@@ -1,0 +1,18 @@
+[
+  {
+    "original_path": "results/nurse_forecasting/features.csv",
+    "original_bytes": 69426165,
+    "original_sha256": "54e9cf4f34ad325e6926d1d251f3aa387e361b33c553be3d0d529b5f3fcf9603",
+    "archive": "features.csv.gz",
+    "archive_bytes": 28060354,
+    "archive_sha256": "9af923de4f0f35406a02e551e6fe815b7e6210c09256f4dfbec467c1f0e0154b"
+  },
+  {
+    "original_path": "results/nurse_forecasting/predictions.csv",
+    "original_bytes": 152993203,
+    "original_sha256": "14c212dbc53cb19b7d799c9fc9058a5aa3f2b1662d2c9b2555e8935b6ab98584",
+    "archive": "predictions.csv.gz",
+    "archive_bytes": 61029201,
+    "archive_sha256": "42baae5ffd6c297c8b9824be7ebebfc08c165c10138e26d041a37d0d18242146"
+  }
+]

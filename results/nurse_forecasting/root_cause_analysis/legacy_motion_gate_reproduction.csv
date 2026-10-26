@@ -1,0 +1,4 @@
+﻿gate,q4_negative_fpr,n_total_events,n_detected_events,n_missed_events,event_recall,total_alert_episodes,true_hit_episodes,false_alarm_episodes,verified_non_event_hours,false_alarms_per_hour,alert_episode_precision,lead_time_mean_s,lead_time_median_s,lead_time_min_s,lead_time_max_s,n_events_warned_ge_60s,n_events_warned_ge_180s,lead_time_reliability_note
+none,0.23944308445532436,176,71,105,0.4034090909090909,682,70,612,390.35,1.5678237479185346,0.10263929618768329,146.3943661971831,155.0,62.0,180.0,71,3,Minute-rounded survey start timestamp (+-60s resolution)
+legacy_hard,0.0,176,1,175,0.005681818181818182,24,1,23,390.35,0.05892148072242859,0.041666666666666664,158.0,158.0,158.0,158.0,1,0,Minute-rounded survey start timestamp (+-60s resolution)
+soft_dynamic,0.02784577723378213,176,40,136,0.22727272727272727,462,40,422,390.35,1.081081081081081,0.08658008658008658,133.425,152.0,64.0,180.0,40,1,Minute-rounded survey start timestamp (+-60s resolution)

@@ -1,0 +1,16 @@
+﻿experiment,fold,test_subject,feature,coefficient
+simple_eda_slope,0,15,eda_recent60_minus_prev120,0.30176724309283304
+simple_eda_slope,1,5C,eda_recent60_minus_prev120,0.2949532199594256
+simple_eda_slope,2,6B,eda_recent60_minus_prev120,0.2540701972790473
+simple_eda_slope,3,6D,eda_recent60_minus_prev120,0.2902991999391452
+simple_eda_slope,4,7A,eda_recent60_minus_prev120,0.3081309212108484
+simple_eda_slope,5,7E,eda_recent60_minus_prev120,0.29534659749663333
+simple_eda_slope,6,83,eda_recent60_minus_prev120,0.3114763194531605
+simple_eda_slope,7,8B,eda_recent60_minus_prev120,0.32141246375826293
+simple_eda_slope,8,94,eda_recent60_minus_prev120,0.28292737605160556
+simple_eda_slope,9,BG,eda_recent60_minus_prev120,0.29804700868218387
+simple_eda_slope,10,CE,eda_recent60_minus_prev120,0.2983244662355055
+simple_eda_slope,11,DF,eda_recent60_minus_prev120,0.299217324395462
+simple_eda_slope,12,E4,eda_recent60_minus_prev120,0.24935108886567095
+simple_eda_slope,13,EG,eda_recent60_minus_prev120,0.28787375765767353
+simple_eda_slope,14,F5,eda_recent60_minus_prev120,0.23541322923694907
