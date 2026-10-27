@@ -43,7 +43,7 @@
 
   function seed(profile) {
     return [{
-      id: 0, level: 'warn', title: '주의 상태 감지', time: '어제 14:08', ack: true,
+      id: 0, level: 'warn', title: '주의 상태 감지', time: '어제 14:08', ack: true, pid: profile.id,
       body: `${profile.name} 학생의 점심시간 이후 심박수가 일시적으로 올랐다가 기준선으로 돌아왔습니다.`,
       ...profile.previous, ackTime: '어제 14:12'
     }];
@@ -55,7 +55,7 @@
       cur: { ...profile.baseline },
       hrH: Array.from({ length: N }, () => profile.baseline.hr + rnd(2.5)),
       edaH: Array.from({ length: N }, () => profile.baseline.eda + rnd(.12)),
-      alerts: seed(profile), filter: 'all', fired: false, uid: 1, openId: null
+      alerts: profile.id === PROFILES[0].id ? seed(profile) : [], filter: 'all', fired: false, uid: 1, openId: null
     };
   }
   function addProfile(name, info, baseline) {
@@ -87,6 +87,7 @@
   function tickAll() {
     for (const st of profileStates.values()) tickOne(st);
     if ($('#s-all').classList.contains('active')) renderOverview();
+    else if ($('#s-demo').classList.contains('active')) renderPeopleChips();
     else renderSharedAlertsWatch();
   }
   function tickOne(st) {
@@ -116,30 +117,52 @@
   const OVER_N = 48; // 전체 화면용 미니 그래프 샘플 수
   function renderOverview() {
     const el = $('#allList');
+    const lvs = PROFILES.map(p => levelOf(profileStates.get(p.id)));
     $('#allCount').textContent = `${PROFILES.length}명 연결됨`;
-    el.innerHTML = PROFILES.map(p => {
-      const st = profileStates.get(p.id);
-      const lv = levelOf(st);
-      return `
-      <button class="all-row lv-${lv}" data-profile="${p.id}" type="button">
-        <span class="all-dot"></span>
-        <span class="all-t">
-          <b>${p.name}</b>
-          <small>${p.info}</small>
-        </span>
-        <span class="all-graph"><svg viewBox="0 0 100 30" aria-hidden="true"><polyline points="${overviewPoints(st)}"/></svg></span>
-        <span class="all-risk">${Math.round(st.cur.risk)}</span>
-        <span class="tag ${lv === 'safe' ? 'done' : lv}">${LBL2[lv]}</span>
-      </button>`;
-    }).join('');
+    $('#sumSafe').textContent = lvs.filter(v => v === 'safe').length;
+    $('#sumWarn').textContent = lvs.filter(v => v === 'warn').length;
+    $('#sumRisk').textContent = lvs.filter(v => v === 'risk').length;
+    $('#sumExercise').textContent = lvs.filter(v => v === 'exercise').length;
+
+    if (el.childElementCount !== PROFILES.length) {
+      el.innerHTML = PROFILES.map(p => `
+        <button class="all-row" data-profile="${p.id}" type="button">
+          <span class="all-dot"></span>
+          <span class="all-t"><b>${p.name}</b><small>${p.info}</small></span>
+          <span class="all-graph"><svg viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true"><polyline/></svg></span>
+          <span class="all-num"><b>0</b><small>위험 점수</small></span>
+        </button>`).join('');
+    }
+    PROFILES.forEach((p, i) => {
+      const st = profileStates.get(p.id), lv = lvs[i];
+      const row = el.children[i];
+      row.className = `all-row lv-${lv}`;
+      row.dataset.profile = p.id;
+      row.querySelector('.all-t b').textContent = p.name;
+      row.querySelector('.all-t small').textContent = p.info;
+      row.querySelector('.all-num b').textContent = Math.round(st.cur.risk);
+      row.querySelector('.all-num small').textContent = LVL_TXT[lv];
+      row.querySelector('polyline').setAttribute('points', overviewPoints(st));
+    });
+    renderPeopleChips();
   }
   function overviewPoints(st) {
     const vals = st.hrH.slice(-OVER_N);
-    return vals.map((v, i) => `${(i / (OVER_N - 1) * 100).toFixed(1)},${(30 - clamp((v - 60) / 90, 0, 1) * 26 - 2).toFixed(1)}`).join(' ');
+    const lo = 60, hi = 150;
+    return vals.map((v, i) => `${(i / (OVER_N - 1) * 100).toFixed(1)},${(28 - clamp((v - lo) / (hi - lo), 0, 1) * 24).toFixed(1)}`).join(' ');
+  }
+  function renderPeopleChips() {
+    const box = $('#peopleChips');
+    if (!box) return;
+    $('#regCount').textContent = `${PROFILES.length}명`;
+    box.innerHTML = PROFILES.map(p => {
+      const lv = levelOf(profileStates.get(p.id));
+      return `<span class="people-chip lv-${lv}"><i></i>${p.name}</span>`;
+    }).join('');
   }
   document.addEventListener('click', e => {
     const row = e.target.closest('[data-profile]');
-    if (row) { selectProfile(row.dataset.profile); }
+    if (row) selectProfile(row.dataset.profile);
   });
   function render() {
     const c = S.cur, lv = level();
@@ -216,7 +239,9 @@
   }
   const ICON = { risk: '!', warn: '!', info: 'i' };
   const LBL = { risk: '위험', warn: '주의', info: '참고' };
-  const LBL2 = { safe: '안정', warn: '주의', risk: '위험', exercise: '운동' };
+  const LVL_TXT = { safe: '안정', warn: '주의', risk: '위험', exercise: '운동 중' };
+  let alertFilter = 'all';
+  let openSeq = null;
   function ownerName(a) { const p = profileById.get(a.pid); return p ? p.name : ''; }
   // 모든 대상자의 알림을 시간순으로 합친다
   function allAlerts() {
@@ -233,8 +258,9 @@
     const all = allAlerts();
     const open = all.filter(a => !a.ack && a.level !== 'info').length;
     $('#openCount').textContent = open;
+    $('#openCount').classList.toggle('zero', open === 0);
     const b = $('#tabBadge'); b.textContent = open; b.classList.toggle('show', open > 0);
-    const list = all.filter(a => S.filter === 'all' || (!a.ack && a.level !== 'info'));
+    const list = all.filter(a => alertFilter === 'all' || (!a.ack && a.level !== 'info'));
     $('#alertList').innerHTML = list.length ? list.map(a => `
       <button class="acard ${a.level} ${a.ack ? 'ack' : ''}" data-id="${a.seq}">
         <div class="row"><span class="tag ${a.ack ? 'done' : a.level}">${a.ack ? '확인 완료' : LBL[a.level]}</span><span class="time">${ownerName(a)} · ${a.time}</span></div>
@@ -278,7 +304,9 @@
 
   function openSheet(seq) {
     const a = findAlert(seq); if (!a) return;
-    S.openId = seq;
+    openSeq = seq;
+    hideToast();
+    hideBanner();
     const person = profileById.get(a.pid);
     const isInfo = a.level === 'info';
     $('#sheetBody').innerHTML = `
@@ -301,9 +329,12 @@
   }
   function closeSheet() {
     $('#sheet').classList.remove('show'); $('#scrim').classList.remove('show');
-    $('#sheet').setAttribute('aria-hidden', 'true'); S.openId = null;
+    $('#sheet').setAttribute('aria-hidden', 'true'); openSeq = null;
   }
-  $('#scrim').onclick = closeSheet;
+  $('#scrim').onclick = () => {
+    if (regSheet.classList.contains('show')) closeRegSheet();
+    else closeSheet();
+  };
 
   const savePngButton = $('#savePng');
   const savePngStatus = $('#savePngStatus');
@@ -356,7 +387,7 @@
     a.ack = true; a.ackTime = nowStr();
     const btn = $('#ackBtn'); btn.textContent = '✓ 확인 완료'; btn.className = 'ackbtn done';
     hideBanner(); renderAlerts();
-    setTimeout(() => { if (S.openId === seq) closeSheet(); }, 900);
+    setTimeout(() => { if (openSeq === seq) closeSheet(); }, 900);
   }
   $('#markAll').onclick = () => { for (const a of allAlerts()) { if (!a.ack) { a.ack = true; a.ackTime = nowStr(); } } hideBanner(); renderAlerts(); };
 
@@ -371,20 +402,27 @@
     $$('.tab').forEach(t => t.classList.toggle('on', t.dataset.go === name));
     $$('.scroll').forEach(s => s.scrollTop = 0);
     closeSheet();
+    hideToast();
   }
   $$('[data-go]').forEach(b => b.addEventListener('click', () => go(b.dataset.go)));
   const profileTrigger = $('#profileTrigger');
   const profileMenu = $('#profileMenu');
   function syncScenarioControls() {
     app.dataset.scn = S.scn;
-    $$('.scn').forEach(b => b.classList.toggle('on', b.dataset.scn === S.scn));
+    $$('.scn').forEach(b => {
+      const on = randomMode ? b.dataset.scn === 'random' : b.dataset.scn === S.scn;
+      b.classList.toggle('on', on);
+    });
   }
   function renderProfileMenu() {
     profileMenu.innerHTML = PROFILES.map(profile => `
       <button class="profile-option" type="button" role="menuitem" data-profile-id="${profile.id}" aria-current="${profile.id === S.profileId}">
         <span class="profile-option-name">${profile.name}</span>
         <span class="profile-option-class">${profile.info}</span>
-      </button>`).join('');
+      </button>`).join('') + `
+      <button class="profile-option add" type="button" role="menuitem" data-add-person>
+        <span class="profile-option-name">+ 새로운 사람 등록</span>
+      </button>`;
   }
   function closeProfileMenu(returnFocus = false) {
     profileMenu.hidden = true;
@@ -404,6 +442,7 @@
     renderProfileMenu();
     render();
     renderAlerts();
+    renderOverview();
     syncScenarioControls();
     go('home');
     profileTrigger.focus();
@@ -415,6 +454,7 @@
     if (!isOpen) profileMenu.querySelector('[aria-current="true"]')?.focus();
   });
   profileMenu.addEventListener('click', event => {
+    if (event.target.closest('[data-add-person]')) { openRegSheet(); return; }
     const option = event.target.closest('[data-profile-id]');
     if (option) selectProfile(option.dataset.profileId);
   });
@@ -426,12 +466,12 @@
   });
   renderProfileMenu();
   $$('#seg button').forEach(b => b.onclick = () => {
-    S.filter = b.dataset.f; $$('#seg button').forEach(x => x.classList.toggle('on', x === b)); renderAlerts();
+    alertFilter = b.dataset.f; $$('#seg button').forEach(x => x.classList.toggle('on', x === b)); renderAlerts();
   });
 
   /* ---------- Scenario control ---------- */
   function setScenario(key) {
-    S.scn = key; S.t = 0; S.fired = false;
+    S.scn = key; S.t = 0; S.fired = false; randomMode = false;
     syncScenarioControls();
     render();
   }
@@ -451,29 +491,90 @@
     if ($('#s-all').classList.contains('active')) renderOverview();
   };
   // 무작위 상태: 등록된 모든 사람에게 안정/스트레스/운동 중 랜덤 배정
+  let randomMode = false;
   function randomizeAll() {
     const keys = ['calm', 'stress', 'exercise'];
+    let i = 0;
     for (const st of profileStates.values()) {
-      st.scn = keys[Math.floor(Math.random() * 3)];
-      st.t = 0; st.fired = false;
+      const key = keys[Math.floor(Math.random() * 3)];
+      st.scn = key;
+      st.fired = true;                 // 무작위 배치 중 알림이 한꺼번에 쏟아지지 않게
+      // 결과가 바로 보이도록 각 상태의 정상 구간으로 이동
+      st.t = key === 'calm' ? 12 : 22;
+      const tg = SCN[key].at(st.t, st.baseline);
+      st.cur = { ...tg };
+      st.hrH = Array.from({ length: N }, (_, k) => {
+        const p = k / (N - 1);
+        if (key === 'stress') return st.baseline.hr + (tg.hr - st.baseline.hr) * Math.min(1, p * 1.6) + rnd(1.8);
+        if (key === 'exercise') return st.baseline.hr + (tg.hr - st.baseline.hr) * Math.min(1, p * 2.2) + rnd(4.5);
+        return tg.hr + rnd(2.4);
+      });
+      st.edaH = Array.from({ length: N }, (_, k) => {
+        const p = k / (N - 1);
+        if (key === 'stress') return st.baseline.eda + (tg.eda - st.baseline.eda) * Math.min(1, p * 1.6) + rnd(.1);
+        if (key === 'exercise') return st.baseline.eda + (tg.eda - st.baseline.eda) * Math.min(1, p * 2.2) + rnd(.1);
+        return tg.eda + rnd(.1);
+      });
+      i++;
     }
+    randomMode = true;
     syncScenarioControls();
-    render(); renderAlerts();
-    if ($('#s-all').classList.contains('active')) renderOverview();
+    render(); renderAlerts(); renderOverview();
+    toast(`등록된 ${PROFILES.length}명의 상태를 무작위로 배정했어요`);
   }
-  $('#randomAll').onclick = randomizeAll;
 
-  // 등록 폼
-  const regForm = $('#regForm'), regName = $('#regName'), regInfo = $('#regInfo'), regErr = $('#regErr');
+  /* ---------- Register sheet ---------- */
+  const regSheet = $('#regSheet'), regForm = $('#regForm'), regName = $('#regName'), regInfo = $('#regInfo'), regErr = $('#regErr');
+  let toastT;
+  function toast(message) {
+    const el = $('#toast');
+    el.textContent = message;
+    el.classList.add('show');
+    clearTimeout(toastT);
+    toastT = setTimeout(hideToast, 2600);
+  }
+  function hideToast() {
+    $('#toast').classList.remove('show');
+    clearTimeout(toastT);
+  }
+  function openRegSheet() {
+    regErr.hidden = true;
+    closeProfileMenu();
+    closeSheet();
+    hideToast();
+    $('#scrim').classList.add('show');
+    regSheet.classList.add('show');
+    regSheet.setAttribute('aria-hidden', 'false');
+    setTimeout(() => regName.focus(), 420);
+  }
+  function closeRegSheet() {
+    regSheet.classList.remove('show');
+    regSheet.setAttribute('aria-hidden', 'true');
+    if (!$('#sheet').classList.contains('show')) $('#scrim').classList.remove('show');
+  }
+  $('#closeReg').onclick = closeRegSheet;
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && regSheet.classList.contains('show')) closeRegSheet();
+  });
+  $('#addPersonTop').onclick = openRegSheet;
+  $('#addPersonDemo').onclick = openRegSheet;
+
   regForm.addEventListener('submit', e => {
     e.preventDefault();
     const name = regName.value.trim();
-    if (!name) { regErr.hidden = false; regName.focus(); return; }
+    if (!name) {
+      regErr.hidden = false;
+      regName.focus();
+      return;
+    }
     regErr.hidden = true;
     const info = regInfo.value.trim();
     const id = addProfile(name, info);
     regName.value = ''; regInfo.value = '';
+    closeRegSheet();
     selectProfile(id);
+    renderOverview();
+    toast(`${name} 님을 등록했어요`);
   });
 
   function prefill() {
