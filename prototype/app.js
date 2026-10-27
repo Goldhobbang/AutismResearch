@@ -9,13 +9,13 @@
   const rnd = a => (Math.random() * 2 - 1) * a;
   const nowStr = () => { const d = new Date(); return `${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`; };
   const PROFILES = [
-    { id: 'kim-seonrin', name: '김선린', className: '2학년 5반', baseline: { hr: 80, eda: 1.6, risk: 17, mv: .12 }, previous: { hr: 96, eda: 2.8, risk: 52 } },
-    { id: 'lee-gyeongsan', name: '이경산', className: '2학년 3반', baseline: { hr: 88, eda: 2.0, risk: 24, mv: .18 }, previous: { hr: 101, eda: 3.1, risk: 47 } },
-    { id: 'kang-daegu', name: '강대구', className: '3학년 1반', baseline: { hr: 74, eda: 1.3, risk: 12, mv: .10 }, previous: { hr: 91, eda: 2.4, risk: 39 } }
+    { id: 'kim-seonrin', name: '김선린', info: '2학년 5반', baseline: { hr: 80, eda: 1.6, risk: 17, mv: .12 }, previous: { hr: 96, eda: 2.8, risk: 52 } },
+    { id: 'lee-gyeongsan', name: '이경산', info: '2학년 3반', baseline: { hr: 88, eda: 2.0, risk: 24, mv: .18 }, previous: { hr: 101, eda: 3.1, risk: 47 } },
+    { id: 'kang-daegu', name: '강대구', info: '3학년 1반', baseline: { hr: 74, eda: 1.3, risk: 12, mv: .10 }, previous: { hr: 91, eda: 2.4, risk: 39 } }
   ];
   const profileById = new Map(PROFILES.map(profile => [profile.id, profile]));
   const studentName = () => profileById.get(S.profileId).name;
-  const studentClass = () => profileById.get(S.profileId).className;
+  const studentInfo = () => profileById.get(S.profileId).info;
 
   /* ---------- Scenarios: target values as function of elapsed seconds ---------- */
   const ramp = (t, a, b, d) => a + (b - a) * Math.min(1, Math.max(0, t / d));
@@ -58,14 +58,23 @@
       alerts: seed(profile), filter: 'all', fired: false, uid: 1, openId: null
     };
   }
+  function addProfile(name, info, baseline) {
+    const base = baseline || { hr: 76 + Math.random() * 12, eda: 1.4 + Math.random() * 0.6, risk: 14 + Math.random() * 10, mv: .1 + Math.random() * .08 };
+    const id = 'p' + Date.now().toString(36) + Math.floor(Math.random() * 999);
+    const profile = { id, name, info: info || '정보 없음', baseline: { ...base }, previous: { hr: Math.round(base.hr) + 16, eda: +(base.eda + 1.2).toFixed(1), risk: Math.round(base.risk) + 30 } };
+    PROFILES.push(profile);
+    profileById.set(id, profile);
+    profileStates.set(id, createProfileState(profile));
+    renderProfileMenu();
+    renderOverview();
+    return id;
+  }
   const profileStates = new Map(PROFILES.map(profile => [profile.id, createProfileState(profile)]));
   let S = profileStates.get(PROFILES[0].id);
 
   /* ---------- Level logic ---------- */
   function level() {
-    if (S.scn === 'exercise' && S.cur.mv > .45) return 'exercise';
-    const r = S.cur.risk;
-    return r >= 70 ? 'risk' : r >= 40 ? 'warn' : 'safe';
+    return levelOf(S);
   }
   const TXT = {
     safe: ['안정', '평소 범위 안에서 안정적으로 유지되고 있어요.'],
@@ -74,31 +83,69 @@
     exercise: ['운동 중', '움직임이 함께 늘어 운동에 의한 변화로 분석했어요.']
   };
 
-  /* ---------- Tick ---------- */
-  function sample() {
-    const sc = SCN[S.scn], tg = sc.at(S.t, S.baseline), n = sc.noise, c = S.cur;
+  // 모든 대상자의 시뮬레이션을 항상 함께 전진시킨다 (화면과 무관하게 진행)
+  function tickAll() {
+    for (const st of profileStates.values()) tickOne(st);
+    if ($('#s-all').classList.contains('active')) renderOverview();
+    else renderSharedAlertsWatch();
+  }
+  function tickOne(st) {
+    const sc = SCN[st.scn], tg = sc.at(st.t, st.baseline), n = sc.noise, c = st.cur;
     for (const k of ['hr', 'eda', 'risk', 'mv']) {
       c[k] += (tg[k] - c[k]) * .3 + rnd(n[k]) * .6;
     }
     c.hr = clamp(c.hr, 60, 150); c.eda = clamp(c.eda, .6, 6); c.risk = clamp(c.risk, 3, 99); c.mv = clamp(c.mv, 0, 1);
-    S.hrH.push(c.hr); S.edaH.push(c.eda);
-    if (S.hrH.length > N) { S.hrH.shift(); S.edaH.shift(); }
-    S.t += TICK / 1000;
+    st.hrH.push(c.hr); st.edaH.push(c.eda);
+    if (st.hrH.length > N) { st.hrH.shift(); st.edaH.shift(); }
+    st.t += TICK / 1000;
 
-    if (!S.fired && sc.alertAt && S.t >= sc.alertAt) {
-      S.fired = true;
-      if (S.scn === 'stress') raise('risk');
-      if (S.scn === 'exercise') raise('info');
+    if (!st.fired && sc.alertAt && st.t >= sc.alertAt) {
+      st.fired = true;
+      if (st.scn === 'stress') raiseFor(st, 'risk');
+      if (st.scn === 'exercise') raiseFor(st, 'info');
     }
-    render();
+    if (st === S) render();
+  }
+  function levelOf(st) {
+    if (st.scn === 'exercise' && st.cur.mv > .45) return 'exercise';
+    const r = st.cur.risk;
+    return r >= 70 ? 'risk' : r >= 40 ? 'warn' : 'safe';
   }
 
   /* ---------- Rendering ---------- */
+  const OVER_N = 48; // 전체 화면용 미니 그래프 샘플 수
+  function renderOverview() {
+    const el = $('#allList');
+    $('#allCount').textContent = `${PROFILES.length}명 연결됨`;
+    el.innerHTML = PROFILES.map(p => {
+      const st = profileStates.get(p.id);
+      const lv = levelOf(st);
+      return `
+      <button class="all-row lv-${lv}" data-profile="${p.id}" type="button">
+        <span class="all-dot"></span>
+        <span class="all-t">
+          <b>${p.name}</b>
+          <small>${p.info}</small>
+        </span>
+        <span class="all-graph"><svg viewBox="0 0 100 30" aria-hidden="true"><polyline points="${overviewPoints(st)}"/></svg></span>
+        <span class="all-risk">${Math.round(st.cur.risk)}</span>
+        <span class="tag ${lv === 'safe' ? 'done' : lv}">${LBL2[lv]}</span>
+      </button>`;
+    }).join('');
+  }
+  function overviewPoints(st) {
+    const vals = st.hrH.slice(-OVER_N);
+    return vals.map((v, i) => `${(i / (OVER_N - 1) * 100).toFixed(1)},${(30 - clamp((v - 60) / 90, 0, 1) * 26 - 2).toFixed(1)}`).join(' ');
+  }
+  document.addEventListener('click', e => {
+    const row = e.target.closest('[data-profile]');
+    if (row) { selectProfile(row.dataset.profile); }
+  });
   function render() {
     const c = S.cur, lv = level();
     app.dataset.state = lv;
     $('#studentName').textContent = studentName();
-    $('#studentClass').textContent = studentClass();
+    $('#studentClass').textContent = studentInfo();
     const [label, msg] = TXT[lv];
     $('#stateText').textContent = label;
     $('#heroMsg').textContent = msg;
@@ -152,41 +199,72 @@
     warn: { title: '주의 상태 감지', body: name => `${name} 학생의 심박수와 피부전도가 평소보다 올라가고 있습니다.`, body2: name => `${name} 학생의 상태를 한 번 살펴봐 주세요.`, lbl: '주의' },
     info: { title: '운동으로 인한 변화', body: '심박수가 올랐지만 움직임이 함께 증가해 운동에 의한 변화로 분석했습니다.', body2: '위험 알림은 보내지 않았고, 이 기록은 참고용입니다.', lbl: '참고' }
   };
-  function raise(lv) {
-    const c = S.cur, cp = COPY[lv], name = studentName();
+  function raise(lv) { raiseFor(S, lv); }
+  function raiseFor(st, lv) {
+    const profile = profileById.get(st.profileId);
+    const name = profile.name;
+    const c = st.cur, cp = COPY[lv];
     const a = {
-      id: S.uid++, level: lv, title: cp.title, time: '방금', clock: nowStr(), ack: false,
+      id: st.uid++, level: lv, title: cp.title, time: '방금', clock: nowStr(), ack: false, pid: st.profileId,
       body: typeof cp.body === 'function' ? cp.body(name) : cp.body,
       body2: typeof cp.body2 === 'function' ? cp.body2(name) : cp.body2,
       hr: Math.round(c.hr), eda: +c.eda.toFixed(1), risk: Math.round(c.risk)
     };
     a.time = a.clock;
-    S.alerts.unshift(a);
-    renderAlerts();
-    if (lv === 'risk') showBanner(a.id);
+    _push(st, a);
+    refreshAfterRaise(a, lv);
   }
   const ICON = { risk: '!', warn: '!', info: 'i' };
   const LBL = { risk: '위험', warn: '주의', info: '참고' };
+  const LBL2 = { safe: '안정', warn: '주의', risk: '위험', exercise: '운동' };
+  function ownerName(a) { const p = profileById.get(a.pid); return p ? p.name : ''; }
+  // 모든 대상자의 알림을 시간순으로 합친다
+  function allAlerts() {
+    const all = [];
+    for (const st of profileStates.values()) for (const a of st.alerts) all.push(a);
+    return all.sort((x, y) => y.seq - x.seq);
+  }
+  let alertSeq = 0;
+  const _push = (st, a) => { a.seq = ++alertSeq; st.alerts.unshift(a); };
+  // 부트 시 시드 알림에도 순서 번호 부여
+  for (const st of profileStates.values()) for (const a of st.alerts) a.seq = ++alertSeq;
 
   function renderAlerts() {
-    const open = S.alerts.filter(a => !a.ack && a.level !== 'info').length;
+    const all = allAlerts();
+    const open = all.filter(a => !a.ack && a.level !== 'info').length;
     $('#openCount').textContent = open;
     const b = $('#tabBadge'); b.textContent = open; b.classList.toggle('show', open > 0);
-    const list = S.alerts.filter(a => S.filter === 'all' || (!a.ack && a.level !== 'info'));
+    const list = all.filter(a => S.filter === 'all' || (!a.ack && a.level !== 'info'));
     $('#alertList').innerHTML = list.length ? list.map(a => `
-      <button class="acard ${a.level} ${a.ack ? 'ack' : ''}" data-id="${a.id}">
-        <div class="row"><span class="tag ${a.ack ? 'done' : a.level}">${a.ack ? '확인 완료' : LBL[a.level]}</span><span class="time">${a.time}</span></div>
+      <button class="acard ${a.level} ${a.ack ? 'ack' : ''}" data-id="${a.seq}">
+        <div class="row"><span class="tag ${a.ack ? 'done' : a.level}">${a.ack ? '확인 완료' : LBL[a.level]}</span><span class="time">${ownerName(a)} · ${a.time}</span></div>
         <h4>${a.title}</h4><p>${a.body}</p>
         <div class="foot">${a.ack ? '✓ ' + (a.ackTime || '확인함') + ' 확인' : a.level === 'info' ? '알림 억제됨 · 자세히 보기' : '확인이 필요해요 ›'}</div>
       </button>`).join('') : '<p class="empty">확인할 알림이 없어요.</p>';
 
-    const rec = S.alerts.slice(0, 2);
+    const rec = all.slice(0, 2);
     $('#recentList').innerHTML = rec.map(a => `
-      <button class="al ${a.level}" data-id="${a.id}">
+      <button class="al ${a.level}" data-id="${a.seq}">
         <span class="al-ico">${ICON[a.level]}</span>
-        <span class="al-t"><b>${a.title}</b><small>${a.body}</small></span>
+        <span class="al-t"><b>${a.title}</b><small>${ownerName(a)} · ${a.body}</small></span>
         <span class="al-r"><span>${a.time}</span><span class="tag ${a.ack ? 'done' : a.level}">${a.ack ? '확인함' : LBL[a.level]}</span></span>
       </button>`).join('');
+  }
+  // 알림 화면이 열려 있을 때만 갱신 (전체 화면 틱에서 호출)
+  function renderSharedAlertsWatch() {
+    if ($('#s-alerts').classList.contains('active')) renderAlerts();
+  }
+
+  function findAlert(seq) {
+    return allAlerts().find(x => x.seq === seq);
+  }
+  function refreshAfterRaise(a, lv) {
+    renderAlerts();
+    if ($('#s-all').classList.contains('active')) renderOverview();
+    if (lv === 'risk') {
+      const b = $('#banner b'); if (b) b.textContent = `${ownerName(a)} · 위험 징후 감지`;
+      showBanner(a.seq);
+    }
   }
 
   /* ---------- Banner & Sheet ---------- */
@@ -198,9 +276,10 @@
   function hideBanner() { $('#banner').classList.remove('show'); }
   $('#banner').onclick = () => { hideBanner(); openSheet(bannerId); };
 
-  function openSheet(id) {
-    const a = S.alerts.find(x => x.id === id); if (!a) return;
-    S.openId = id;
+  function openSheet(seq) {
+    const a = findAlert(seq); if (!a) return;
+    S.openId = seq;
+    const person = profileById.get(a.pid);
     const isInfo = a.level === 'info';
     $('#sheetBody').innerHTML = `
       <div class="sh-ico ${a.level}">${ICON[a.level]}</div>
@@ -212,10 +291,10 @@
         <div><small>피부전도</small><b>${a.eda}</b><em>μS</em></div>
         <div><small>위험 점수</small><b>${a.risk}</b><em>/100</em></div>
       </div>
-      <p class="meta"><b>${studentName()}</b> · ${studentClass()} · ${a.time}${a.ack ? ' · ' + (a.ackTime || '') + ' 확인' : ''}<br>시연용 Mock 데이터입니다.</p>
+      <p class="meta"><b>${person ? person.name : ''}</b> · ${person ? person.info : ''} · ${a.time}${a.ack ? ' · ' + (a.ackTime || '') + ' 확인' : ''}<br>시연용 Mock 데이터입니다.</p>
       <button class="ackbtn ${a.ack ? 'done' : isInfo ? 'blue' : ''}" id="ackBtn">${a.ack ? '✓ 확인 완료' : isInfo ? '기록 확인' : '확인 완료'}</button>
       <button class="close" id="closeSheet">닫기</button>`;
-    $('#ackBtn').onclick = () => ack(id);
+    $('#ackBtn').onclick = () => ack(seq);
     $('#closeSheet').onclick = closeSheet;
     $('#sheet').classList.add('show'); $('#scrim').classList.add('show');
     $('#sheet').setAttribute('aria-hidden', 'false');
@@ -259,7 +338,7 @@
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `${studentName()}_${studentClass().replaceAll(' ', '')}_마음결.png`;
+      link.download = `${studentName()}_${studentInfo().replaceAll(' ', '')}_마음결.png`;
       link.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
       showSaveStatus(`${studentName()} 화면을 PNG로 저장했어요.`);
@@ -272,18 +351,18 @@
     }
   };
 
-  function ack(id) {
-    const a = S.alerts.find(x => x.id === id); if (!a || a.ack) return;
+  function ack(seq) {
+    const a = findAlert(seq); if (!a || a.ack) return;
     a.ack = true; a.ackTime = nowStr();
     const btn = $('#ackBtn'); btn.textContent = '✓ 확인 완료'; btn.className = 'ackbtn done';
     hideBanner(); renderAlerts();
-    setTimeout(() => { if (S.openId === id) closeSheet(); }, 900);
+    setTimeout(() => { if (S.openId === seq) closeSheet(); }, 900);
   }
-  $('#markAll').onclick = () => { S.alerts.forEach(a => { if (!a.ack) { a.ack = true; a.ackTime = nowStr(); } }); hideBanner(); renderAlerts(); };
+  $('#markAll').onclick = () => { for (const a of allAlerts()) { if (!a.ack) { a.ack = true; a.ackTime = nowStr(); } } hideBanner(); renderAlerts(); };
 
   document.addEventListener('click', e => {
     const card = e.target.closest('[data-id]');
-    if (card) openSheet(+card.dataset.id);
+    if (card && !e.target.closest('[data-profile]')) openSheet(+card.dataset.id);
   });
 
   /* ---------- Navigation ---------- */
@@ -304,7 +383,7 @@
     profileMenu.innerHTML = PROFILES.map(profile => `
       <button class="profile-option" type="button" role="menuitem" data-profile-id="${profile.id}" aria-current="${profile.id === S.profileId}">
         <span class="profile-option-name">${profile.name}</span>
-        <span class="profile-option-class">${profile.className}</span>
+        <span class="profile-option-class">${profile.info}</span>
       </button>`).join('');
   }
   function closeProfileMenu(returnFocus = false) {
@@ -356,23 +435,56 @@
     syncScenarioControls();
     render();
   }
-  $$('.scn').forEach(b => b.onclick = () => { setScenario(b.dataset.scn); });
+  $$('.scn').forEach(b => b.onclick = () => { if (b.dataset.scn === 'random') randomizeAll(); else setScenario(b.dataset.scn); });
   $('#replay').onclick = () => {
     // 현재 시나리오를 안정 상태에서 다시 시작
     S.cur = { ...S.baseline }; S.hrH = []; S.edaH = [];
     prefill(); setScenario(S.scn);
   };
-  $('#resetAll').onclick = () => { S.alerts = seed(profileById.get(S.profileId)); S.uid = 1; hideBanner(); renderAlerts(); };
+  $('#resetAll').onclick = () => {
+    for (const [pid, st] of profileStates) {
+      st.alerts = seed(profileById.get(pid));
+      st.uid = 1;
+      for (const a of st.alerts) a.seq = ++alertSeq;
+    }
+    hideBanner(); renderAlerts();
+    if ($('#s-all').classList.contains('active')) renderOverview();
+  };
+  // 무작위 상태: 등록된 모든 사람에게 안정/스트레스/운동 중 랜덤 배정
+  function randomizeAll() {
+    const keys = ['calm', 'stress', 'exercise'];
+    for (const st of profileStates.values()) {
+      st.scn = keys[Math.floor(Math.random() * 3)];
+      st.t = 0; st.fired = false;
+    }
+    syncScenarioControls();
+    render(); renderAlerts();
+    if ($('#s-all').classList.contains('active')) renderOverview();
+  }
+  $('#randomAll').onclick = randomizeAll;
+
+  // 등록 폼
+  const regForm = $('#regForm'), regName = $('#regName'), regInfo = $('#regInfo'), regErr = $('#regErr');
+  regForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const name = regName.value.trim();
+    if (!name) { regErr.hidden = false; regName.focus(); return; }
+    regErr.hidden = true;
+    const info = regInfo.value.trim();
+    const id = addProfile(name, info);
+    regName.value = ''; regInfo.value = '';
+    selectProfile(id);
+  });
 
   function prefill() {
     for (let i = 0; i < N; i++) { S.hrH.push(S.baseline.hr + rnd(2.5)); S.edaH.push(S.baseline.eda + rnd(.12)); }
   }
 
   /* ---------- Boot ---------- */
-  render(); renderAlerts(); setScenario('calm');
-  let simulationTimer = setInterval(sample, TICK);
+  render(); renderAlerts(); renderOverview(); setScenario('calm');
+  let simulationTimer = setInterval(tickAll, TICK);
   document.addEventListener('visibilitychange', () => {
     clearInterval(simulationTimer);
-    if (!document.hidden) simulationTimer = setInterval(sample, TICK);
+    if (!document.hidden) simulationTimer = setInterval(tickAll, TICK);
   });
 })();

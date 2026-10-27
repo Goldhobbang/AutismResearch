@@ -178,7 +178,29 @@ h2{font-size:15px;font-weight:700}
 .scn.on{border-color:var(--accent);background:#fff}
 .scn-ico{flex:none;width:46px;height:46px;border-radius:15px;display:grid;place-items:center}
 .scn-ico svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2.200;stroke-linecap:round;stroke-linejoin:round}
-.c-safe{background:var(--safe-bg);color:var(--safe)}.c-warn{background:var(--warn-bg);color:var(--warn)}.c-blue{background:var(--blue-bg);color:var(--blue)}
+.c-rand{background:#efe7fb;color:#7a3fd1}
+.run-note{font-size:12.5px;color:var(--ink2);font-weight:600;line-height:1.5;margin-top:10px}
+.reg-form{display:flex;flex-direction:column;gap:10px}
+.fld{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:700;color:var(--ink2)}
+.fld input{min-height:46px;border:1.5px solid var(--line);border-radius:13px;padding:0 14px;font:inherit;font-weight:600;color:var(--ink);background:#fafcfb}
+.fld input:focus{outline:none;border-color:var(--blue)}
+.fld-err{font-size:12.5px;font-weight:700;color:var(--risk);margin:0}
+.reg-form .btn{margin-top:2px}
+.all-list{display:flex;flex-direction:column;gap:10px}
+.all-row{display:flex;align-items:center;gap:10px;width:100%;background:var(--bg);border:2px solid transparent;border-radius:18px;padding:12px;min-height:64px}
+.all-row:active{transform:scale(.98)}
+.all-dot{flex:none;width:10px;height:10px;border-radius:50%;background:var(--safe)}
+.lv-warn .all-dot{background:var(--warn)}.lv-risk .all-dot{background:var(--risk);animation:blink 1s infinite}.lv-exercise .all-dot{background:var(--blue)}
+.all-t{flex:1;min-width:0;text-align:left}
+.all-t b{display:block;font-size:15px;font-weight:800}
+.all-t small{display:block;font-size:12px;color:var(--ink2);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.all-graph{flex:none;width:64px;height:30px}
+.all-graph svg{width:100%;height:100%;display:block;overflow:visible}
+.all-graph polyline{fill:none;stroke:var(--safe);stroke-width:2.500;stroke-linecap:round;stroke-linejoin:round}
+.lv-warn .all-graph polyline{stroke:var(--warn)}.lv-risk .all-graph polyline{stroke:var(--risk)}.lv-exercise .all-graph polyline{stroke:var(--blue)}
+.all-risk{flex:none;font-size:20px;font-weight:800;min-width:30px;text-align:right;font-variant-numeric:tabular-nums;color:var(--safe)}
+.lv-warn .all-risk{color:var(--warn)}.lv-risk .all-risk{color:var(--risk)}.lv-exercise .all-risk{color:var(--blue)}
+.btn.warn{background:#7a3fd1}
 .scn-txt b{display:block;font-size:16px;font-weight:800}
 .scn-txt small{display:block;font-size:12px;color:var(--ink2);margin-top:3px;line-height:1.45;word-break:keep-all}
 .run-t{font-size:13px;font-weight:700;color:var(--ink2);font-variant-numeric:tabular-nums}
